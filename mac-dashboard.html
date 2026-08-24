@@ -3024,6 +3024,98 @@ function urlBase64ToUint8Array(b64){
 }
 const PUSH_PUBLIC_KEY='BEl62i2Y7jFjDgTqBGPmNvE3uPPYm3hR5SQkLGcPTXdRhVgCobGkTyvMLHnxVTGkThTlBxbsVQMdPJTmnEDEoDM';
 
+// ==================== AUTO REFRESH（自动刷新：复盘分析 / 微信读书 / 阅读计划）====================
+// 每 60 秒轮询数据文件；23:00 AI 分析等新数据落地后自动更新界面并推送通知（含 App 重启后首次发现）
+var AUTO_REFRESH_MS=60000;
+var RV_AI_NOTIFIED_KEY=P+'rv_ai_notified';
+var lastReviewSig=null;
+var lastWereadSync=null;
+var lastPlanRaw=null;
+var NOTIFY_ICON='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="%23FF9500"/><text x="50" y="68" text-anchor="middle" font-size="48" fill="white" font-family="sans-serif">行</text></svg>';
+
+function reviewSig(data){
+  try{
+    const en=(data&&data.entries)||{};
+    const t=en[rvDateOffset(0)]||{};
+    return (t.text?'t1':'t0')+'|'+(t.aiSummary?String(t.aiSummary.summary||'').length+':'+String(t.aiSummary.suggestion||'').length:'none')+'|'+Object.keys(en).length;
+  }catch(e){return null;}
+}
+
+function notifyAiSummary(entry){
+  try{
+    const ai=entry.aiSummary||{};
+    const sug=String(ai.suggestion||'');
+    toast('🤖 今日复盘 AI 分析已生成');
+    if(notifyPerm==='granted'||(('Notification' in window)&&Notification.permission==='granted')){
+      new Notification('行者复盘分析已生成',{
+        body:sug?('明日建议：'+sug.slice(0,70)+(sug.length>70?'…':'')):'打开「复盘」查看今日分析',
+        icon:NOTIFY_ICON,tag:'rv-ai',requireInteraction:false
+      });
+    }
+  }catch(e){}
+}
+
+async function autoRefreshData(){
+  // 1) review.json — 23:00 自动分析写回后自动刷新 + 通知
+  try{
+    const resp=await fetch('review.json',{cache:'no-store'});
+    if(resp.ok){
+      const data=await resp.json();
+      const sig=reviewSig(data);
+      if(sig&&sig!==lastReviewSig){
+        lastReviewSig=sig;
+        REVIEW_CACHE=data||{entries:{},weekly:{},insights:[]};
+        rvMirrorToStorage();
+        if(currentTab==='review')renderReview();
+        renderHomeReviewCard();
+        updateTabBadges();
+        // AI 分析从无到有（含重启后首次发现）→ 只通知一次
+        const t=rvToday();
+        if(t&&t.aiSummary&&t.aiSummary.summary){
+          const nk=rvDateOffset(0)+':'+t.aiSummary.summary.length+':'+String(t.aiSummary.suggestion||'').length;
+          if(localStorage.getItem(RV_AI_NOTIFIED_KEY)!==nk){
+            localStorage.setItem(RV_AI_NOTIFIED_KEY,nk);
+            notifyAiSummary(t);
+          }
+        }
+        console.log('[AutoRefresh] review.json updated');
+      }
+    }
+  }catch(e){}
+  // 2) weread_data.json — 定时同步后静默更新
+  try{
+    const resp=await fetch('weread_data.json',{cache:'no-store'});
+    if(resp.ok){
+      const data=await resp.json();
+      const sy=data&&data.syncedAt;
+      if(sy&&sy!==lastWereadSync){
+        if(lastWereadSync!==null){
+          data.importTime=new Date().toISOString();
+          sg(K.weread,data);
+          renderWeRead();
+          autoCheckinFromWeRead();
+          console.log('[AutoRefresh] weread_data.json updated:',sy);
+        }
+        lastWereadSync=sy;
+      }
+    }
+  }catch(e){}
+  // 3) reading_plan.json — 早间自动化更新后静默刷新
+  try{
+    const resp=await fetch('reading_plan.json',{cache:'no-store'});
+    if(resp.ok){
+      const raw=await resp.text();
+      if(lastPlanRaw===null){lastPlanRaw=raw;}
+      else if(raw!==lastPlanRaw){
+        lastPlanRaw=raw;
+        planLoaded=false;planLoading=false;
+        loadReadingPlan().then(()=>{renderReadingTaskCards();});
+        console.log('[AutoRefresh] reading_plan.json updated');
+      }
+    }
+  }catch(e){}
+}
+
 // ==================== TAB QUERY PARAM ====================
 (function(){
   const params=new URLSearchParams(window.location.search);
@@ -3055,6 +3147,10 @@ loadReview();
 
 setInterval(checkReminders, 600000);
 setTimeout(checkReminders, 3000);
+
+// 自动刷新：常驻轮询，AI 分析生成等新数据自动上屏并通知
+autoRefreshData();
+setInterval(autoRefreshData, AUTO_REFRESH_MS);
 
 // Follow system dark mode changes — re-render charts with correct colors
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{
