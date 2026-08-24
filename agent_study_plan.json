@@ -1,0 +1,1158 @@
+{
+ "name": "AI Agent 冲刺备战 12 周计划（加速版）",
+ "version": 3,
+ "source": "内置学习计划",
+ "startDate": "2026-08-23",
+ "endDate": "2026-11-14",
+ "totalWeeks": 12,
+ "totalDays": 84,
+ "phases": [
+  {
+   "name": "基础快筛",
+   "weeks": "1",
+   "desc": "LLM/Transformer 核心概念自测查漏（有基础，快节奏过）"
+  },
+  {
+   "name": "核心技能",
+   "weeks": "2-6",
+   "desc": "Prompt 快筛 + RAG 完整实战 + Agent 设计模式 + LangGraph/MCP"
+  },
+  {
+   "name": "进阶深度",
+   "weeks": "7-8",
+   "desc": "微调/对齐（概念精+轻实战）+ 推理优化 + 安全评估"
+  },
+  {
+   "name": "项目实战",
+   "weeks": "9-11",
+   "desc": "三大项目：RAG 问答 / 多 Agent 协作 / 生产级 Agent 应用"
+  },
+  {
+   "name": "冲刺备战",
+   "weeks": "12",
+   "desc": "高频题 + 项目深挖 + 系统设计 + 模拟演练"
+  }
+ ],
+ "schedule": [
+  {
+   "date": "2026-08-23",
+   "week": 1,
+   "phase": 1,
+   "dow": "周日",
+   "type": "study",
+   "topic": "Self-Attention 快筛自测",
+   "title": "LLM 核心概念快筛",
+   "tasks": [
+    "读 Jay Alammar《The Illustrated Transformer》快速过一遍",
+    "自测清单：QKV 计算、softmax(QK^T/√d_k)V、MHA/MQA/GQA 区别，答不上的点记入查漏清单",
+    "顺手搭好 Python 环境（今天开课，环境并进来）"
+   ],
+   "deliv": "查漏清单 v1"
+  },
+  {
+   "date": "2026-08-24",
+   "week": 1,
+   "phase": 1,
+   "dow": "周一",
+   "type": "study",
+   "topic": "架构细节快筛",
+   "title": "LLM 核心概念快筛",
+   "tasks": [
+    "概念过：RoPE 位置编码、SwiGLU、RMSNorm、Pre-Norm",
+    "重点理解 KV Cache 与 Decoder-Only 架构（高频考点）"
+   ],
+   "deliv": "笔记：架构要点 + 考点"
+  },
+  {
+   "date": "2026-08-25",
+   "week": 1,
+   "phase": 1,
+   "dow": "周二",
+   "type": "study",
+   "topic": "训练侧快筛",
+   "title": "LLM 核心概念快筛",
+   "tasks": [
+    "看 Karpathy《Let's build the GPT Tokenizer》",
+    "梳理：BPE 分词、预训练流程、Scaling Laws 结论（Chinchilla 配比）"
+   ],
+   "deliv": "笔记：训练侧知识地图"
+  },
+  {
+   "date": "2026-08-26",
+   "week": 1,
+   "phase": 1,
+   "dow": "周三",
+   "type": "study",
+   "topic": "解码策略（轻实验）",
+   "title": "LLM 核心概念快筛",
+   "tasks": [
+    "用 API/本地模型跑 Temperature/Top-k/Top-p 对比实验",
+    "整理主流模型对比表：GPT/Claude/Qwen/DeepSeek（MoE/MLA/GQA）"
+   ],
+   "deliv": "实验记录 + 模型对比表"
+  },
+  {
+   "date": "2026-08-27",
+   "week": 1,
+   "phase": 1,
+   "dow": "周四",
+   "type": "study",
+   "topic": "架构串讲",
+   "title": "LLM 核心概念快筛",
+   "tasks": [
+    "看 Karpathy《Let's build GPT》（理解为主，不强制跟敲）",
+    "把查漏清单 v1 逐条补齐"
+   ],
+   "deliv": "查漏清单清零"
+  },
+  {
+   "date": "2026-08-28",
+   "week": 1,
+   "phase": 1,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "实战：跑通 mini-GPT（跑通优先）",
+   "title": "LLM 核心概念快筛",
+   "tasks": [
+    "克隆 nanoGPT，配置 PyTorch 环境跑通训练/推理",
+    "改一个超参观察行为变化（不用手写）"
+   ],
+   "deliv": "✅ 代码：nanoGPT 跑通记录"
+  },
+  {
+   "date": "2026-08-29",
+   "week": 1,
+   "phase": 1,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日 · 轻量复盘",
+   "tasks": [],
+   "deliv": "",
+   "title": "LLM 核心概念快筛"
+  },
+  {
+   "date": "2026-08-30",
+   "week": 2,
+   "phase": 2,
+   "dow": "周日",
+   "type": "study",
+   "topic": "Prompt 技巧自测",
+   "title": "Prompt/Context 快筛 + 上手",
+   "tasks": [
+    "自测：few-shot 示例选择、CoT 变体、Self-Consistency/ToT",
+    "只补不熟的点，熟的直接过"
+   ],
+   "deliv": "提示词速查表"
+  },
+  {
+   "date": "2026-08-31",
+   "week": 2,
+   "phase": 2,
+   "dow": "周一",
+   "type": "study",
+   "topic": "ReAct + Function Calling（重点）",
+   "title": "Prompt/Context 快筛 + 上手",
+   "tasks": [
+    "学 ReAct：Thought→Action→Observation 循环",
+    "吃透 Function Calling 的 schema 定义与调用模式（新增高频考点）"
+   ],
+   "deliv": "笔记：ReAct + FC 要点问答"
+  },
+  {
+   "date": "2026-09-01",
+   "week": 2,
+   "phase": 2,
+   "dow": "周二",
+   "type": "study",
+   "topic": "Context Engineering 上下文工程",
+   "title": "Prompt/Context 快筛 + 上手",
+   "tasks": [
+    "学上下文组装/压缩/排序（Lost in the Middle）、缓存",
+    "读仓库《Context Engineering上下文工程》（你的 Harness 经验可对照）"
+   ],
+   "deliv": "笔记：上下文工程"
+  },
+  {
+   "date": "2026-09-02",
+   "week": 2,
+   "phase": 2,
+   "dow": "周三",
+   "type": "study",
+   "topic": "System Prompt 实战",
+   "title": "Prompt/Context 快筛 + 上手",
+   "tasks": [
+    "为复杂场景设计完整提示系统（客服 Agent / Code Review Agent）",
+    "结合你 SKILL 工程经验做对照笔记"
+   ],
+   "deliv": "✅ 完整 System Prompt 设计"
+  },
+  {
+   "date": "2026-09-03",
+   "week": 2,
+   "phase": 2,
+   "dow": "周四",
+   "type": "study",
+   "topic": "LangChain/LCEL 热身",
+   "title": "Prompt/Context 快筛 + 上手",
+   "tasks": [
+    "Python 环境装 LangChain，跑通第一个 LLM 调用链",
+    "为后面 RAG/LangGraph 打代码底子"
+   ],
+   "deliv": "代码：LangChain 入门 demo"
+  },
+  {
+   "date": "2026-09-04",
+   "week": 2,
+   "phase": 2,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "实战：生产级 Prompt 系统",
+   "title": "Prompt/Context 快筛 + 上手",
+   "tasks": [
+    "给自己的工作场景（如行者工作台/产品分析）写一套生产级提示系统并实测迭代"
+   ],
+   "deliv": "✅ 项目：Prompt 系统实测报告"
+  },
+  {
+   "date": "2026-09-05",
+   "week": 2,
+   "phase": 2,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "Prompt/Context 快筛 + 上手"
+  },
+  {
+   "date": "2026-09-06",
+   "week": 3,
+   "phase": 2,
+   "dow": "周日",
+   "type": "study",
+   "topic": "文档处理与分块",
+   "title": "RAG 基础",
+   "tasks": [
+    "学固定长度/递归/语义/结构化分块策略",
+    "实现文档处理管道（256-1024 token、10-20% 重叠）"
+   ],
+   "deliv": "代码：文档处理管道"
+  },
+  {
+   "date": "2026-09-07",
+   "week": 3,
+   "phase": 2,
+   "dow": "周一",
+   "type": "study",
+   "topic": "Embedding 模型",
+   "title": "RAG 基础",
+   "tasks": [
+    "对比 BGE 系列（中文最佳）/GTE/text-embedding-3",
+    "了解 MTEB/C-MTEB 评测"
+   ],
+   "deliv": "实验：Embedding 对比"
+  },
+  {
+   "date": "2026-09-08",
+   "week": 3,
+   "phase": 2,
+   "dow": "周二",
+   "type": "study",
+   "topic": "向量数据库",
+   "title": "RAG 基础",
+   "tasks": [
+    "Chroma 实操",
+    "学 HNSW/IVF 索引原理；了解 Milvus/Qdrant 选型"
+   ],
+   "deliv": "代码：向量检索 demo"
+  },
+  {
+   "date": "2026-09-09",
+   "week": 3,
+   "phase": 2,
+   "dow": "周三",
+   "type": "study",
+   "topic": "搭建 Naive RAG",
+   "title": "RAG 基础",
+   "tasks": [
+    "串起 加载→分块→向量化→检索→生成 完整链路"
+   ],
+   "deliv": "✅ 代码：Naive RAG"
+  },
+  {
+   "date": "2026-09-10",
+   "week": 3,
+   "phase": 2,
+   "dow": "周四",
+   "type": "study",
+   "topic": "混合检索",
+   "title": "RAG 基础",
+   "tasks": [
+    "实现 BM25 + 向量 + RRF 融合检索"
+   ],
+   "deliv": "代码：混合检索"
+  },
+  {
+   "date": "2026-09-11",
+   "week": 3,
+   "phase": 2,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "RAG 评估",
+   "title": "RAG 基础",
+   "tasks": [
+    "学 RAGAs 四指标：Faithfulness/Answer Relevance/Context Precision/Recall",
+    "构建评估测试集"
+   ],
+   "deliv": "评估报告"
+  },
+  {
+   "date": "2026-09-12",
+   "week": 3,
+   "phase": 2,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "RAG 基础"
+  },
+  {
+   "date": "2026-09-13",
+   "week": 4,
+   "phase": 2,
+   "dow": "周日",
+   "type": "study",
+   "topic": "查询改写",
+   "title": "高级 RAG",
+   "tasks": [
+    "实现 Multi-Query 分解、HyDE、Step-back Prompting"
+   ],
+   "deliv": "代码：查询改写模块"
+  },
+  {
+   "date": "2026-09-14",
+   "week": 4,
+   "phase": 2,
+   "dow": "周一",
+   "type": "study",
+   "topic": "重排序 Rerank",
+   "title": "高级 RAG",
+   "tasks": [
+    "集成 BGE-Reranker-v2（Cross-Encoder）",
+    "对比召回-重排前后效果"
+   ],
+   "deliv": "实验：重排效果对比"
+  },
+  {
+   "date": "2026-09-15",
+   "week": 4,
+   "phase": 2,
+   "dow": "周二",
+   "type": "study",
+   "topic": "多轮 RAG + 幻觉检测",
+   "title": "高级 RAG",
+   "tasks": [
+    "实现对话历史管理与指代消解",
+    "实现基于 NLI 的幻觉检测 + 引用溯源"
+   ],
+   "deliv": "代码：多轮 RAG + 检测"
+  },
+  {
+   "date": "2026-09-16",
+   "week": 4,
+   "phase": 2,
+   "dow": "周三",
+   "type": "study",
+   "topic": "系统集成 Advanced RAG",
+   "title": "高级 RAG",
+   "tasks": [
+    "组装混合检索+重排+改写+检测完整系统"
+   ],
+   "deliv": "✅ 代码：Advanced RAG"
+  },
+  {
+   "date": "2026-09-17",
+   "week": 4,
+   "phase": 2,
+   "dow": "周四",
+   "type": "study",
+   "topic": "对比分析",
+   "title": "高级 RAG",
+   "tasks": [
+    "Naive vs Advanced 全指标对比（Recall@5 提升目标 15%）",
+    "写对比分析报告（沉淀为项目素材）"
+   ],
+   "deliv": "对比分析报告"
+  },
+  {
+   "date": "2026-09-18",
+   "week": 4,
+   "phase": 2,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "缓冲日 / 查漏",
+   "title": "高级 RAG",
+   "tasks": [
+    "补本周未完成的代码任务（代码偏弱，留缓冲）",
+    "或预习 LangGraph 概念"
+   ],
+   "deliv": "本周交付物补齐"
+  },
+  {
+   "date": "2026-09-19",
+   "week": 4,
+   "phase": 2,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "高级 RAG"
+  },
+  {
+   "date": "2026-09-20",
+   "week": 5,
+   "phase": 2,
+   "dow": "周日",
+   "type": "study",
+   "topic": "Agent 核心概念快筛",
+   "title": "Agent 设计模式",
+   "tasks": [
+    "读 Lilian Weng《LLM Powered Autonomous Agents》",
+    "自测：规划/记忆/工具/行动四组件、Agent vs Chain（你有底子，快过）"
+   ],
+   "deliv": "查漏笔记"
+  },
+  {
+   "date": "2026-09-21",
+   "week": 5,
+   "phase": 2,
+   "dow": "周一",
+   "type": "study",
+   "topic": "纯 Python 实现 ReAct Agent",
+   "title": "Agent 设计模式",
+   "tasks": [
+    "不用框架，纯 Python 实现 ReAct Agent",
+    "处理最大步数/循环检测/超时"
+   ],
+   "deliv": "✅ 代码：ReAct Agent"
+  },
+  {
+   "date": "2026-09-22",
+   "week": 5,
+   "phase": 2,
+   "dow": "周二",
+   "type": "study",
+   "topic": "Plan-and-Execute + Reflection",
+   "title": "Agent 设计模式",
+   "tasks": [
+    "实现计划-执行分离模式",
+    "实现 Reflexion（跨轮）与 Self-Refine（轮内）"
+   ],
+   "deliv": "代码：两种模式"
+  },
+  {
+   "date": "2026-09-23",
+   "week": 5,
+   "phase": 2,
+   "dow": "周三",
+   "type": "study",
+   "topic": "Multi-Agent 模式",
+   "title": "Agent 设计模式",
+   "tasks": [
+    "学 Supervisor/层级/辩论/群体四种模式",
+    "画架构图；理解通信：直接消息/共享黑板/事件驱动"
+   ],
+   "deliv": "笔记 + 架构图"
+  },
+  {
+   "date": "2026-09-24",
+   "week": 5,
+   "phase": 2,
+   "dow": "周四",
+   "type": "study",
+   "topic": "记忆系统",
+   "title": "Agent 设计模式",
+   "tasks": [
+    "实现短期（上下文）+ 长期（向量库/摘要/实体）记忆"
+   ],
+   "deliv": "代码：Agent 记忆模块"
+  },
+  {
+   "date": "2026-09-25",
+   "week": 5,
+   "phase": 2,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "实战：完整工具型 Agent",
+   "title": "Agent 设计模式",
+   "tasks": [
+    "组装一个带工具+记忆的完整 Agent（可用工作台场景）"
+   ],
+   "deliv": "✅ 项目：完整 Agent"
+  },
+  {
+   "date": "2026-09-26",
+   "week": 5,
+   "phase": 2,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "Agent 设计模式"
+  },
+  {
+   "date": "2026-09-27",
+   "week": 6,
+   "phase": 2,
+   "dow": "周日",
+   "type": "study",
+   "topic": "LangGraph 基础 + ReAct",
+   "title": "LangGraph + MCP",
+   "tasks": [
+    "学 State/Node/Edge/Graph 概念与官方教程",
+    "用 LangGraph 图编排实现 ReAct Agent（支持循环）"
+   ],
+   "deliv": "代码：LangGraph ReAct"
+  },
+  {
+   "date": "2026-09-28",
+   "week": 6,
+   "phase": 2,
+   "dow": "周一",
+   "type": "study",
+   "topic": "Supervisor 多 Agent",
+   "title": "LangGraph + MCP",
+   "tasks": [
+    "实现 Supervisor + Worker 多 Agent 图"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-09-29",
+   "week": 6,
+   "phase": 2,
+   "dow": "周二",
+   "type": "study",
+   "topic": "HITL + 持久化",
+   "title": "LangGraph + MCP",
+   "tasks": [
+    "实现人工审核节点与中断恢复",
+    "实现 Checkpointing 持久化与 Streaming 流式"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-09-30",
+   "week": 6,
+   "phase": 2,
+   "dow": "周三",
+   "type": "study",
+   "topic": "MCP 协议实战",
+   "title": "LangGraph + MCP",
+   "tasks": [
+    "学 MCP 规范：工具集成标准化",
+    "实现一个 MCP 工具服务器（结合你的 SKILL 工程经验）"
+   ],
+   "deliv": "代码：MCP Server"
+  },
+  {
+   "date": "2026-10-01",
+   "week": 6,
+   "phase": 2,
+   "dow": "周四",
+   "type": "study",
+   "topic": "Dify 快速验证 + A2A 概览",
+   "title": "LangGraph + MCP",
+   "tasks": [
+    "用 Dify 低代码搭 RAG 应用（快速验证故事）",
+    "了解 A2A 协议与三家 Function Calling 差异"
+   ],
+   "deliv": "应用：Dify RAG + 笔记"
+  },
+  {
+   "date": "2026-10-02",
+   "week": 6,
+   "phase": 2,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "阶段复盘",
+   "title": "LangGraph + MCP",
+   "tasks": [
+    "复盘阶段一二：Prompt/RAG/Agent/LangGraph/MCP",
+    "整理各模块要点问答（重点：FC vs MCP）"
+   ],
+   "deliv": "✅ 阶段复盘笔记"
+  },
+  {
+   "date": "2026-10-03",
+   "week": 6,
+   "phase": 2,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "LangGraph + MCP"
+  },
+  {
+   "date": "2026-10-04",
+   "week": 7,
+   "phase": 3,
+   "dow": "周日",
+   "type": "study",
+   "topic": "SFT 基础",
+   "title": "微调 + 对齐",
+   "tasks": [
+    "学 SFT 流程与指令数据格式（instruction-input-output）",
+    "了解全量微调 vs PEFT"
+   ],
+   "deliv": "笔记：SFT 流程"
+  },
+  {
+   "date": "2026-10-05",
+   "week": 7,
+   "phase": 3,
+   "dow": "周一",
+   "type": "study",
+   "topic": "LoRA/QLoRA 原理",
+   "title": "微调 + 对齐",
+   "tasks": [
+    "推导 LoRA：冻结 W₀、ΔW=BA、r<<min(d,k)",
+    "学超参：r 8-64、alpha 1-2r、target_modules；QLoRA 4-bit NF4"
+   ],
+   "deliv": "笔记：LoRA 推导"
+  },
+  {
+   "date": "2026-10-06",
+   "week": 7,
+   "phase": 3,
+   "dow": "周二",
+   "type": "study",
+   "topic": "微调实战（跑通优先）",
+   "title": "微调 + 对齐",
+   "tasks": [
+    "用 LLaMA-Factory 跑通 Qwen 微调（跑通即可，不强求调优）",
+    "构建 100+ 条指令数据集"
+   ],
+   "deliv": "代码：微调跑通 + 数据集"
+  },
+  {
+   "date": "2026-10-07",
+   "week": 7,
+   "phase": 3,
+   "dow": "周三",
+   "type": "study",
+   "topic": "RLHF 概念",
+   "title": "微调 + 对齐",
+   "tasks": [
+    "学 SFT→偏好数据→RM→PPO 完整流程",
+    "理解 KL 约束与 4 模型开销、Reward Hacking"
+   ],
+   "deliv": "笔记：RLHF 端到端"
+  },
+  {
+   "date": "2026-10-08",
+   "week": 7,
+   "phase": 3,
+   "dow": "周四",
+   "type": "study",
+   "topic": "DPO/GRPO 原理",
+   "title": "微调 + 对齐",
+   "tasks": [
+    "推导 DPO：跳过显式 RM 转分类问题",
+    "学 DeepSeek-R1 的 GRPO：组相对排序奖励"
+   ],
+   "deliv": "笔记：DPO/GRPO"
+  },
+  {
+   "date": "2026-10-09",
+   "week": 7,
+   "phase": 3,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "技术综述",
+   "title": "微调 + 对齐",
+   "tasks": [
+    "梳理 RLHF→DPO→GRPO 演进时间线与取舍",
+    "整理要点问答（PM 背景讲清 trade-off 是优势项）"
+   ],
+   "deliv": "✅ 综述 + 要点问答"
+  },
+  {
+   "date": "2026-10-10",
+   "week": 7,
+   "phase": 3,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "微调 + 对齐"
+  },
+  {
+   "date": "2026-10-11",
+   "week": 8,
+   "phase": 3,
+   "dow": "周日",
+   "type": "study",
+   "topic": "KV Cache + vLLM",
+   "title": "推理优化 + 安全评估",
+   "tasks": [
+    "学 KV Cache/PagedAttention/Continuous Batching 原理",
+    "vLLM 部署模型实操"
+   ],
+   "deliv": "代码：vLLM 部署"
+  },
+  {
+   "date": "2026-10-12",
+   "week": 8,
+   "phase": 3,
+   "dow": "周一",
+   "type": "study",
+   "topic": "量化 + 压测",
+   "title": "推理优化 + 安全评估",
+   "tasks": [
+    "GPTQ/AWQ 概念 + 跑一次量化推理",
+    "基准测试：吞吐/延迟/显存（参数量×2B FP16 估算）"
+   ],
+   "deliv": "基准测试报告"
+  },
+  {
+   "date": "2026-10-13",
+   "week": 8,
+   "phase": 3,
+   "dow": "周二",
+   "type": "study",
+   "topic": "Prompt Injection 攻防",
+   "title": "推理优化 + 安全评估",
+   "tasks": [
+    "学直接/间接注入与防御：检测过滤、指令层级隔离、输出校验",
+    "实现基础 Guardrails（Guardrails AI / NeMo）"
+   ],
+   "deliv": "笔记 + 代码：Guardrails"
+  },
+  {
+   "date": "2026-10-14",
+   "week": 8,
+   "phase": 3,
+   "dow": "周三",
+   "type": "study",
+   "topic": "Agent 评估",
+   "title": "推理优化 + 安全评估",
+   "tasks": [
+    "设计评估框架：任务成功率/步效率/工具调用准确率（LangSmith/AgentBench/GAIA）"
+   ],
+   "deliv": "评估方案文档"
+  },
+  {
+   "date": "2026-10-15",
+   "week": 8,
+   "phase": 3,
+   "dow": "周四",
+   "type": "study",
+   "topic": "GraphRAG 上手",
+   "title": "推理优化 + 安全评估",
+   "tasks": [
+    "GraphRAG：实体抽取→知识图谱→社区检测→Local/Global 检索"
+   ],
+   "deliv": "代码：GraphRAG demo"
+  },
+  {
+   "date": "2026-10-16",
+   "week": 8,
+   "phase": 3,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "进阶段复盘 + 项目预热",
+   "title": "推理优化 + 安全评估",
+   "tasks": [
+    "复盘微调/对齐/推理优化/安全",
+    "规划项目1的个人化选题（结合产品经验选垂直场景）"
+   ],
+   "deliv": "✅ 复盘 + 项目选题"
+  },
+  {
+   "date": "2026-10-17",
+   "week": 8,
+   "phase": 3,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "推理优化 + 安全评估"
+  },
+  {
+   "date": "2026-10-18",
+   "week": 9,
+   "phase": 4,
+   "dow": "周日",
+   "type": "study",
+   "topic": "项目1设计",
+   "title": "项目1：RAG 知识问答系统",
+   "tasks": [
+    "设计架构：查询理解→混合检索→重排→生成→幻觉检测",
+    "技术选型：LangChain+Milvus/Chroma+BGE+Qwen",
+    "选题结合你的垂直领域知识（差异化亮点）"
+   ],
+   "deliv": "项目设计文档"
+  },
+  {
+   "date": "2026-10-19",
+   "week": 9,
+   "phase": 4,
+   "dow": "周一",
+   "type": "study",
+   "topic": "开发①：索引管道",
+   "title": "项目1：RAG 知识问答系统",
+   "tasks": [
+    "文档处理管道 + 索引构建（多格式、结构化+语义分块）"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-10-20",
+   "week": 9,
+   "phase": 4,
+   "dow": "周二",
+   "type": "study",
+   "topic": "开发②：检索系统",
+   "title": "项目1：RAG 知识问答系统",
+   "tasks": [
+    "向量+BM25+RRF+重排+查询改写"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-10-21",
+   "week": 9,
+   "phase": 4,
+   "dow": "周三",
+   "type": "study",
+   "topic": "开发③：生成系统",
+   "title": "项目1：RAG 知识问答系统",
+   "tasks": [
+    "System Prompt、Lost-in-the-Middle 优化、引用溯源、NLI 幻觉检测"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-10-22",
+   "week": 9,
+   "phase": 4,
+   "dow": "周四",
+   "type": "study",
+   "topic": "开发④：前端 + 优化",
+   "title": "项目1：RAG 知识问答系统",
+   "tasks": [
+    "多轮对话 + Streamlit/Gradio 前端",
+    "RAGAs 评估 + 模块 A/B 测试"
+   ],
+   "deliv": "代码 + 评估报告"
+  },
+  {
+   "date": "2026-10-23",
+   "week": 9,
+   "phase": 4,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "项目1收尾",
+   "title": "项目1：RAG 知识问答系统",
+   "tasks": [
+    "README、文档、部署",
+    "沉淀项目数据点（Recall 提升/幻觉率下降）"
+   ],
+   "deliv": "✅ 项目1完成"
+  },
+  {
+   "date": "2026-10-24",
+   "week": 9,
+   "phase": 4,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "项目1：RAG 知识问答系统"
+  },
+  {
+   "date": "2026-10-25",
+   "week": 10,
+   "phase": 4,
+   "dow": "周日",
+   "type": "study",
+   "topic": "项目2设计",
+   "title": "项目2：多 Agent 协作系统",
+   "tasks": [
+    "定义 5 角色：Supervisor/Researcher/Analyst/Writer/Reviewer",
+    "技术选型：LangGraph + 工具 + Checkpointing"
+   ],
+   "deliv": "项目设计文档"
+  },
+  {
+   "date": "2026-10-26",
+   "week": 10,
+   "phase": 4,
+   "dow": "周一",
+   "type": "study",
+   "topic": "开发①：编排图",
+   "title": "项目2：多 Agent 协作系统",
+   "tasks": [
+    "实现 Supervisor + Worker 编排图（条件边流转）"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-10-27",
+   "week": 10,
+   "phase": 4,
+   "dow": "周二",
+   "type": "study",
+   "topic": "开发②：工具集成",
+   "title": "项目2：多 Agent 协作系统",
+   "tasks": [
+    "搜索/Python REPL/文件读写工具集成"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-10-28",
+   "week": 10,
+   "phase": 4,
+   "dow": "周三",
+   "type": "study",
+   "topic": "开发③：HITL + 持久化",
+   "title": "项目2：多 Agent 协作系统",
+   "tasks": [
+    "关键决策人工审核 + 断点恢复",
+    "错误处理与重试机制"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-10-29",
+   "week": 10,
+   "phase": 4,
+   "dow": "周四",
+   "type": "study",
+   "topic": "项目2收尾",
+   "title": "项目2：多 Agent 协作系统",
+   "tasks": [
+    "测试、文档、部署"
+   ],
+   "deliv": "✅ 项目2完成"
+  },
+  {
+   "date": "2026-10-30",
+   "week": 10,
+   "phase": 4,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "项目3设计",
+   "title": "项目2：多 Agent 协作系统",
+   "tasks": [
+    "系统架构：多模型路由/工具系统/记忆/安全/可观测性",
+    "技术选型：LangGraph+FastAPI+Redis+pgvector"
+   ],
+   "deliv": "架构设计文档"
+  },
+  {
+   "date": "2026-10-31",
+   "week": 10,
+   "phase": 4,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "项目2：多 Agent 协作系统"
+  },
+  {
+   "date": "2026-11-01",
+   "week": 11,
+   "phase": 4,
+   "dow": "周日",
+   "type": "study",
+   "topic": "开发①：路由 + 工具",
+   "title": "项目3：生产级 Agent 应用",
+   "tasks": [
+    "智能路由（意图→模型→工具）+ MCP 工具系统"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-11-02",
+   "week": 11,
+   "phase": 4,
+   "dow": "周一",
+   "type": "study",
+   "topic": "开发②：记忆系统",
+   "title": "项目3：生产级 Agent 应用",
+   "tasks": [
+    "短期上下文 + 长期摘要/实体记忆（Redis+pgvector）"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-11-03",
+   "week": 11,
+   "phase": 4,
+   "dow": "周二",
+   "type": "study",
+   "topic": "开发③：安全 + 可观测",
+   "title": "项目3：生产级 Agent 应用",
+   "tasks": [
+    "注入防御、PII 脱敏、审计日志",
+    "LangSmith 追踪、延迟/成本监控"
+   ],
+   "deliv": "代码"
+  },
+  {
+   "date": "2026-11-04",
+   "week": 11,
+   "phase": 4,
+   "dow": "周三",
+   "type": "study",
+   "topic": "项目3收尾",
+   "title": "项目3：生产级 Agent 应用",
+   "tasks": [
+    "Docker 容器化部署 + 文档"
+   ],
+   "deliv": "✅ 项目3完成"
+  },
+  {
+   "date": "2026-11-05",
+   "week": 11,
+   "phase": 4,
+   "dow": "周四",
+   "type": "study",
+   "topic": "亮点提炼 + 简历",
+   "title": "项目3：生产级 Agent 应用",
+   "tasks": [
+    "三项目亮点提炼（多模型路由降本、完整安全栈、长期记忆）",
+    "STAR 结构写进简历 + 量化指标"
+   ],
+   "deliv": "简历初稿"
+  },
+  {
+   "date": "2026-11-06",
+   "week": 11,
+   "phase": 4,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "项目深挖预演",
+   "title": "项目3：生产级 Agent 应用",
+   "tasks": [
+    "每项目准备 8 个追问：Why/What/How/指标/挑战/取舍/改进/规模化"
+   ],
+   "deliv": "深挖文档"
+  },
+  {
+   "date": "2026-11-07",
+   "week": 11,
+   "phase": 4,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "休息日",
+   "tasks": [],
+   "deliv": "",
+   "title": "项目3：生产级 Agent 应用"
+  },
+  {
+   "date": "2026-11-08",
+   "week": 12,
+   "phase": 5,
+   "dow": "周日",
+   "type": "study",
+   "topic": "知识体系复盘",
+   "title": "冲刺备战",
+   "tasks": [
+    "复盘 50 道高频题：基础 10 + RAG 10 + Agent 10 + 微调对齐 10 + 推理优化 5",
+    "画知识脑图"
+   ],
+   "deliv": "知识脑图"
+  },
+  {
+   "date": "2026-11-09",
+   "week": 12,
+   "phase": 5,
+   "dow": "周一",
+   "type": "study",
+   "topic": "刷题①",
+   "title": "冲刺备战",
+   "tasks": [
+    "刷《八股文完整答案集》69 题",
+    "刷牛客高频拷打题"
+   ],
+   "deliv": "整理答案"
+  },
+  {
+   "date": "2026-11-10",
+   "week": 12,
+   "phase": 5,
+   "dow": "周二",
+   "type": "study",
+   "topic": "刷题② + 系统设计",
+   "title": "冲刺备战",
+   "tasks": [
+    "练 4 道系统设计：企业 RAG/多 Agent 客服/代码生成 Agent/LLM 推理服务",
+    "按 5-10-15-5 分钟框架答题"
+   ],
+   "deliv": "设计方案"
+  },
+  {
+   "date": "2026-11-11",
+   "week": 12,
+   "phase": 5,
+   "dow": "周三",
+   "type": "study",
+   "topic": "模拟演练",
+   "title": "冲刺备战",
+   "tasks": [
+    "完整模拟一轮（录音复盘 / 找伙伴 / 牛客）",
+    "练 STAR 讲项目 + 先结论后细节"
+   ],
+   "deliv": "演练复盘"
+  },
+  {
+   "date": "2026-11-12",
+   "week": 12,
+   "phase": 5,
+   "dow": "周四",
+   "type": "study",
+   "topic": "目标公司研究",
+   "title": "冲刺备战",
+   "tasks": [
+    "研究目标公司 JD 与面经（字节重工程/阿里 Qwen/腾讯混元/小红书多模态等）"
+   ],
+   "deliv": "投递清单"
+  },
+  {
+   "date": "2026-11-13",
+   "week": 12,
+   "phase": 5,
+   "dow": "周五",
+   "type": "practice",
+   "topic": "简历定稿",
+   "title": "冲刺备战",
+   "tasks": [
+    "简历定稿 + 投递准备（PM 转 Agent 工程师的差异化故事线）"
+   ],
+   "deliv": "✅ 开始投递！"
+  },
+  {
+   "date": "2026-11-14",
+   "week": 12,
+   "phase": 5,
+   "dow": "周六",
+   "type": "rest",
+   "topic": "🎉 计划完成 — 开始投递！",
+   "tasks": [],
+   "deliv": "",
+   "title": "冲刺备战"
+  }
+ ]
+}

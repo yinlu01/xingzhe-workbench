@@ -1,0 +1,19 @@
+# 个人数据（不提交）
+review.json
+reading_plan.json
+weread_data.json
+obsidian_report.json
+
+# 旧版页面（已由 mac-dashboard.html 取代）
+life-dashboard.html
+
+# 构建产物 / 缓存
+__pycache__/
+*.pyc
+deploy/
+macos_app/*.png
+macos_app/XingZheWorkbench
+*.app/
+
+# 工作区内部文件
+.workbuddy/
