@@ -728,27 +728,47 @@ body{
 ::-webkit-scrollbar-track{background:transparent;}
 
 /* ==================== PLAN MODULE ==================== */
-.plan-subtabs{display:flex;gap:4px;margin-bottom:14px;background:var(--input-bg);padding:4px;border-radius:10px;width:fit-content;}
-.plan-subtab{border:none;background:none;padding:6px 20px;font-size:13px;font-weight:600;color:var(--text-2);border-radius:8px;cursor:pointer;transition:all .15s;}
-.plan-subtab.active{background:var(--card-bg);color:var(--text);box-shadow:var(--shadow);}
-.plan-day-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.plan-subtabs{display:flex;gap:4px;margin-bottom:16px;background:var(--input-bg);padding:4px;border-radius:11px;width:fit-content;border:1px solid var(--card-border);}
+.plan-subtab{border:none;background:none;padding:6px 22px;font-size:13px;font-weight:600;color:var(--text-2);border-radius:8px;cursor:pointer;transition:all .15s;}
+.plan-subtab:hover{color:var(--text);}
+.plan-subtab.active{background:var(--card-bg);color:var(--primary-dark);box-shadow:var(--shadow);}
+.plan-hero{background:linear-gradient(135deg,rgba(255,149,0,.11),rgba(175,82,222,.07) 55%,rgba(10,132,255,.06));border:1px solid rgba(255,149,0,.25);border-radius:var(--radius);padding:13px 16px 13px;margin-bottom:16px;position:relative;overflow:hidden;}
+.plan-hero::after{content:'';position:absolute;right:-40px;top:-40px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,.12),transparent 70%);pointer-events:none;}
+.plan-day-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;position:relative;z-index:1;}
 .plan-day-nav{display:flex;align-items:center;gap:8px;}
-.plan-day-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-2);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;line-height:1;}
-.plan-day-btn:hover{background:var(--nav-hover);color:var(--text);}
-.plan-day-label{font-size:15px;font-weight:700;min-width:170px;text-align:center;line-height:1.3;}
-.plan-day-label .sub{display:block;font-size:11px;font-weight:500;color:var(--text-3);margin-top:2px;}
-.plan-day-today{color:var(--primary);font-size:10.5px;font-weight:700;background:rgba(255,149,0,.12);padding:1px 8px;border-radius:8px;margin-left:6px;}
-.plan-progress{display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:10px 14px;}
-.plan-progress-bar{flex:1;height:8px;background:var(--ring-track);border-radius:4px;overflow:hidden;}
-.plan-progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#FFB340);border-radius:4px;transition:width .3s;}
+.plan-day-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-2);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;}
+.plan-day-btn:hover{background:var(--nav-hover);color:var(--text);transform:scale(1.06);}
+.plan-day-btn:active{transform:scale(.92);}
+.plan-day-label{font-size:16px;font-weight:800;min-width:190px;text-align:center;line-height:1.25;letter-spacing:.2px;}
+.plan-day-label .sub{display:block;font-size:11px;font-weight:500;color:var(--text-3);margin-top:2px;letter-spacing:0;}
+.plan-day-today{color:var(--primary-dark);font-size:10.5px;font-weight:700;background:rgba(255,149,0,.15);padding:1px 8px;border-radius:8px;margin-left:6px;vertical-align:1px;}
+.plan-hero-stats{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+.plan-hero-numbox{display:flex;flex-direction:column;align-items:flex-end;gap:2px;}
+.plan-hero-num{font-size:26px;font-weight:800;color:var(--primary-dark);letter-spacing:-.5px;line-height:1;font-variant-numeric:tabular-nums;}
+.plan-hero-cnt{font-size:11px;color:var(--text-2);font-weight:600;}
+.plan-today-btn{height:30px;border-radius:9px;border:1px solid rgba(255,149,0,.4);background:rgba(255,149,0,.13);color:var(--primary-dark);cursor:pointer;font-size:12.5px;font-weight:700;padding:0 14px;transition:all .15s;}
+.plan-today-btn:hover{background:rgba(255,149,0,.22);}
+.plan-today-btn:active{transform:scale(.94);}
+.plan-progress{display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
+.plan-progress-bar{flex:1;height:7px;background:var(--card-bg);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.07);}
+.plan-progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#FFB340);border-radius:4px;transition:width .45s cubic-bezier(.22,.9,.35,1);}
 .plan-progress-txt{font-size:12px;color:var(--text-2);font-weight:600;white-space:nowrap;}
-.plan-sec{margin-bottom:16px;}
-.plan-sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding:0 2px;}
-.plan-sec-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;color:var(--text);}
-.plan-sec-badge{font-size:10.5px;color:var(--text-3);font-weight:500;background:var(--input-bg);padding:2px 9px;border-radius:10px;border:1px solid var(--card-border);}
-.plan-task{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);padding:9px 12px;margin-bottom:7px;transition:box-shadow .15s,border-color .15s;position:relative;}
-.plan-task:hover{box-shadow:var(--shadow);border-color:rgba(0,0,0,.14);}
+.plan-sec{margin-bottom:18px;}
+.plan-sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;padding:0 2px;}
+.plan-sec-title{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--text);letter-spacing:.3px;}
+.plan-sec-ic{width:24px;height:24px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.plan-sec-ic svg{width:13px;height:13px;}
+.plan-sec-ic.ic-am{background:rgba(255,149,0,.15);color:var(--primary-dark);}
+.plan-sec-ic.ic-pm{background:rgba(10,132,255,.13);color:var(--blue);}
+.plan-sec-ic.ic-ev{background:rgba(175,82,222,.13);color:var(--purple);}
+.plan-sec-badge{font-size:10.5px;color:var(--text-3);font-weight:500;background:var(--input-bg);padding:2px 9px;border-radius:10px;border:1px solid var(--card-border);margin-left:2px;}
+.plan-sec-count{font-size:11px;color:var(--text-3);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.3px;}
+.plan-sec-count b{color:var(--green);font-weight:800;}
+.plan-task{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:9px 12px;margin-bottom:7px;transition:box-shadow .15s,border-color .15s,transform .15s;position:relative;}
+.plan-task:hover{box-shadow:var(--shadow);border-color:rgba(0,0,0,.14);transform:translateY(-1px);}
+.plan-task-rail{position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:0 3px 3px 0;opacity:.9;transition:opacity .2s;}
 .plan-task.done{opacity:.6;}
+.plan-task.done .plan-task-rail{opacity:.25;}
 .plan-task.done .plan-task-title{text-decoration:line-through;color:var(--text-3);}
 .plan-check{width:21px;height:21px;border-radius:50%;border:2px solid var(--text-3);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0;color:#fff;font-size:11px;transition:all .15s;line-height:1;}
 .plan-check:hover{border-color:var(--green);transform:scale(1.08);}
@@ -757,13 +777,14 @@ body{
 .plan-task-title{font-size:13.5px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plan-task-detail{font-size:11.5px;color:var(--text-3);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plan-task-tag{font-size:10px;font-weight:600;padding:1.5px 8px;border-radius:8px;flex-shrink:0;}
-.plan-task-time{font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-2);background:var(--input-bg);padding:3px 9px;border-radius:6px;cursor:pointer;flex-shrink:0;border:1px solid transparent;white-space:nowrap;transition:all .12s;}
-.plan-task-time:hover{border-color:var(--primary);color:var(--primary);}
+.plan-task-time{font-size:11.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-2);background:var(--input-bg);padding:3px 9px;border-radius:6px;cursor:pointer;flex-shrink:0;border:1px solid var(--card-border);white-space:nowrap;transition:all .12s;font-weight:500;}
+.plan-task-time.unset{border-style:dashed;color:var(--text-3);}
+.plan-task-time:hover{border-color:var(--primary);color:var(--primary-dark);background:rgba(255,149,0,.07);}
 .plan-task-del{width:22px;height:22px;border:none;background:none;color:var(--text-3);cursor:pointer;font-size:15px;flex-shrink:0;opacity:0;border-radius:6px;transition:all .12s;line-height:1;}
 .plan-task:hover .plan-task-del{opacity:1;}
 .plan-task-del:hover{color:var(--red);background:var(--red-light);}
-.plan-add{width:100%;border:1.5px dashed var(--card-border);background:none;color:var(--text-2);padding:8px;border-radius:var(--radius-sm);font-size:12.5px;cursor:pointer;margin-top:4px;transition:all .15s;}
-.plan-add:hover{color:var(--primary);border-color:var(--primary);background:rgba(255,149,0,.05);}
+.plan-add{width:100%;border:1.5px dashed var(--card-border);background:none;color:var(--text-3);padding:8px;border-radius:10px;font-size:12.5px;cursor:pointer;margin-top:4px;transition:all .15s;}
+.plan-add:hover{color:var(--primary-dark);border-color:var(--primary);background:rgba(255,149,0,.05);}
 .plan-add-form{display:flex;gap:8px;align-items:center;margin-top:4px;padding:10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);}
 .plan-add-form input[type=text]{flex:1;border:1px solid var(--input-border);background:var(--input-bg);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text);outline:none;}
 .plan-add-form input[type=text]:focus{border-color:var(--primary);}
@@ -771,7 +792,8 @@ body{
 .plan-add-ok{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;}
 .plan-add-ok:hover{background:var(--primary-dark);}
 .plan-add-cancel{background:none;border:none;color:var(--text-3);font-size:12.5px;cursor:pointer;padding:7px 6px;}
-.plan-ai-card{background:linear-gradient(135deg,rgba(255,149,0,.09),rgba(175,82,222,.06));border:1px solid rgba(255,149,0,.3);border-radius:var(--radius);padding:12px 14px;margin-top:16px;}
+.plan-ai-card{background:linear-gradient(135deg,rgba(255,149,0,.10),rgba(175,82,222,.08));border:1px solid rgba(255,149,0,.3);border-radius:var(--radius);padding:13px 15px;margin-top:16px;position:relative;overflow:hidden;}
+.plan-ai-card::after{content:'';position:absolute;right:-30px;top:-36px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,.13),transparent 70%);pointer-events:none;}
 .plan-ai-title{font-size:12px;font-weight:700;color:var(--primary-dark);margin-bottom:5px;display:flex;align-items:center;gap:5px;}
 .plan-ai-text{font-size:12.5px;color:var(--text-2);line-height:1.6;}
 .plan-ai-btn{margin-top:9px;background:var(--primary);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;}
@@ -787,23 +809,25 @@ body{
 .plan-time-custom input{border:1px solid var(--input-border);background:var(--input-bg);border-radius:7px;padding:5px 6px;font-size:12px;color:var(--text);width:80px;font-family:ui-monospace,Menlo,monospace;}
 .plan-time-custom button{margin-left:auto;background:var(--blue);color:#fff;border:none;border-radius:7px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;}
 /* month view */
-.plan-month-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.plan-cal-heads{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;}
-.plan-cal-head{font-size:11px;color:var(--text-3);text-align:center;padding:4px 0;font-weight:600;}
-.plan-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:7px;}
-.plan-cal-cell{height:38px;border-radius:7px;border:1.5px solid transparent;background:var(--input-bg);position:relative;display:flex;align-items:center;gap:6px;padding:0 8px;cursor:default;transition:all .12s;}
+.plan-month-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.plan-cal-heads{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:5px;}
+.plan-cal-head{font-size:11px;color:var(--text-3);text-align:center;padding:4px 0;font-weight:700;letter-spacing:.5px;}
+.plan-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:8px;box-shadow:var(--shadow);}
+.plan-cal-cell{height:38px;border-radius:8px;border:1.5px solid transparent;background:var(--input-bg);position:relative;display:flex;align-items:center;gap:6px;padding:0 8px;cursor:default;transition:all .12s;}
+.plan-cal-cell:nth-child(7n+6),.plan-cal-cell:nth-child(7n){background:rgba(10,132,255,.05);}
 .plan-cal-cell .d{font-size:11.5px;font-weight:600;color:var(--text-2);flex-shrink:0;min-width:14px;text-align:center;}
-.plan-cal-cell.week{background:rgba(255,149,0,.1);border-color:rgba(255,149,0,.35);}
-.plan-cal-cell.today{border-color:var(--primary);box-shadow:0 0 0 2px rgba(255,149,0,.22);}
-.plan-cal-cell.week.today{background:rgba(255,149,0,.16);}
+.plan-cal-cell.week{background:rgba(255,149,0,.09);border-color:rgba(255,149,0,.3);}
+.plan-cal-cell.today{border-color:var(--primary);box-shadow:0 0 0 2px rgba(255,149,0,.18);}
+.plan-cal-cell.today .d{background:var(--primary);color:#fff;width:20px;height:20px;min-width:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;box-shadow:0 1px 4px rgba(255,149,0,.45);}
+.plan-cal-cell.week.today{background:rgba(255,149,0,.15);}
 .plan-cal-cell.other{opacity:.35;}
 .plan-cal-cell.clickable{cursor:pointer;}
-.plan-cal-cell.clickable:hover{border-color:var(--primary);}
+.plan-cal-cell.clickable:hover{border-color:var(--primary);transform:translateY(-1px);}
 .plan-cal-dots{display:flex;gap:3px;margin-left:auto;flex-wrap:wrap;}
-.plan-dot{width:5.5px;height:5.5px;border-radius:50%;}
+.plan-dot{width:6px;height:6px;border-radius:50%;}
 .plan-cal-legend{display:flex;gap:14px;align-items:center;margin-top:8px;font-size:11px;color:var(--text-3);}
-.plan-mg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
-.plan-mg .card{padding:12px;}
+.plan-mg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+.plan-mg .card{padding:14px;box-shadow:var(--shadow);}
 .plan-focus-item{display:flex;align-items:center;gap:8px;padding:5px 2px;border-bottom:1px solid var(--card-border);font-size:12.5px;}
 .plan-focus-item:last-child{border-bottom:none;}
 .plan-focus-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
@@ -816,8 +840,8 @@ body{
 .plan-bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
 .plan-bar-name{font-size:12.5px;font-weight:600;color:var(--text);}
 .plan-bar-val{font-size:11.5px;color:var(--text-2);font-family:ui-monospace,Menlo,monospace;}
-.plan-bar{height:6px;background:var(--ring-track);border-radius:4px;overflow:hidden;}
-.plan-bar-fill{height:100%;border-radius:4px;transition:width .4s;}
+.plan-bar{height:7px;background:var(--ring-track);border-radius:4px;overflow:hidden;}
+.plan-bar-fill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.22,.9,.35,1);}
 .plan-bar-proj{font-size:11px;color:var(--text-3);margin-top:4px;}
 .plan-bar-proj b{color:var(--primary-dark);font-weight:600;}
 .plan-gw{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
@@ -1306,28 +1330,44 @@ body{
 
       <!-- 日度视图 -->
       <div id="planDayView">
-        <div class="plan-day-head">
-          <div class="plan-day-nav">
-            <button class="plan-day-btn" onclick="planShiftDay(-1)" title="前一天">‹</button>
-            <div class="plan-day-label" id="planDayLabel"></div>
-            <button class="plan-day-btn" onclick="planShiftDay(1)" title="后一天">›</button>
+        <div class="plan-hero">
+          <div class="plan-day-head">
+            <div class="plan-day-nav">
+              <button class="plan-day-btn" onclick="planShiftDay(-1)" title="前一天">‹</button>
+              <div class="plan-day-label" id="planDayLabel"></div>
+              <button class="plan-day-btn" onclick="planShiftDay(1)" title="后一天">›</button>
+            </div>
+            <div class="plan-hero-stats">
+              <div class="plan-hero-numbox">
+                <div class="plan-hero-num" id="planHeroPct">0%</div>
+                <div class="plan-hero-cnt" id="planProgressTxt">0/0 完成</div>
+              </div>
+              <button class="plan-today-btn" onclick="planJumpToday()" title="回到今天">今天</button>
+            </div>
           </div>
-          <button class="plan-day-btn" onclick="planJumpToday()" title="回到今天" style="border-color:var(--primary);color:var(--primary-dark);">今天</button>
-        </div>
-        <div class="plan-progress">
-          <div class="plan-progress-bar"><div class="plan-progress-fill" id="planProgressFill" style="width:0%"></div></div>
-          <div class="plan-progress-txt" id="planProgressTxt">0/0 完成</div>
+          <div class="plan-progress">
+            <div class="plan-progress-bar"><div class="plan-progress-fill" id="planProgressFill" style="width:0%"></div></div>
+          </div>
         </div>
         <div class="plan-sec">
-          <div class="plan-sec-head"><span class="plan-sec-title">☀️ 上午 <span class="plan-sec-badge">工作时段 · 自由添加</span></span></div>
+          <div class="plan-sec-head">
+            <span class="plan-sec-title"><span class="plan-sec-ic ic-am"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>上午<span class="plan-sec-badge">工作时段 · 自由添加</span></span>
+            <span class="plan-sec-count" id="planCntMorning"></span>
+          </div>
           <div id="planMorning"></div>
         </div>
         <div class="plan-sec">
-          <div class="plan-sec-head"><span class="plan-sec-title">🌤 下午 <span class="plan-sec-badge">工作时段 · 自由添加</span></span></div>
+          <div class="plan-sec-head">
+            <span class="plan-sec-title"><span class="plan-sec-ic ic-pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>下午<span class="plan-sec-badge">工作时段 · 自由添加</span></span>
+            <span class="plan-sec-count" id="planCntAfternoon"></span>
+          </div>
           <div id="planAfternoon"></div>
         </div>
         <div class="plan-sec">
-          <div class="plan-sec-head"><span class="plan-sec-title">🌙 晚上 <span class="plan-sec-badge">个人提升 · 计划自动排入</span></span></div>
+          <div class="plan-sec-head">
+            <span class="plan-sec-title"><span class="plan-sec-ic ic-ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>晚上<span class="plan-sec-badge">个人提升 · 计划自动排入</span></span>
+            <span class="plan-sec-count" id="planCntEvening"></span>
+          </div>
           <div id="planEvening"></div>
         </div>
         <div id="planAiCard"></div>
@@ -1341,7 +1381,7 @@ body{
             <div class="plan-day-label" id="planMonthLabel"></div>
             <button class="plan-day-btn" onclick="planShiftMonth(1)" title="下个月">›</button>
           </div>
-          <button class="plan-day-btn" onclick="planJumpMonthNow()" title="回到本月" style="border-color:var(--primary);color:var(--primary-dark);">本月</button>
+          <button class="plan-today-btn" onclick="planJumpMonthNow()" title="回到本月">本月</button>
         </div>
         <div class="plan-cal-heads" id="planCalHeads"></div>
         <div class="plan-cal" id="planCal"></div>
@@ -1354,14 +1394,14 @@ body{
         <div class="plan-mg">
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="plan-sec-ic ic-pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
               本周聚焦 <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px" id="planWeekRange"></span>
             </div>
             <div id="planWeekFocus"></div>
           </div>
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              <span class="plan-sec-ic ic-am"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
               月度进展 <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px" id="planMonthRange"></span>
             </div>
             <div id="planMonthProgress"></div>
@@ -3122,7 +3162,7 @@ var planAddOpen=null;
 // 默认时间段表（数据源无时间字段时按此赋默认值）
 var PLAN_TIME_DEF={exercise:'20:00-20:30',reading:'20:30-21:30',study:'21:30-22:00',review:'22:30-23:00',ai:'21:00-21:30',contact:'21:00-21:30',work:'09:30-10:00',custom:'09:30-10:00'};
 var PLAN_PRESETS=['09:00-09:30','09:30-10:30','10:30-12:00','14:00-15:00','15:00-16:30','16:30-18:00','20:00-20:30','20:30-21:30','21:00-21:30','21:30-22:00','22:00-22:30','22:30-23:00'];
-var PLAN_CAT_META={reading:{label:'📖 读书',color:'var(--blue)'},study:{label:'🎯 学习',color:'var(--purple)'},exercise:{label:'🏃 运动',color:'var(--green)'},review:{label:'📝 复盘',color:'var(--primary)'},ai:{label:'✨ AI建议',color:'#FF9500'},work:{label:'💼 工作',color:'var(--text-3)'},contact:{label:'🤝 人脉',color:'#5AC8FA'},custom:{label:'📌 任务',color:'var(--text-3)'}};
+var PLAN_CAT_META={reading:{label:'📖 读书',color:'#0A84FF'},study:{label:'🎯 学习',color:'#AF52DE'},exercise:{label:'🏃 运动',color:'#34C759'},review:{label:'📝 复盘',color:'#FF9500'},ai:{label:'✨ AI建议',color:'#FF9500'},work:{label:'💼 工作',color:'#8E8E93'},contact:{label:'🤝 人脉',color:'#5AC8FA'},custom:{label:'📌 任务',color:'#8E8E93'}};
 function planCatMeta(c){return PLAN_CAT_META[c]||PLAN_CAT_META.custom;}
 function planUid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 
@@ -3192,6 +3232,7 @@ function renderPlanDay(){
   const done=all.filter(t=>t.done).length;
   const pct=all.length?Math.round(done/all.length*100):0;
   document.getElementById('planProgressFill').style.width=pct+'%';
+  document.getElementById('planHeroPct').textContent=pct+'%';
   document.getElementById('planProgressTxt').textContent=done+'/'+all.length+' 完成';
   ['morning','afternoon','evening'].forEach(s=>renderPlanSlot(date,s));
 }
@@ -3199,17 +3240,20 @@ function renderPlanSlot(date,slot){
   const day=planEnsureDay(date);
   const list=day[slot]||[];
   const el=document.getElementById(slot==='morning'?'planMorning':slot==='afternoon'?'planAfternoon':'planEvening');
+  const cntEl=document.getElementById(slot==='morning'?'planCntMorning':slot==='afternoon'?'planCntAfternoon':'planCntEvening');
+  if(cntEl){const d=list.filter(t=>t.done).length;cntEl.innerHTML=list.length?`<b>${d}</b>/${list.length}`:'';}
   const html=list.map(t=>{
     const meta=planCatMeta(t.cat);
-    const ttag=(t.cat==='work'||t.cat==='custom')?'':`<span class="plan-task-tag" style="background:${meta.color}1f;color:${meta.color}">${meta.label}</span>`;
+    const ttag=(t.cat==='work'||t.cat==='custom')?'':`<span class="plan-task-tag" style="background:${meta.color}1a;color:${meta.color}">${meta.label}</span>`;
     return `<div class="plan-task ${t.done?'done':''}" id="ptask-${t.id}">
+      <span class="plan-task-rail" style="background:${meta.color}"></span>
       <button class="plan-check ${t.done?'checked':''}" onclick="planToggleTask('${date}','${t.id}')">${t.done?'✓':''}</button>
       <div class="plan-task-body">
         <div class="plan-task-title">${esc(t.title)}</div>
         ${t.detail?`<div class="plan-task-detail">${esc(t.detail)}</div>`:''}
       </div>
       ${ttag}
-      <span class="plan-task-time" onclick="planOpenTimePick(event,'${date}','${t.id}')">${t.time||'未排'}</span>
+      <span class="plan-task-time${t.time?'':' unset'}" onclick="planOpenTimePick(event,'${date}','${t.id}')">${t.time||'未排'}</span>
       <button class="plan-task-del" onclick="planDeleteTask('${date}','${t.id}')" title="删除">×</button>
     </div>`;
   }).join('');
