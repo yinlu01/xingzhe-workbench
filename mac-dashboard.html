@@ -790,32 +790,33 @@ body{
 .plan-month-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .plan-cal-heads{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px;}
 .plan-cal-head{font-size:11px;color:var(--text-3);text-align:center;padding:4px 0;font-weight:600;}
-.plan-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:10px;}
-.plan-cal-cell{aspect-ratio:1;border-radius:9px;border:1.5px solid transparent;background:var(--input-bg);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:42px;cursor:default;transition:all .12s;}
-.plan-cal-cell .d{font-size:12px;font-weight:600;color:var(--text-2);}
+.plan-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius);padding:7px;}
+.plan-cal-cell{height:38px;border-radius:7px;border:1.5px solid transparent;background:var(--input-bg);position:relative;display:flex;align-items:center;gap:6px;padding:0 8px;cursor:default;transition:all .12s;}
+.plan-cal-cell .d{font-size:11.5px;font-weight:600;color:var(--text-2);flex-shrink:0;min-width:14px;text-align:center;}
 .plan-cal-cell.week{background:rgba(255,149,0,.1);border-color:rgba(255,149,0,.35);}
 .plan-cal-cell.today{border-color:var(--primary);box-shadow:0 0 0 2px rgba(255,149,0,.22);}
 .plan-cal-cell.week.today{background:rgba(255,149,0,.16);}
 .plan-cal-cell.other{opacity:.35;}
 .plan-cal-cell.clickable{cursor:pointer;}
 .plan-cal-cell.clickable:hover{border-color:var(--primary);}
-.plan-cal-dots{display:flex;gap:3px;margin-top:2px;flex-wrap:wrap;justify-content:center;}
+.plan-cal-dots{display:flex;gap:3px;margin-left:auto;flex-wrap:wrap;}
 .plan-dot{width:5.5px;height:5.5px;border-radius:50%;}
-.plan-cal-legend{display:flex;gap:14px;align-items:center;margin-top:10px;font-size:11px;color:var(--text-3);}
-.plan-mg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
-.plan-mg .card{padding:14px;}
-.plan-focus-item{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid var(--card-border);font-size:12.5px;}
+.plan-cal-legend{display:flex;gap:14px;align-items:center;margin-top:8px;font-size:11px;color:var(--text-3);}
+.plan-mg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+.plan-mg .card{padding:12px;}
+.plan-focus-item{display:flex;align-items:center;gap:8px;padding:5px 2px;border-bottom:1px solid var(--card-border);font-size:12.5px;}
 .plan-focus-item:last-child{border-bottom:none;}
 .plan-focus-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
 .plan-focus-date{color:var(--text-3);font-size:11px;width:44px;flex-shrink:0;font-weight:600;}
 .plan-focus-title{flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plan-focus-title.today{font-weight:700;}
 .plan-focus-title.done{color:var(--text-3);text-decoration:line-through;}
-.plan-bar-row{margin-bottom:13px;}
-.plan-bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;}
+.plan-bar-row{margin-bottom:9px;}
+.plan-bar-row:last-child{margin-bottom:0;}
+.plan-bar-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;}
 .plan-bar-name{font-size:12.5px;font-weight:600;color:var(--text);}
 .plan-bar-val{font-size:11.5px;color:var(--text-2);font-family:ui-monospace,Menlo,monospace;}
-.plan-bar{height:7px;background:var(--ring-track);border-radius:4px;overflow:hidden;}
+.plan-bar{height:6px;background:var(--ring-track);border-radius:4px;overflow:hidden;}
 .plan-bar-fill{height:100%;border-radius:4px;transition:width .4s;}
 .plan-bar-proj{font-size:11px;color:var(--text-3);margin-top:4px;}
 .plan-bar-proj b{color:var(--primary-dark);font-weight:600;}
@@ -871,14 +872,10 @@ body{
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       <span>首页</span>
     </button>
-    <button class="nav-item" data-tab="tasks" onclick="switchTab('tasks')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      <span>待办</span>
-      <span class="nav-badge" id="taskBadge">0</span>
-    </button>
     <button class="nav-item" data-tab="plan" onclick="switchTab('plan')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
       <span>规划</span>
+      <span class="nav-badge" id="taskBadge">0</span>
     </button>
     <button class="nav-item" data-tab="exercise" onclick="switchTab('exercise')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
@@ -924,7 +921,7 @@ body{
       </div>
 
       <div class="stats-grid">
-        <div class="stat-card" onclick="switchTab('tasks')">
+        <div class="stat-card" onclick="switchTab('plan');planSwitchView('tasks')">
           <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
           <div><div class="stat-label">工作日程</div><div class="stat-value" id="dashTasks">0</div><div class="stat-meta">待完成任务</div></div>
         </div>
@@ -1050,41 +1047,6 @@ body{
     </div>
 
     <!-- ==================== TASKS ==================== -->
-    <div class="page" id="page-tasks">
-      <div class="tasks-grid">
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-            核心目标
-            <button class="sec-action" onclick="openSheet('goal')">+ 添加</button>
-          </div>
-          <div id="goalList"></div>
-        </div>
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-            待办清单
-            <button class="sec-action" id="clearDoneBtn" style="display:none" onclick="clearDoneTasks()">清除已完成</button>
-            <button class="sec-action" onclick="openSheet('task')">+ 新建</button>
-          </div>
-          <div class="rt-card" id="tasksReadingCard" onclick="switchTab('reading')" style="display:none">
-            <div class="rt-icon" id="rtTasksIcon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-            </div>
-            <div class="rt-body">
-              <div class="rt-label" id="rtTasksLabel">今日读书任务</div>
-              <div class="rt-title" id="rtTasksTitle">加载中...</div>
-              <div class="rt-sub" id="rtTasksSub"></div>
-            </div>
-            <div class="rt-check" id="rtTasksCheck" onclick="event.stopPropagation();togglePlanCheckIn()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-          </div>
-          <div id="taskList"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- ==================== EXERCISE ==================== -->
     <div class="page" id="page-exercise">
       <div class="ex-grid">
@@ -1339,6 +1301,7 @@ body{
       <div class="plan-subtabs">
         <button class="plan-subtab active" id="planSubDay" onclick="planSwitchView('day')">日度</button>
         <button class="plan-subtab" id="planSubMonth" onclick="planSwitchView('month')">周月</button>
+        <button class="plan-subtab" id="planSubTasks" onclick="planSwitchView('tasks')">待办</button>
       </div>
 
       <!-- 日度视图 -->
@@ -1387,7 +1350,6 @@ body{
           <span><span class="plan-dot" style="background:var(--purple);display:inline-block;vertical-align:middle;"></span> 学习</span>
           <span><span class="plan-dot" style="background:var(--green);display:inline-block;vertical-align:middle;"></span> 运动</span>
           <span><span class="plan-dot" style="background:var(--primary);display:inline-block;vertical-align:middle;"></span> 复盘</span>
-          <span style="margin-left:auto">点击日期可回看当天</span>
         </div>
         <div class="plan-mg">
           <div class="card">
@@ -1403,6 +1365,42 @@ body{
               月度进展 <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px" id="planMonthRange"></span>
             </div>
             <div id="planMonthProgress"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 待办视图（并入规划） -->
+      <div id="planTasksView" style="display:none">
+        <div class="tasks-grid">
+          <div class="card">
+            <div class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              核心目标
+              <button class="sec-action" onclick="openSheet('goal')">+ 添加</button>
+            </div>
+            <div id="goalList"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              待办清单
+              <button class="sec-action" id="clearDoneBtn" style="display:none" onclick="clearDoneTasks()">清除已完成</button>
+              <button class="sec-action" onclick="openSheet('task')">+ 新建</button>
+            </div>
+            <div class="rt-card" id="tasksReadingCard" onclick="switchTab('reading')" style="display:none">
+              <div class="rt-icon" id="rtTasksIcon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+              </div>
+              <div class="rt-body">
+                <div class="rt-label" id="rtTasksLabel">今日读书任务</div>
+                <div class="rt-title" id="rtTasksTitle">加载中...</div>
+                <div class="rt-sub" id="rtTasksSub"></div>
+              </div>
+              <div class="rt-check" id="rtTasksCheck" onclick="event.stopPropagation();togglePlanCheckIn()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+            </div>
+            <div id="taskList"></div>
           </div>
         </div>
       </div>
@@ -1764,7 +1762,7 @@ function renderHome(){
 
   const items=[];
   tsks.filter(x=>!x.dn&&x.d<=t).forEach(x=>{
-    items.push({dot:'red',text:`<b>${esc(x.ti)}</b> ${x.d<t?'(逾期)':''}`,action:()=>switchTab('tasks'),overdue:x.d<t});
+    items.push({dot:'red',text:`<b>${esc(x.ti)}</b> ${x.d<t?'(逾期)':''}`,action:()=>{switchTab('plan');planSwitchView('tasks');},overdue:x.d<t});
   });
   const todayEx=exs.filter(e=>e.d===t);
   const planInfo=getTodayPlanInfo();
@@ -3178,7 +3176,8 @@ function planAllTasks(day){return [].concat(day.morning||[],day.afternoon||[],da
 function renderPlan(){
   ensurePlanForDate(ts());
   if(planView==='day'){renderPlanDay();renderPlanAiCard();}
-  else renderPlanMonth();
+  else if(planView==='month'){renderPlanMonth();}
+  else renderTasks();
 }
 function planSlotName(slot){return slot==='morning'?'上午':slot==='afternoon'?'下午':'晚上';}
 function renderPlanDay(){
@@ -3342,9 +3341,13 @@ function planSwitchView(v){
   planView=v;
   document.getElementById('planSubDay').classList.toggle('active',v==='day');
   document.getElementById('planSubMonth').classList.toggle('active',v==='month');
+  document.getElementById('planSubTasks').classList.toggle('active',v==='tasks');
   document.getElementById('planDayView').style.display=v==='day'?'':'none';
   document.getElementById('planMonthView').style.display=v==='month'?'':'none';
-  if(v==='month')renderPlanMonth();else{renderPlanDay();renderPlanAiCard();}
+  document.getElementById('planTasksView').style.display=v==='tasks'?'':'none';
+  if(v==='tasks'){renderTasks();}
+  else if(v==='month'){renderPlanMonth();}
+  else{renderPlanDay();renderPlanAiCard();}
 }
 // ---------- 周月视图 ----------
 function planShiftMonth(n){
@@ -3496,7 +3499,6 @@ function renderPlanMonthProgress(y,m){
 // ==================== RENDER ALL ====================
 function renderAll(){
   renderHome();
-  if(currentTab==='tasks')renderTasks();
   if(currentTab==='plan')renderPlan();
   if(currentTab==='exercise')renderExercise();
   if(currentTab==='reading')renderReading();
@@ -3675,7 +3677,7 @@ async function autoRefreshData(){
   const params=new URLSearchParams(window.location.search);
   const tab=params.get('tab');
   if(tab){
-    const tabMap={'home':'home','tasks':'tasks','plan':'plan','reading':'reading','exercise':'exercise','contacts':'contact'};
+    const tabMap={'home':'home','tasks':'plan','plan':'plan','reading':'reading','exercise':'exercise','contacts':'contact'};
     const target=tabMap[tab];
     if(target){setTimeout(()=>switchTab(target),500);}
   }
