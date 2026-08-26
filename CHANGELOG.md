@@ -1,5 +1,21 @@
 # 行者工作台更新日志
 
+## [2026-08-26] fix(plan+home): 首页今日概览同步顺延 + 修复计划被永久缓存
+
+### 新增（首页统一读取每日计划）
+- 首页「今日概览」、读书卡、Agent 学习卡、读书计划 mini 卡统一改为**优先读取每日计划（含顺延任务）**，不再各自独立读 reading_plan.json / agent_study_plan.json 的「日期推进式」数据，顺延后首页与规划页完全一致。
+- 顺延任务在首页以 `（⏳ 延期）` 标记呈现；mini 计划卡在读书顺延时显示「昨日未完成 · 顺延至今日，先补旧账」。
+- 新增 `getTodayDailyTasks()`（首页统一入口）、`planDetailBrief()`（清洗任务 detail 前缀后缀）、`planSyncTodayFromCheckins()`（打卡与每日计划双向同步）。
+- 打卡入口（`checkPlanToday` / `togglePlanCheckIn` / 微信读书自动打卡）在标记后触发 `renderHome()`，首页概览即时刷新。
+
+### 修复（关键：计划被永久缓存导致更新不生效）
+- **根因**：`ensurePlanForDate` 在初始化时于 reading_plan.json / agent_study_plan.json 异步加载完成前就生成了「今天」计划，并被 `generated:true` 永久缓存；之后代码升级（含顺延逻辑）也**不会触发重算**，所以首页始终显示旧章节、顺延从未真正计算。
+- **方案 1（schema 版本）**：给计划数据加 `PLAN_SCHEMA` 版本号（当前=2），`ensurePlanForDate` 检测到 `v` 不符即视为旧缓存强制重算——**单纯重启 App 也能让代码更新生效**。
+- **方案 2（数据就绪后刷新）**：reading_plan.json / agent_study_plan.json 加载成功后调用 `planRefreshToday()` 主动让今日计划失效并重算，确保顺延与章节基于最新数据。
+- **方案 3（保留上午/下午）**：重算时仅重建晚间例行，保留用户已添加的上午/下午任务（修复上一版 `delete` 整条导致自定义任务丢失的回归）。
+
+---
+
 ## [2026-08-26] feat(plan): 任务滚动顺延机制
 
 ### 新增
