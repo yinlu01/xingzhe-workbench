@@ -1,5 +1,17 @@
 # 行者工作台更新日志
 
+## [2026-08-26] fix(plan): 休息日不再误生成学习任务 + 顺延机制梳理加固
+
+### 修复
+- **休息日边界**：agent 计划含 12 个周六 `rest` 日，此前 `ensurePlanForDate` 的 study 分支只判断 `ag.today` 存在、未排除 `type==='rest'`，导致休息日误生成「学习」任务。修复：`else if(ag&&ag.today&&ag.today.type!=='rest')`。顺延欠账仍会补（rest 日若有前一天未完成的学习任务仍顺延），但休息日不再凭空生成新学习任务。
+- 读书位边界此前已正确（周日 `rest` 不生成读书、周六 `review` 生成复习），本次仅补齐 study 位，使两个位在「顺延优先 + 休息日不新增」上完全对称。
+
+### 梳理结论（顺延机制完整性）
+- 数据流闭环：`renderAll → renderPlan/首页 → ensurePlanForDate → planRolloverFrom(前一天) → 生成今日晚间`；`loadReadingPlan/loadAgentPlan → planRefreshToday` 兜底数据未就绪；`PLAN_SCHEMA` 版本号兜底代码升级；`planSyncTodayFromCheckins` 保证打卡与每日计划双向一致。
+- 一致性入口：首页今日概览 / 读书卡 / Agent 卡 / mini 计划卡 / 规划页，均收敛到 `getTodayDailyTasks()` 单一数据源。
+
+---
+
 ## [2026-08-26] fix(plan+home): 首页今日概览同步顺延 + 修复计划被永久缓存
 
 ### 新增（首页统一读取每日计划）

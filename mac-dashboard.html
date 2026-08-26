@@ -3278,7 +3278,7 @@ function ensurePlanForDate(date){
   }
   const ag=getTodayAgentInfo();
   if(roll.study){tasks.push(roll.study);}
-  else if(ag&&ag.today){
+  else if(ag&&ag.today&&ag.today.type!=='rest'){
     const tt=ag.today;
     const det=(tt.tasks||[]).slice(0,3).map(x=>typeof x==='string'?x:(x.t||x.title||'')).filter(Boolean).join(' · ');
     add('study','学习：'+(tt.title||tt.topic||'Agent 学习'),det||(tt.topic||''));
