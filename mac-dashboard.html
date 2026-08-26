@@ -779,6 +779,9 @@ body{
 .plan-task-title{font-size:13.5px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plan-task-detail{font-size:11.5px;color:var(--text-3);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .plan-task-tag{font-size:10px;font-weight:600;padding:1.5px 8px;border-radius:8px;flex-shrink:0;}
+.plan-roll-tag{font-size:10px;font-weight:700;color:#C93400;background:rgba(201,52,0,.09);border:1px dashed rgba(201,52,0,.4);padding:1.5px 8px;border-radius:8px;flex-shrink:0;white-space:nowrap;}
+.plan-task.rolled{background:linear-gradient(90deg,rgba(255,149,0,.07),rgba(255,149,0,0) 70%);border-color:rgba(255,149,0,.35);}
+.plan-task.rolled .plan-task-rail{opacity:1;}
 .plan-task-time{font-size:11.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-2);background:var(--input-bg);padding:3px 9px;border-radius:6px;cursor:pointer;flex-shrink:0;border:1px solid var(--card-border);white-space:nowrap;transition:all .12s;font-weight:500;}
 .plan-task-time.unset{border-style:dashed;color:var(--text-3);}
 .plan-task-time:hover{border-color:var(--primary);color:var(--primary-dark);background:rgba(255,149,0,.07);}
@@ -3178,6 +3181,33 @@ function planEnsureDay(date,daily){
   if(!daily[date]){daily[date]={generated:false,morning:[],afternoon:[],evening:[],note:''};planSaveDaily(daily);}
   return daily[date];
 }
+// 前一天日期（跨月/跨年安全）
+function planPrevDate(date){
+  const d=new Date(date+'T00:00:00');
+  d.setDate(d.getDate()-1);
+  const m=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0');
+  return d.getFullYear()+'-'+m+'-'+dd;
+}
+// 滚动顺延：从「前一天」找出未完成的读书/学习任务，复制顺延到今天（保留原时间段，标记 rolled）
+// 原则：欠账不跳过，先补旧的、做完了才推进新内容
+function planRolloverFrom(date,daily){
+  const prev=planPrevDate(date);
+  const pday=daily[prev];
+  const res={reading:null,study:null};
+  if(!pday||!Array.isArray(pday.evening))return res;
+  const mark='未完成 · 自 '+prev.slice(5).replace('-','/')+' 顺延';
+  pday.evening.forEach(t=>{
+    if(t.done)return;
+    if(t.cat==='reading'&&!res.reading){
+      const det=t.detail&&t.detail.indexOf('顺延')>-1?t.detail:(t.detail?t.detail+' · ':'')+mark;
+      res.reading={id:planUid(),cat:'reading',title:t.title,detail:det,time:t.time||PLAN_TIME_DEF.reading||'',done:false,rolled:true,rolledFrom:prev};
+    }else if(t.cat==='study'&&!res.study){
+      const det=t.detail&&t.detail.indexOf('顺延')>-1?t.detail:(t.detail?t.detail+' · ':'')+mark;
+      res.study={id:planUid(),cat:'study',title:t.title,detail:det,time:t.time||PLAN_TIME_DEF.study||'',done:false,rolled:true,rolledFrom:prev};
+    }
+  });
+  return res;
+}
 // 自动生成「今天」的晚间例行计划（读书/学习/运动/复盘 + 昨日AI建议）
 function ensurePlanForDate(date){
   const daily=planGetDaily();
@@ -3185,13 +3215,17 @@ function ensurePlanForDate(date){
   if(date!==ts())return planEnsureDay(date);
   const tasks=[];
   const add=(cat,title,detail,time)=>tasks.push({id:planUid(),cat,title,detail:detail||'',time:time||PLAN_TIME_DEF[cat]||'',done:false});
+  // 先查欠账：昨天读书/学习未完成 → 顺延到今天，不再生成今日同类型新任务
+  const roll=planRolloverFrom(date,daily);
   const planInfo=getTodayPlanInfo();
-  if(planInfo){
+  if(roll.reading){tasks.push(roll.reading);}
+  else if(planInfo){
     if(planInfo.type==='reading')add('reading','读书：《'+(planInfo.book||'')+'》','第'+(planInfo.week||'')+'周 · '+(planInfo.chapter||''));
     else if(planInfo.type==='review')add('reading','复习：本周笔记整理','回顾本周内容，整理核心概念');
   }
   const ag=getTodayAgentInfo();
-  if(ag&&ag.today){
+  if(roll.study){tasks.push(roll.study);}
+  else if(ag&&ag.today){
     const tt=ag.today;
     const det=(tt.tasks||[]).slice(0,3).map(x=>typeof x==='string'?x:(x.t||x.title||'')).filter(Boolean).join(' · ');
     add('study','学习：'+(tt.title||tt.topic||'Agent 学习'),det||(tt.topic||''));
@@ -3247,13 +3281,15 @@ function renderPlanSlot(date,slot){
   const html=list.map(t=>{
     const meta=planCatMeta(t.cat);
     const ttag=(t.cat==='work'||t.cat==='custom')?'':`<span class="plan-task-tag" style="background:${meta.color}1a;color:${meta.color}">${meta.label}</span>`;
-    return `<div class="plan-task ${t.done?'done':''}" id="ptask-${t.id}">
+    const rtag=(t.rolled&&!t.done)?`<span class="plan-roll-tag" title="未完成 · 自 ${esc(t.rolledFrom||'')} 顺延">⏳ 延期</span>`:'';
+    return `<div class="plan-task ${t.done?'done':''} ${t.rolled&&!t.done?'rolled':''}" id="ptask-${t.id}">
       <span class="plan-task-rail" style="background:${meta.color}"></span>
       <button class="plan-check ${t.done?'checked':''}" onclick="planToggleTask('${date}','${t.id}')">${t.done?'✓':''}</button>
       <div class="plan-task-body">
         <div class="plan-task-title">${esc(t.title)}</div>
         ${t.detail?`<div class="plan-task-detail">${esc(t.detail)}</div>`:''}
       </div>
+      ${rtag}
       ${ttag}
       <span class="plan-task-time${t.time?'':' unset'}" onclick="planOpenTimePick(event,'${date}','${t.id}')">${t.time||'未排'}</span>
       <button class="plan-task-del" onclick="planDeleteTask('${date}','${t.id}')" title="删除">×</button>
