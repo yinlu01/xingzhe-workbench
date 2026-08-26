@@ -2380,8 +2380,14 @@ function renderReadingPlan(){
   const cp=data.currentPhase||1;
   const phaseInfo=data.phases?data.phases[cp-1]:null;
 
-  if(heroLabel)heroLabel.textContent=(phaseInfo?phaseInfo.name:'')+' · 第'+cw+'周';
-  if(dow==='周六'){
+  // 顺延优先：今日存在顺延读书任务时，hero 显示顺延内容而非计划新章节（与首页/规划页一致）
+  const dtasks=getTodayDailyTasks();
+  const rolledReading=(dtasks.reading&&dtasks.reading.rolled&&!dtasks.reading.done)?dtasks.reading:null;
+  if(heroLabel)heroLabel.textContent=(rolledReading?'⏳ 顺延 · ':'')+(phaseInfo?phaseInfo.name:'')+' · 第'+cw+'周';
+  if(rolledReading){
+    if(heroBook)heroBook.textContent=rolledReading.title.replace(/^读书：/,'');
+    if(heroPoint)heroPoint.textContent=planDetailBrief(rolledReading)||'昨日未完成 · 顺延至今日';
+  }else if(dow==='周六'){
     if(heroBook)heroBook.textContent='复习+笔记整理';
     if(heroPoint)heroPoint.textContent='回顾本周所读内容，整理核心概念笔记';
   }else if(dow==='周日'){
@@ -3309,6 +3315,7 @@ function planRefreshToday(){
   ensurePlanForDate(ts());
   renderPlan();
   renderHome();
+  if(planLoaded)renderReadingPlan();
 }
 function planAllTasks(day){return [].concat(day.morning||[],day.afternoon||[],day.evening||[]);}
 // 从每日计划任务的 detail 提取章节摘要（去掉「第X周 · 」前缀与「 · 未完成 · 自 M/D 顺延」后缀）
