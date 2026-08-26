@@ -66,6 +66,60 @@ def ts_to_date(ts):
     return datetime.fromtimestamp(ts, TZ).strftime("%Y-%m-%d")
 
 
+def fetch_recent_notes(notebooks_books, days=14, top_n=8):
+    """拉取最近 N 本有笔记的书的划线/想法正文，过滤近 days 天的笔记。
+
+    返回列表，每条含 bookId/title/chapter/text/time/type，按时间降序。
+    type: 'mark'=划线原文, 'note'=想法/点评内容。
+    """
+    notes = []
+    cutoff = int((datetime.now(TZ) - timedelta(days=days)).timestamp())
+    for b in (notebooks_books or [])[:top_n]:
+        book = b.get("book", {})
+        book_id = b.get("bookId", "")
+        title = book.get("title", "")
+        if not book_id:
+            continue
+        # 划线正文
+        try:
+            bm = call_api("/book/bookmarklist", bookId=book_id)
+            chapters = {c.get("chapterUid"): c.get("title", "") for c in bm.get("chapters", [])}
+            for u in bm.get("updated", []):
+                ct = u.get("createTime", 0) or 0
+                if ct < cutoff:
+                    continue
+                text = (u.get("markText") or "").strip()
+                if not text:
+                    continue
+                notes.append({
+                    "bookId": book_id, "title": title,
+                    "chapter": chapters.get(u.get("chapterUid"), ""),
+                    "text": text, "time": ts_to_date(ct), "ts": ct, "type": "mark",
+                })
+        except Exception as e:
+            print(f"  ⚠️ bookmarklist 失败 [{title}]: {e}", file=sys.stderr)
+        # 想法/点评内容
+        try:
+            rv = call_api("/review/list/mine", bookid=book_id, count=50)
+            for r in rv.get("reviews", []):
+                rev = r.get("review", {})
+                ct = rev.get("createTime", 0) or 0
+                if ct < cutoff:
+                    continue
+                text = (rev.get("content") or rev.get("abstract") or "").strip()
+                if not text:
+                    continue
+                notes.append({
+                    "bookId": book_id, "title": title,
+                    "chapter": rev.get("chapterName", ""),
+                    "text": text, "time": ts_to_date(ct), "ts": ct, "type": "note",
+                })
+        except Exception as e:
+            print(f"  ⚠️ review/list/mine 失败 [{title}]: {e}", file=sys.stderr)
+    notes.sort(key=lambda x: x["ts"], reverse=True)
+    return notes
+
+
 def main():
     print("🔄 正在同步微信读书数据...", file=sys.stderr)
 
@@ -83,8 +137,16 @@ def main():
     # 3. 笔记本（取第一页）
     notebooks = call_api("/user/notebooks", count=50)
 
+    # 3.5 近期笔记正文（划线 + 想法）
+    try:
+        recent_notes = fetch_recent_notes(notebooks.get("books", []))
+    except Exception as e:
+        print(f"  ⚠️ 近期笔记拉取失败: {e}", file=sys.stderr)
+        recent_notes = []
+
     # --- 构建结果 ---
     result = {"syncedAt": datetime.now(TZ).isoformat()}
+    result["recentNotes"] = recent_notes
 
     # 书架概览
     result["shelf"] = {

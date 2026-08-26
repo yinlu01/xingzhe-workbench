@@ -208,6 +208,11 @@ body{
 .note-item:last-child{border-bottom:none;}
 .note-text{font-size:13px;line-height:1.6;}
 .note-meta{font-size:11px;color:var(--text-3);margin-top:4px;}
+.note-tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-right:6px;font-weight:600;}
+.note-tag.mark{background:rgba(52,199,89,.14);color:var(--green);}
+.note-tag.note{background:rgba(10,132,255,.14);color:var(--blue);}
+.notes-summary{background:var(--bg);border-radius:8px;padding:10px 12px;margin-bottom:10px;font-size:12.5px;line-height:1.7;color:var(--text-2);}
+.notes-summary .ns-head{font-size:11px;font-weight:600;color:var(--orange);margin-bottom:4px;}
 
 /* Empty states */
 .empty-state{padding:22px 0;text-align:center;color:var(--text-3);font-size:13px;}
@@ -1035,6 +1040,7 @@ body{
               最近读书笔记
               <button class="sec-action" onclick="switchTab('reading')">全部</button>
             </div>
+            <div id="homeNotesSummary"></div>
             <div id="homeNotes"></div>
           </div>
         </div>
@@ -1869,10 +1875,7 @@ function renderHome(){
     itemsEl.innerHTML=items.map((item,i)=>`<div class="today-row"><span class="today-dot" style="background:${item.dot};box-shadow:0 0 6px rgba(255,59,48,.25);"></span><span class="today-text">${item.text}</span><button class="today-action" onclick="window._todayActions[${i}]()">处理</button></div>`).join('');
   }
 
-  const ns=ld(K.notes);ns.sort((a,b)=>b.d.localeCompare(a.d));
-  const homeNotes=document.getElementById('homeNotes');
-  if(!ns.length)homeNotes.innerHTML='<div class="empty-state"><span class="empty-desc">还没有读书笔记</span></div>';
-  else homeNotes.innerHTML=ns.slice(0,5).map(n=>`<div class="note-item"><div class="note-text">${esc(n.tx)}</div><div class="note-meta">${n.bk?'《'+esc(n.bk)+'》 · ':''}${fmt(n.d)}</div></div>`).join('');
+  renderHomeNotes();
 
   // Header greeting
   const h=new Date().getHours();let g='早上好';if(h>=12&&h<18)g='下午好';else if(h>=18)g='晚上好';
@@ -1910,6 +1913,33 @@ function renderHome(){
   renderHomePlan();
   renderAgentCards();
   renderContactRemind();
+}
+
+// 首页「最近读书笔记」：AI 总结（来自 weread_summary.json）+ 微信读书近期笔记，fallback 手动笔记
+function renderHomeNotes(){
+  const sumEl=document.getElementById('homeNotesSummary');
+  const homeNotes=document.getElementById('homeNotes');
+  if(!homeNotes)return;
+  if(sumEl){
+    const sum=lg(P+'weread_summary',null);
+    if(sum&&sum.summary){
+      sumEl.innerHTML='<div class="notes-summary"><div class="ns-head">AI 读书笔记总结'+(sum.date?' · '+esc(sum.date):'')+'</div>'+esc(sum.summary)+'</div>';
+    }else{
+      sumEl.innerHTML='';
+    }
+  }
+  const wr=lg(K.weread,null);
+  const rn=wr&&Array.isArray(wr.recentNotes)?wr.recentNotes:[];
+  if(rn.length){
+    homeNotes.innerHTML=rn.slice(0,6).map(n=>{
+      const tag=n.type==='mark'?'<span class="note-tag mark">划线</span>':'<span class="note-tag note">想法</span>';
+      return `<div class="note-item"><div class="note-text">${esc(n.text)}</div><div class="note-meta">${tag}《${esc(n.title)}》${n.chapter?' · '+esc(n.chapter):''} · ${n.time}</div></div>`;
+    }).join('');
+  }else{
+    const ns=ld(K.notes);ns.sort((a,b)=>b.d.localeCompare(a.d));
+    if(!ns.length)homeNotes.innerHTML='<div class="empty-state"><span class="empty-desc">还没有读书笔记，读点书记一笔吧</span></div>';
+    else homeNotes.innerHTML=ns.slice(0,5).map(n=>`<div class="note-item"><div class="note-text">${esc(n.tx)}</div><div class="note-meta">${n.bk?'《'+esc(n.bk)+'》 · ':''}${fmt(n.d)}</div></div>`).join('');
+  }
 }
 
 // Mini plan card on home
@@ -3720,6 +3750,7 @@ async function autoLoadWeReadData(force){
     data.importTime=new Date().toISOString();
     sg(K.weread,data);
     renderWeRead();
+    renderHomeNotes();
     autoCheckinFromWeRead();
     var syncTime=data.syncedAt?data.syncedAt.slice(0,16).replace('T',' '):'';
     toast('✅ 微信读书数据已同步');
@@ -3839,10 +3870,25 @@ async function autoRefreshData(){
           data.importTime=new Date().toISOString();
           sg(K.weread,data);
           renderWeRead();
+          renderHomeNotes();
           autoCheckinFromWeRead();
           console.log('[AutoRefresh] weread_data.json updated:',sy);
         }
         lastWereadSync=sy;
+      }
+    }
+  }catch(e){}
+  // 2.5) weread_summary.json — AI 读书笔记总结
+  try{
+    const r2=await fetch('weread_summary.json',{cache:'no-store'});
+    if(r2.ok){
+      const sd=await r2.json();
+      if(sd&&sd.summary){
+        const old=lg(P+'weread_summary',null);
+        if(!old||old.generatedAt!==sd.generatedAt){
+          sg(P+'weread_summary',sd);
+          renderHomeNotes();
+        }
       }
     }
   }catch(e){}

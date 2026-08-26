@@ -1,5 +1,18 @@
 # 行者工作台更新日志
 
+## [2026-08-26] feat(reading): 最近读书笔记接入微信读书 + AI 每日总结
+
+### 问题
+首页「最近读书笔记」模块只读 `wb_life_notes`（手动笔记，仅 2 条、停在 8/12），近期在微信读书的笔记/划线从未同步进来，导致模块「压根不更新」。
+
+### 改动
+- **数据层（`weread_sync.py`）**：新增 `fetch_recent_notes()`，拉取最近 8 本有笔记的书的划线（`/book/bookmarklist`）与想法（`/review/list/mine`）正文，过滤近 14 天，产出 `recentNotes` 字段（含 bookId/title/chapter/text/time/type）到 `weread_data.json`。
+- **前端（`mac-dashboard.html`）**：首页「最近读书笔记」改为 `renderHomeNotes()`，优先展示微信读书近期笔记（划线/想法带标签），无数据时 fallback 手动笔记；新增「AI 读书笔记总结」区块（`homeNotesSummary`）。`autoLoadWeReadData` 与 `autoRefreshData` 同步后联动刷新首页。
+- **AI 每日总结**：新增 `weread_summary.json`（结构 `{date, generatedAt, summary, highlights}`），前端轮询加载；新建 WorkBuddy 自动化「每日读书笔记总结」（每日 22:30），扫描近 3 天笔记生成总结写回。
+- `weread_summary.json` 已加入 `.gitignore`（个人数据）。
+
+---
+
 ## [2026-08-26] fix(reading): 读书页 hero 接入顺延逻辑（全站扫描收尾）
 
 ### 修复
