@@ -768,6 +768,8 @@ body{
 .plan-task:hover{box-shadow:var(--shadow);border-color:rgba(0,0,0,.14);transform:translateY(-1px);}
 .plan-task-rail{position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:0 3px 3px 0;opacity:.9;transition:opacity .2s;}
 .plan-task.done{opacity:.6;}
+.plan-task.plan-flash{animation:planFlash 1.6s ease;}
+@keyframes planFlash{0%{background:rgba(255,149,0,.28);border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,149,0,.18);}100%{background:var(--card-bg);border-color:var(--card-border);}}
 .plan-task.done .plan-task-rail{opacity:.25;}
 .plan-task.done .plan-task-title{text-decoration:line-through;color:var(--text-3);}
 .plan-check{width:21px;height:21px;border-radius:50%;border:2px solid var(--text-3);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0;color:#fff;font-size:11px;transition:all .15s;line-height:1;}
@@ -3171,8 +3173,8 @@ function planGetDaily(){return lg(K.planDaily,{});}
 function planSaveDaily(d){sg(K.planDaily,d);}
 function planGetWeekly(){return lg(K.planWeekly,{});}
 function planSaveWeekly(w){sg(K.planWeekly,w);}
-function planEnsureDay(date){
-  const daily=planGetDaily();
+function planEnsureDay(date,daily){
+  if(!daily)daily=planGetDaily();
   if(!daily[date]){daily[date]={generated:false,morning:[],afternoon:[],evening:[],note:''};planSaveDaily(daily);}
   return daily[date];
 }
@@ -3261,7 +3263,7 @@ function renderPlanSlot(date,slot){
 }
 function planAddForm(date,slot){
   return `<div class="plan-add-form">
-    <input type="text" id="planAddTitle" placeholder="做什么？" maxlength="40" onkeydown="if(event.key==='Enter')planConfirmAdd('${date}','${slot}')">
+    <input type="text" id="planAddTitle" placeholder="做什么？" maxlength="40" autocomplete="off" onkeydown="if(event.isComposing||event.keyCode===229)return;if(event.key==='Enter'){event.preventDefault();planConfirmAdd('${date}','${slot}')}">
     <select id="planAddCat">
       <option value="work">💼 工作</option>
       <option value="custom">📌 其他</option>
@@ -3282,11 +3284,14 @@ function planConfirmAdd(date,slot){
   const cat=document.getElementById('planAddCat').value;
   let time=document.getElementById('planAddTime').value;
   if(!time)time=PLAN_TIME_DEF[cat]||'';
-  const daily=planGetDaily();const day=planEnsureDay(date);
-  (day[slot]=day[slot]||[]).push({id:planUid(),cat,title,detail:'',time,done:false});
+  const daily=planGetDaily();const day=planEnsureDay(date,daily);
+  const nid=planUid();
+  (day[slot]=day[slot]||[]).push({id:nid,cat,title,detail:'',time,done:false});
   planSaveDaily(daily);
   planAddOpen=null;
   renderPlanDay();
+  const nel=document.getElementById('ptask-'+nid);
+  if(nel){nel.scrollIntoView({block:'nearest',behavior:'smooth'});nel.classList.add('plan-flash');setTimeout(()=>nel.classList.remove('plan-flash'),1600);}
   toast('已加入'+planSlotName(slot)+' ✓');
 }
 // 勾选任务 → 打卡联动（写入复盘 checkSnapshot 能读到的键）
@@ -3368,7 +3373,7 @@ function renderPlanAiCard(){
 function planApplySuggestion(){
   const date=ts();
   const sug=getYesterdaySuggestion();if(!sug)return;
-  const daily=planGetDaily();const day=planEnsureDay(date);
+  const daily=planGetDaily();const day=planEnsureDay(date,daily);
   if(planAllTasks(day).some(t=>t.cat==='ai')){toast('建议已在今日计划中');return;}
   day.evening.push({id:planUid(),cat:'ai',title:'昨日建议：'+sug.slice(0,24)+(sug.length>24?'…':''),detail:sug,time:PLAN_TIME_DEF.ai,done:false});
   planSaveDaily(daily);renderPlanDay();renderPlanAiCard();
