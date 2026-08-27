@@ -128,6 +128,10 @@ def main():
     books = shelf.get("books", [])
     albums = shelf.get("albums", [])
     mp = shelf.get("mp")
+    # 防御：书架返回空（API 异常 / Key 失效 / 网络抖动）时中止，绝不用空数据覆盖本地
+    if not books and not albums and not mp:
+        print("❌ 同步中止：书架返回空数据（可能 API 异常或 Key 失效），未覆盖本地数据", file=sys.stderr)
+        sys.exit(1)
 
     # 2. 阅读统计
     overall = call_api("/readdata/detail", mode="overall")
