@@ -3373,8 +3373,22 @@ function planRolloverFrom(date,daily){
 // 自动生成「今天」的晚间例行计划（读书/学习/运动/复盘 + 昨日AI建议）
 function ensurePlanForDate(date){
   const daily=planGetDaily();
+  const ex=daily[date];
   // schema 版本不符（代码已更新）→ 视为旧缓存，强制重算
-  if(daily[date]&&daily[date].generated&&daily[date].v===PLAN_SCHEMA)return daily[date];
+  if(ex&&ex.generated&&ex.v===PLAN_SCHEMA){
+    // 自愈：今天的读书/学习章节若与游标不一致（游标变化后计划未同步），则失效重算
+    if(date===ts()){
+      const ch=getTodayReadingChapter();
+      const rd=(ex.evening||[]).find(t=>t.cat==='reading');
+      const sd=(ex.evening||[]).find(t=>t.cat==='study');
+      const chMatch=!ch||!rd||(rd.detail||'').indexOf(ch.chapter)>-1;
+      const agMatch=(()=>{const a=getTodayAgentInfo();const want=a&&a.today?a.today.title:'';return !want||!sd||(sd.title||'').indexOf(want)>-1;})();
+      if(!chMatch||!agMatch){ex.generated=false;delete ex.v;}
+      else return ex;
+    }else{
+      return ex;
+    }
+  }
   if(date!==ts())return planEnsureDay(date);
   const tasks=[];
   const add=(cat,title,detail,time)=>tasks.push({id:planUid(),cat,title,detail:detail||'',time:time||PLAN_TIME_DEF[cat]||'',done:false});
