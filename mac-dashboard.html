@@ -2782,10 +2782,20 @@ function renderReading(){
   for(let i=29;i>=0;i--){const d=new Date(Date.now()-i*864e5).toISOString().slice(0,10);let lv=0;if(ch[d]){let cnt=0;for(let j=0;j<=i;j++){const dd=new Date(Date.now()-j*864e5).toISOString().slice(0,10);if(ch[dd])cnt++;else break;}lv=Math.min(4,Math.ceil(cnt/2));}html+=`<div class="heat-cell h${lv}" title="${d}"></div>`;}
   document.getElementById('heatmap').innerHTML=`<div class="heatmap">${html}</div><div class="heat-label">最近30天打卡 · 越深连续越久</div>`;
 
-  const ns=ld(K.notes);ns.sort((a,b)=>b.d.localeCompare(a.d));
+  // 读书笔记：优先微信读书近期笔记（划线/想法），无则 fallback 手动笔记
+  const wrData2=lg(K.weread,null);
+  const rn=(wrData2&&Array.isArray(wrData2.recentNotes))?wrData2.recentNotes:[];
   const nl=document.getElementById('noteList');
-  if(!ns.length)nl.innerHTML='<div class="empty-state"><span class="empty-desc">还没有笔记，看完书记一笔</span></div>';
-  else nl.innerHTML=ns.slice(0,15).map(n=>`<div class="note-item"><div class="note-text">${esc(n.tx)}</div><div class="note-meta">${n.bk?'《'+esc(n.bk)+'》 · ':''}${fmt(n.d)}</div></div>`).join('');
+  if(rn.length){
+    nl.innerHTML=rn.slice(0,15).map(n=>{
+      const tag=n.type==='mark'?'<span class="note-tag mark">划线</span>':'<span class="note-tag note">想法</span>';
+      return `<div class="note-item"><div class="note-text">${esc(n.text)}</div><div class="note-meta">${tag}《${esc(n.title)}》${n.chapter?' · '+esc(n.chapter):''} · ${n.time}</div></div>`;
+    }).join('');
+  }else{
+    const ns=ld(K.notes);ns.sort((a,b)=>b.d.localeCompare(a.d));
+    if(!ns.length)nl.innerHTML='<div class="empty-state"><span class="empty-desc">还没有笔记，看完书记一笔</span></div>';
+    else nl.innerHTML=ns.slice(0,15).map(n=>`<div class="note-item"><div class="note-text">${esc(n.tx)}</div><div class="note-meta">${n.bk?'《'+esc(n.bk)+'》 · ':''}${fmt(n.d)}</div></div>`).join('');
+  }
 }
 function updateBook(id){const bs=ld(K.books);const b=bs.find(x=>x.id===id);if(!b)return;const v=parseInt(document.getElementById('bk_'+id).value);if(isNaN(v)||v<0)return toast('请输入有效页数');b.c=Math.min(v,b.tl);sv(K.books,bs);renderAll();toast('进度已更新');}
 function deleteBook(id){showDialog('删除书目','确定删除吗？',()=>{let bs=ld(K.books);bs=bs.filter(x=>x.id!==id);sv(K.books,bs);renderAll();toast('已删除');});}
