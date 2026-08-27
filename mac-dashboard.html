@@ -2766,9 +2766,17 @@ function renderReading(){
   renderWeRead();
   renderAgentCards();
   if(!planLoaded&&!planLoading)loadReadingPlan();else renderReadingPlan();
-  const bs=ld(K.books);const bl=document.getElementById('bookList');
-  if(!bs.length)bl.innerHTML='<div class="empty-state"><div class="empty-title">还没有在读书目</div><div class="empty-desc">记录阅读进度，持续积累</div><button class="empty-btn" onclick="openSheet(\'book\')">添加书目</button></div>';
-  else bl.innerHTML=bs.map(b=>{const p=Math.min(100,Math.round(b.c/b.tl*100));return`<div class="book-item"><div class="book-header"><span class="book-name">${esc(b.ti)}</span><span class="book-pages">${b.c}/${b.tl}页</span></div><div class="book-bar"><div class="book-fill" style="width:${p}%"></div></div><div class="book-actions"><input class="book-input" type="number" id="bk_${b.id}" value="${b.c}"><button class="book-btn" onclick="updateBook('${b.id}')">更新</button><button style="color:var(--text-3);font-size:12px;padding:4px 8px;background:none;border:none;cursor:pointer" onclick="deleteBook('${b.id}')">删除</button></div></div>`;}).join('');
+  // 在读书目：优先微信读书在读（真实数据），无则 fallback 手动书目
+  const wrData=lg(K.weread,null);
+  const wrBooks=(wrData&&Array.isArray(wrData.inProgressBooks))?wrData.inProgressBooks:[];
+  const bl=document.getElementById('bookList');
+  if(wrBooks.length){
+    bl.innerHTML=wrBooks.slice(0,8).map(b=>{const p=b.readingProgress||0;return`<div class="book-item"><div class="book-header"><span class="book-name">${esc(b.title)}</span><span class="book-pages">${p}%</span></div><div class="book-bar"><div class="book-fill" style="width:${p}%"></div></div><div class="book-actions"><span style="font-size:11px;color:var(--text-3);">微信读书 · 最近读 ${esc(b.lastRead||'')}</span></div></div>`;}).join('');
+  }else{
+    const bs=ld(K.books);
+    if(!bs.length)bl.innerHTML='<div class="empty-state"><div class="empty-title">还没有在读书目</div><div class="empty-desc">记录阅读进度，持续积累</div><button class="empty-btn" onclick="openSheet(\'book\')">添加书目</button></div>';
+    else bl.innerHTML=bs.map(b=>{const p=Math.min(100,Math.round(b.c/b.tl*100));return`<div class="book-item"><div class="book-header"><span class="book-name">${esc(b.ti)}</span><span class="book-pages">${b.c}/${b.tl}页</span></div><div class="book-bar"><div class="book-fill" style="width:${p}%"></div></div><div class="book-actions"><input class="book-input" type="number" id="bk_${b.id}" value="${b.c}"><button class="book-btn" onclick="updateBook('${b.id}')">更新</button><button style="color:var(--text-3);font-size:12px;padding:4px 8px;background:none;border:none;cursor:pointer" onclick="deleteBook('${b.id}')">删除</button></div></div>`;}).join('');
+  }
 
   const ch=lg(K.study,{});let html='';
   for(let i=29;i>=0;i--){const d=new Date(Date.now()-i*864e5).toISOString().slice(0,10);let lv=0;if(ch[d]){let cnt=0;for(let j=0;j<=i;j++){const dd=new Date(Date.now()-j*864e5).toISOString().slice(0,10);if(ch[dd])cnt++;else break;}lv=Math.min(4,Math.ceil(cnt/2));}html+=`<div class="heat-cell h${lv}" title="${d}"></div>`;}
