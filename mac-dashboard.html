@@ -1955,14 +1955,11 @@ function renderHomePlan(){
     return;
   }
   const dow=getDayOfWeekCN();
-  const td=data.todaySchedule||{};
   const wp=data.weeklyProgress||[];
-  const cw=data.currentWeek||1;
-  const cp=data.currentPhase||1;
-  const phaseInfo=data.phases?data.phases[cp-1]:null;
-  if(phaseEl)phaseEl.textContent=(phaseInfo?phaseInfo.name:'')+' · 第'+cw+'周';
+  const ch=getTodayReadingChapter();
+  if(phaseEl)phaseEl.textContent=(ch?ch.phaseName:'')+(ch&&ch.week?' · 第'+ch.week+'周':'');
 
-  // 顺延优先：今日每日计划里存在顺延读书任务且未完成时，显示顺延内容而非新章节
+  // 顺延优先：今日每日计划里存在顺延读书任务且未完成时，显示顺延内容；否则显示游标章节
   const dtasks=getTodayDailyTasks();
   if(dtasks.reading&&dtasks.reading.rolled&&!dtasks.reading.done){
     const r=dtasks.reading;
@@ -1970,13 +1967,8 @@ function renderHomePlan(){
     contentEl.innerHTML='<div style="font-size:15px;font-weight:700;">⏳ '+esc(r.title.replace(/^读书：/,''))+'</div>'
       +'<div style="font-size:12.5px;color:var(--orange,#FF9500);font-weight:600;margin-top:3px;">昨日未完成 · 顺延至今日，先补旧账</div>'
       +(brief?'<div style="font-size:12px;color:var(--text-2);margin-top:4px;">'+esc(brief)+'</div>':'');
-  }else if(dow==='周六'){
-    contentEl.innerHTML='<div class="plan-today"><div style="font-size:13px;font-weight:700;">📝 周六复习</div><div style="font-size:12px;color:var(--text-2);margin-top:4px;">回顾本周所读内容，整理核心概念笔记</div></div>';
-  }else if(dow==='周日'){
-    contentEl.innerHTML='<div class="plan-today"><div style="font-size:13px;font-weight:700;">😴 休息日</div><div style="font-size:12px;color:var(--text-2);margin-top:4px;">劳逸结合，为下周充电</div></div>';
-    if(checkBtn)checkBtn.style.display='none';
-  }else{
-    contentEl.innerHTML=`<div style="font-size:15px;font-weight:700;">《${esc(td.book||'')}》</div><div style="font-size:12.5px;color:var(--primary);font-weight:600;margin-top:3px;">${esc(td.chapter||'')}</div><div style="font-size:12px;color:var(--text-2);margin-top:4px;">${esc(td.point||'')}</div>`;
+  }else if(ch){
+    contentEl.innerHTML='<div style="font-size:15px;font-weight:700;">《'+esc(ch.book||'')+'》</div><div style="font-size:12.5px;color:var(--primary);font-weight:600;margin-top:3px;">'+esc(ch.chapter||'')+'</div><div style="font-size:12px;color:var(--text-2);margin-top:4px;">'+esc(ch.point||'')+'</div>';
   }
 
   // Week dots
@@ -1995,9 +1987,7 @@ function renderHomePlan(){
     wpEl.innerHTML=dots;
   }
   if(checkBtn){
-    if(dow==='周日'){
-      checkBtn.style.display='none';
-    }else if(todayDone){
+    if(todayDone){
       checkBtn.className='plan-btn done-btn';
       checkBtn.innerHTML='✅ 今日已完成';
       checkBtn.onclick=null;
@@ -2273,20 +2263,84 @@ function renderWeRead(){
 }
 
 // ==================== READING PLAN ====================
+// ---- 读书进度游标（进度驱动：读完打卡才前进，未读停留，整体平移）----
+var RD_CURSOR_KEY=P+'reading_cursor';
+function buildReadingSequence(){
+  const data=lg(K.planData,null);
+  if(!data||!Array.isArray(data.phases))return [];
+  const seq=[];
+  data.phases.forEach(ph=>{
+    (ph.weeks_detail||[]).forEach(w=>{
+      const sched=w.schedule||{};
+      ['周一','周二','周三','周四','周五'].forEach(d=>{
+        const info=sched[d];
+        if(!info)return;
+        const book=info.book||'';
+        if(book==='休息'||book.indexOf('复习')>-1)return;  // 跳过休息/复习，只保留线性章节
+        seq.push({phaseId:ph.id,phaseName:ph.name,week:w.week||'',day:d,book:book,chapter:info.chapter||'',point:info.point||''});
+      });
+    });
+  });
+  return seq;
+}
+function getReadingCursor(){
+  const v=lg(RD_CURSOR_KEY,null);
+  if(v===null)return null;
+  const n=parseInt(v,10);
+  return isNaN(n)?null:n;
+}
+function setReadingCursor(i){sg(RD_CURSOR_KEY,i);}
+// 迁移：从历史 plan_daily 找「最后一个已完成的读书章节」，游标指向其下一讲
+function migrateReadingCursor(seq){
+  const daily=planGetDaily();
+  let lastChapter='';
+  Object.keys(daily).sort().forEach(dt=>{
+    const day=daily[dt]||{};
+    ['morning','afternoon','evening'].forEach(s=>(day[s]||[]).forEach(t=>{
+      if(t.cat==='reading'&&t.done&&t.detail){
+        const m=String(t.detail).match(/第\d+讲/);
+        if(m)lastChapter=m[0];
+      }
+    }));
+  });
+  if(lastChapter){
+    const idx=seq.findIndex(s=>s.chapter===lastChapter);
+    if(idx>=0)return idx+1;
+  }
+  return 0;
+}
+// 今日该读的章节（进度驱动，统一数据源）
+function getTodayReadingChapter(){
+  const seq=buildReadingSequence();
+  if(!seq.length)return null;
+  let cur=getReadingCursor();
+  if(cur===null){cur=migrateReadingCursor(seq);setReadingCursor(cur);}
+  if(cur<0)cur=0;
+  if(cur>=seq.length)cur=seq.length-1;
+  return seq[cur]||null;
+}
+function advanceReadingCursor(){
+  const cur=getReadingCursor();
+  if(cur===null)return;
+  const seq=buildReadingSequence();
+  setReadingCursor(Math.min(cur+1,seq.length-1));
+}
+function rewindReadingCursor(){
+  const cur=getReadingCursor();
+  if(cur===null)return;
+  setReadingCursor(Math.max(cur-1,0));
+}
+
 function getTodayPlanInfo(){
   const data=lg(K.planData,null);
   if(!data)return null;
-  const dow=getDayOfWeekCN();
-  const td=data.todaySchedule||{};
-  const cp=data.currentPhase||1;
-  const phaseInfo=data.phases?data.phases[cp-1]:null;
-  const cw=data.currentWeek||1;
-  const todayKey=(new Date()).toISOString().slice(0,10);
+  const todayKey=ts();
   const checkins=lg(K.planCheckins,{});
   const done=!!checkins[todayKey];
-  if(dow==='周日')return{type:'rest',book:'休息日',sub:'劳逸结合，为下周充电',done:false,phaseName:phaseInfo?phaseInfo.name:'',week:cw};
-  if(dow==='周六')return{type:'review',book:'复习+笔记整理',sub:'回顾本周内容，整理核心概念笔记',done,phaseName:phaseInfo?phaseInfo.name:'',week:cw};
-  return{type:'reading',book:(td.book||''),chapter:(td.chapter||''),point:(td.point||''),note:(td.note||''),done,phaseName:phaseInfo?phaseInfo.name:'',week:cw};
+  // 进度驱动：读「游标」指向的章节，而非日历推进的 todaySchedule
+  const ch=getTodayReadingChapter();
+  if(!ch)return null;
+  return{type:'reading',book:ch.book,chapter:ch.chapter,point:ch.point,note:'阅读20-30页，用费曼学习法复述核心内容',done,phaseName:ch.phaseName,week:ch.week};
 }
 
 function renderReadingTaskCards(){
@@ -2402,31 +2456,20 @@ function renderReadingPlan(){
     if(heroPoint)heroPoint.innerHTML='<a href="javascript:loadReadingPlan()" style="color:var(--primary);text-decoration:underline;">点击重试</a>';
     return;
   }
-  const now=new Date();
   const dow=getDayOfWeekCN();
-  const td=data.todaySchedule||{};
   const wp=data.weeklyProgress||[];
-  const cw=data.currentWeek||1;
-  const cp=data.currentPhase||1;
-  const phaseInfo=data.phases?data.phases[cp-1]:null;
+  const ch=getTodayReadingChapter();
 
-  // 顺延优先：今日存在顺延读书任务时，hero 显示顺延内容而非计划新章节（与首页/规划页一致）
+  // 进度驱动：hero 显示「游标」指向的章节；顺延任务存在时优先显示顺延内容
   const dtasks=getTodayDailyTasks();
   const rolledReading=(dtasks.reading&&dtasks.reading.rolled&&!dtasks.reading.done)?dtasks.reading:null;
-  if(heroLabel)heroLabel.textContent=(rolledReading?'⏳ 顺延 · ':'')+(phaseInfo?phaseInfo.name:'')+' · 第'+cw+'周';
+  if(heroLabel)heroLabel.textContent=(rolledReading?'⏳ 顺延 · ':'')+(ch?ch.phaseName:'')+(ch&&ch.week?' · 第'+ch.week+'周':'');
   if(rolledReading){
     if(heroBook)heroBook.textContent=rolledReading.title.replace(/^读书：/,'');
     if(heroPoint)heroPoint.textContent=planDetailBrief(rolledReading)||'昨日未完成 · 顺延至今日';
-  }else if(dow==='周六'){
-    if(heroBook)heroBook.textContent='复习+笔记整理';
-    if(heroPoint)heroPoint.textContent='回顾本周所读内容，整理核心概念笔记';
-  }else if(dow==='周日'){
-    if(heroBook)heroBook.textContent='😴 休息日';
-    if(heroPoint)heroPoint.textContent='劳逸结合，为下周充电';
-    if(btn)btn.style.display='none';
-  }else{
-    if(heroBook)heroBook.textContent='《'+(td.book||'')+'》';
-    if(heroPoint)heroPoint.textContent=(td.chapter||'')+' | '+(td.point||'');
+  }else if(ch){
+    if(heroBook)heroBook.textContent='《'+(ch.book||'')+'》';
+    if(heroPoint)heroPoint.textContent=(ch.chapter||'')+(ch.point?' | '+ch.point:'');
   }
 
   const todayIdx=wp.length?wp.findIndex(d=>d.day===dow):-1;
@@ -2444,9 +2487,7 @@ function renderReadingPlan(){
     dotsEl.innerHTML=dots;
   }
   if(btn){
-    if(dow==='周日'){
-      btn.style.display='none';
-    }else if(todayDone){
+    if(todayDone){
       btn.className='plan-btn done-btn';
       btn.innerHTML='✅ 今日已完成';
       btn.onclick=null;
@@ -2469,6 +2510,7 @@ function togglePlanCheckIn(){
     showDialog('取消标记','确定要取消今日阅读完成标记吗？',()=>{
       delete checkins[todayKey];
       sg(K.planCheckins,checkins);
+      rewindReadingCursor();
       planSyncTodayFromCheckins();
       renderReadingTaskCards();
       renderReadingPlan();
@@ -2479,6 +2521,7 @@ function togglePlanCheckIn(){
   }else{
     checkins[todayKey]=true;
     sg(K.planCheckins,checkins);
+    advanceReadingCursor();
     planSyncTodayFromCheckins();
     renderReadingTaskCards();
     renderReadingPlan();
@@ -2501,6 +2544,7 @@ function autoCheckinFromWeRead(){
   if(!info||info.type==='rest')return false;
   checkins[todayKey]=true;
   sg(K.planCheckins,checkins);
+  advanceReadingCursor();
   if(info.done!==undefined){planSyncTodayFromCheckins();renderReadingTaskCards();renderReadingPlan();renderHomePlan();renderHome();}
   toast('📖 检测到今天有微信读书记录，已自动打卡');
   return true;
@@ -2512,6 +2556,7 @@ function checkPlanToday(){
   if(checkins[todayKey])return toast('今天已经标记过了');
   checkins[todayKey]=true;
   sg(K.planCheckins,checkins);
+  advanceReadingCursor();
   planSyncTodayFromCheckins();
   renderReadingPlan();
   renderHomePlan();
@@ -2538,15 +2583,54 @@ async function loadAgentPlan(){
 
 function getAgentPlan(){return lg(K.agentPlan,null);}
 
+// ---- Agent 学习进度游标（进度驱动：未打卡停留，rest 日自动跳过）----
+var AG_CURSOR_KEY=P+'agent_cursor';
+function getAgentCursor(){
+  const v=lg(AG_CURSOR_KEY,null);
+  if(v===null)return null;
+  const n=parseInt(v,10);
+  return isNaN(n)?null:n;
+}
+function setAgentCursor(i){sg(AG_CURSOR_KEY,i);}
+function migrateAgentCursor(sch){
+  const checkins=lg(K.agentCk,{});
+  let cursor=0;
+  for(let i=0;i<sch.length;i++){
+    const s=sch[i];
+    if(s&&s.type==='rest'){cursor=i+1;continue;}
+    if(s&&checkins[s.date]){cursor=i+1;}
+    else break;
+  }
+  return Math.min(cursor,sch.length-1);
+}
+function advanceAgentCursor(){
+  const data=getAgentPlan();if(!data)return;
+  const sch=data.schedule||[];
+  let cur=getAgentCursor();if(cur===null)return;
+  cur++;
+  while(cur<sch.length&&sch[cur]&&sch[cur].type==='rest')cur++;
+  setAgentCursor(Math.min(cur,sch.length-1));
+}
+function rewindAgentCursor(){
+  const data=getAgentPlan();if(!data)return;
+  const sch=data.schedule||[];
+  let cur=getAgentCursor();if(cur===null)return;
+  cur--;
+  while(cur>=0&&sch[cur]&&sch[cur].type==='rest')cur--;
+  setAgentCursor(Math.max(cur,0));
+}
+
 function getTodayAgentInfo(){
   const data=getAgentPlan();
   if(!data)return null;
-  const t=(new Date()).toISOString().slice(0,10);
   const sch=data.schedule||[];
-  const idx=sch.findIndex(s=>s.date===t);
-  const today=idx>=0?sch[idx]:null;
+  let idx=getAgentCursor();
+  if(idx===null){idx=migrateAgentCursor(sch);setAgentCursor(idx);}
+  if(idx<0)idx=0;
+  if(idx>=sch.length)idx=sch.length-1;
+  const today=sch[idx]||null;
   const checkins=lg(K.agentCk,{});
-  const done=!!checkins[t];
+  const done=!!checkins[ts()];
   const doneCount=Object.keys(checkins).filter(k=>sch.some(s=>s.date===k)).length;
   let phaseName='';
   if(today&&data.phases&&data.phases[today.phase-1])phaseName=data.phases[today.phase-1].name;
@@ -2578,11 +2662,13 @@ function toggleAgentCheckIn(){
   if(checkins[t]){
     showDialog('取消标记','确定要取消今日学习完成标记吗？',()=>{
       delete checkins[t];sg(K.agentCk,checkins);
+      rewindAgentCursor();
       renderAgentCards();renderTasks();renderHome();
       toast('已取消标记');
     });
   }else{
     checkins[t]=true;sg(K.agentCk,checkins);
+    advanceAgentCursor();
     renderAgentCards();renderTasks();renderHome();
     toast('🎉 今日学习任务完成！');
   }
@@ -3253,7 +3339,7 @@ var planAddOpen=null;
 // 默认时间段表（数据源无时间字段时按此赋默认值）
 var PLAN_TIME_DEF={exercise:'20:00-20:30',reading:'20:30-21:30',study:'21:30-22:00',review:'22:30-23:00',ai:'21:00-21:30',contact:'21:00-21:30',work:'09:30-10:00',custom:'09:30-10:00'};
 // 计划数据 schema 版本：随顺延/生成逻辑升级而递增，用于让已缓存的「今天计划」在代码更新后失效并重算
-var PLAN_SCHEMA=2;
+var PLAN_SCHEMA=3;
 var PLAN_PRESETS=['09:00-09:30','09:30-10:30','10:30-12:00','14:00-15:00','15:00-16:30','16:30-18:00','20:00-20:30','20:30-21:30','21:00-21:30','21:30-22:00','22:00-22:30','22:30-23:00'];
 var PLAN_CAT_META={reading:{label:'📖 读书',color:'#0A84FF'},study:{label:'🎯 学习',color:'#AF52DE'},exercise:{label:'🏃 运动',color:'#34C759'},review:{label:'📝 复盘',color:'#FF9500'},ai:{label:'✨ AI建议',color:'#FF9500'},work:{label:'💼 工作',color:'#8E8E93'},contact:{label:'🤝 人脉',color:'#5AC8FA'},custom:{label:'📌 任务',color:'#8E8E93'}};
 function planCatMeta(c){return PLAN_CAT_META[c]||PLAN_CAT_META.custom;}
@@ -3304,14 +3390,20 @@ function ensurePlanForDate(date){
   if(date!==ts())return planEnsureDay(date);
   const tasks=[];
   const add=(cat,title,detail,time)=>tasks.push({id:planUid(),cat,title,detail:detail||'',time:time||PLAN_TIME_DEF[cat]||'',done:false});
-  // 先查欠账：昨天读书/学习未完成 → 顺延到今天，不再生成今日同类型新任务
-  const roll=planRolloverFrom(date,daily);
+  // 读书：进度驱动（游标）。未读停留即顺延，读完打卡才前进到下一讲
   const planInfo=getTodayPlanInfo();
-  if(roll.reading){tasks.push(roll.reading);}
-  else if(planInfo){
-    if(planInfo.type==='reading')add('reading','读书：《'+(planInfo.book||'')+'》','第'+(planInfo.week||'')+'周 · '+(planInfo.chapter||''));
-    else if(planInfo.type==='review')add('reading','复习：本周笔记整理','回顾本周内容，整理核心概念');
+  if(planInfo&&planInfo.type==='reading'){
+    const prev=planPrevDate(date);
+    const pd=daily[prev];
+    let rolledFrom=null;
+    if(pd&&Array.isArray(pd.evening)&&pd.evening.some(t=>t.cat==='reading'&&!t.done&&(t.detail||'').indexOf(planInfo.chapter)>-1)){
+      rolledFrom=prev;
+    }
+    const det='第'+(planInfo.week||'')+'周 · '+(planInfo.chapter||'')+(rolledFrom?' · 未完成 · 自 '+rolledFrom.slice(5).replace('-','/')+' 顺延':'');
+    add('reading','读书：《'+(planInfo.book||'')+'》',det);
   }
+  // 学习：欠账顺延（暂用旧逻辑，游标化见后续）
+  const roll=planRolloverFrom(date,daily);
   const ag=getTodayAgentInfo();
   if(roll.study){tasks.push(roll.study);}
   else if(ag&&ag.today&&ag.today.type!=='rest'){
@@ -3475,8 +3567,8 @@ function planToggleTask(date,id){
   if(t.cat==='review'&&!t.done){switchTab('review');toast('去复盘页写两句，就收好今天了');return;}
   t.done=!t.done;
   planSaveDaily(daily);
-  if(t.cat==='reading'){const c=lg(K.planCheckins,{});if(t.done)c[date]=true;else delete c[date];sg(K.planCheckins,c);}
-  else if(t.cat==='study'){const c=lg(K.agentCk,{});if(t.done)c[date]=true;else delete c[date];sg(K.agentCk,c);}
+  if(t.cat==='reading'){const c=lg(K.planCheckins,{});if(t.done){c[date]=true;advanceReadingCursor();}else{delete c[date];rewindReadingCursor();}sg(K.planCheckins,c);}
+  else if(t.cat==='study'){const c=lg(K.agentCk,{});if(t.done){c[date]=true;advanceAgentCursor();}else{delete c[date];rewindAgentCursor();}sg(K.agentCk,c);}
   else if(t.cat==='exercise'){
     const exs=ld(K.exercises);
     const mine=exs.find(e=>e.d===date&&e._planTask===id);

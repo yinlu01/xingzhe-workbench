@@ -1,5 +1,20 @@
 # 行者工作台更新日志
 
+## [2026-08-27] refactor(plan): 读书/学习计划改为「进度驱动」（整体平移）
+
+### 背景
+昨天的「顺延」只是单天顺延前一天，且读书章节仍由 `update_today.py` 按日历推进 `todaySchedule`——导致没读的章节被跳过、进度跳号（如今天跳到第 6 讲，实际应补第 4 讲）。用户要求的正确逻辑是：**未打卡就停留，后续整体往后平移**。
+
+### 核心改动（进度游标）
+- 读书、学习各维护一个「进度游标」（`reading_cursor` / `agent_cursor`）：**只有打卡完成才前进，未打卡停留** → 整体平移。
+- 读书：新增 `buildReadingSequence()`（展平 67 周章节、跳过复习/休息）、`getTodayReadingChapter()`、`advance/rewindReadingCursor()`。`getTodayPlanInfo` / `ensurePlanForDate` / 读书页 hero / 首页 mini 卡**统一读游标章节**，废除 `todaySchedule` 割裂数据源。
+- 学习（agent）：新增 `agent_cursor`（rest 日自动跳过）、`advance/rewindAgentCursor()`；`getTodayAgentInfo` 改为读游标（不再按日期匹配）。
+- 打卡联动：规划页勾选 / 读书卡标记 / 微信读书自动打卡 / Agent 卡打卡，都会让游标前进；取消则回退。
+- 迁移：首次运行自动初始化游标（读书游标从历史「最后完成章节」推断 → 第 4 讲；学习游标从打卡记录推断）。
+- `PLAN_SCHEMA` 2→3，旧缓存自动失效重算。
+
+---
+
 ## [2026-08-27] fix: 微信读书数据清零 + 读书章节错位
 
 ### Bug 1：微信读书数据清零
