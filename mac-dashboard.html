@@ -2293,8 +2293,10 @@ function setReadingCursor(i){sg(RD_CURSOR_KEY,i);}
 // 迁移：从历史 plan_daily 找「最后一个已完成的读书章节」，游标指向其下一讲
 function migrateReadingCursor(seq){
   const daily=planGetDaily();
+  const today=ts();
   let lastChapter='';
   Object.keys(daily).sort().forEach(dt=>{
+    if(dt===today)return;  // 今天的 done 多为微信读书自动打卡，不代表真正读完当前章节，跳过
     const day=daily[dt]||{};
     ['morning','afternoon','evening'].forEach(s=>(day[s]||[]).forEach(t=>{
       if(t.cat==='reading'&&t.done&&t.detail){
@@ -3402,11 +3404,9 @@ function ensurePlanForDate(date){
     const det='第'+(planInfo.week||'')+'周 · '+(planInfo.chapter||'')+(rolledFrom?' · 未完成 · 自 '+rolledFrom.slice(5).replace('-','/')+' 顺延':'');
     add('reading','读书：《'+(planInfo.book||'')+'》',det);
   }
-  // 学习：欠账顺延（暂用旧逻辑，游标化见后续）
-  const roll=planRolloverFrom(date,daily);
+  // 学习：进度驱动（agent 游标），未打卡停留，rest 日不生成
   const ag=getTodayAgentInfo();
-  if(roll.study){tasks.push(roll.study);}
-  else if(ag&&ag.today&&ag.today.type!=='rest'){
+  if(ag&&ag.today&&ag.today.type!=='rest'){
     const tt=ag.today;
     const det=(tt.tasks||[]).slice(0,3).map(x=>typeof x==='string'?x:(x.t||x.title||'')).filter(Boolean).join(' · ');
     add('study','学习：'+(tt.title||tt.topic||'Agent 学习'),det||(tt.topic||''));
