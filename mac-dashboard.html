@@ -2533,23 +2533,9 @@ function togglePlanCheckIn(){
   }
 }
 
-// Auto-checkin reading plan based on WeRead data (if read today, mark done)
+// 微信读书自动打卡 —— 已禁用（进度驱动下，读到任意书≠读完当前章节，易误判；改由用户手动打卡）
 function autoCheckinFromWeRead(){
-  const data=lg(K.weread,null);
-  if(!data)return false;
-  const todayKey=(new Date()).toISOString().slice(0,10);
-  const checkins=lg(K.planCheckins,{});
-  if(checkins[todayKey])return false;
-  const readToday=(data.recentBooks||[]).some(b=>b.lastRead===todayKey);
-  if(!readToday)return false;
-  const info=getTodayPlanInfo();
-  if(!info||info.type==='rest')return false;
-  checkins[todayKey]=true;
-  sg(K.planCheckins,checkins);
-  advanceReadingCursor();
-  if(info.done!==undefined){planSyncTodayFromCheckins();renderReadingTaskCards();renderReadingPlan();renderHomePlan();renderHome();}
-  toast('📖 检测到今天有微信读书记录，已自动打卡');
-  return true;
+  return false;
 }
 
 function checkPlanToday(){
