@@ -738,38 +738,70 @@ body{
 .plan-subtab:hover{color:var(--text);}
 .plan-subtab.active{background:var(--card-bg);color:var(--primary-dark);box-shadow:var(--shadow);}
 .plan-hero{background:linear-gradient(135deg,rgba(255,149,0,.11),rgba(175,82,222,.07) 55%,rgba(10,132,255,.06));border:1px solid rgba(255,149,0,.25);border-radius:var(--radius);padding:13px 16px 13px;margin-bottom:16px;position:relative;overflow:hidden;}
+#planDayView .plan-hero{display:block;padding:10px 14px 10px;margin-bottom:12px;}
+#planDayView .plan-day-head{margin-bottom:10px;gap:8px;}
+#planDayView .plan-day-navbtn{width:34px;height:34px;border-radius:10px;font-size:17px;}
+#planDayView .plan-day-label{flex:0 0 188px;padding:3px 10px;}
+#planDayView .plan-day-main{font-size:15px;}
+#planDayView .plan-day-sub{font-size:9.5px;}
+#planDayView .plan-hero-num{font-size:21px;}
+#planDayView .plan-hero-cnt{font-size:10px;}
+#planDayView .plan-today-btn{height:31px;min-width:64px;font-size:12px;padding:0 12px;border-radius:9px;}
+#planDayView .plan-week-strip{gap:6px;margin-bottom:10px;}
+#planDayView .pw-day{height:48px;border-radius:9px;gap:2px;}
+#planDayView .pw-dow{font-size:9px;height:9px;}
+#planDayView .pw-num{font-size:13px;line-height:24px;height:24px;min-width:24px;}
+#planDayView .pw-dot{width:4px;height:4px;}
+#planDayView .plan-progress-bar{height:5px;}
 .plan-hero::after{content:'';position:absolute;right:-40px;top:-40px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,.12),transparent 70%);pointer-events:none;}
-.plan-day-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;position:relative;z-index:1;}
+.plan-day-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;position:relative;z-index:1;}
 .plan-day-nav{display:flex;align-items:center;gap:8px;}
-.plan-day-btn{width:30px;height:30px;border-radius:9px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-2);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;}
+.plan-day-btn{width:32px;height:32px;border-radius:10px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;line-height:1;transition:all .15s;flex-shrink:0;}
 .plan-day-btn:hover{background:var(--nav-hover);color:var(--text);transform:scale(1.06);}
 .plan-day-btn:active{transform:scale(.92);}
-.plan-day-label{font-size:16px;font-weight:800;min-width:190px;text-align:center;line-height:1.25;letter-spacing:.2px;}
-.plan-day-label .sub{display:block;font-size:11px;font-weight:500;color:var(--text-3);margin-top:2px;letter-spacing:0;}
-.plan-day-today{color:var(--primary-dark);font-size:10.5px;font-weight:700;background:rgba(255,149,0,.15);padding:1px 8px;border-radius:8px;margin-left:6px;vertical-align:1px;}
-.plan-hero-stats{display:flex;align-items:center;gap:14px;flex-shrink:0;}
-.plan-hero-numbox{display:flex;flex-direction:column;align-items:flex-end;gap:2px;}
+.plan-day-navbtn{width:42px;height:42px;border-radius:13px;font-size:21px;box-shadow:0 1px 3px rgba(0,0,0,.07);}
+.plan-day-label{flex:0 0 216px;text-align:left;cursor:pointer;border-radius:11px;padding:5px 12px;transition:background .15s;white-space:nowrap;overflow:hidden;}
+.plan-day-label:hover{background:rgba(255,149,0,.1);}
+.plan-day-main{font-size:17px;font-weight:800;line-height:1.35;letter-spacing:.2px;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.plan-day-sub{font-size:10.5px;font-weight:500;color:var(--text-3);letter-spacing:0;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.plan-date-picker{position:absolute;opacity:0;width:1px;height:1px;border:none;padding:0;pointer-events:none;left:0;top:0;}
+.plan-day-head-right{display:flex;align-items:center;gap:16px;margin-left:auto;flex-shrink:0;}
+.plan-hero-numbox{display:flex;flex-direction:column;align-items:flex-end;gap:2px;min-width:86px;}
 .plan-hero-num{font-size:26px;font-weight:800;color:var(--primary-dark);letter-spacing:-.5px;line-height:1;font-variant-numeric:tabular-nums;}
-.plan-hero-cnt{font-size:11px;color:var(--text-2);font-weight:600;}
-.plan-today-btn{height:30px;border-radius:9px;border:1px solid rgba(255,149,0,.4);background:rgba(255,149,0,.13);color:var(--primary-dark);cursor:pointer;font-size:12.5px;font-weight:700;padding:0 14px;transition:all .15s;}
+.plan-hero-cnt{font-size:11px;color:var(--text-2);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.plan-today-btn{height:36px;min-width:74px;border-radius:11px;border:1px solid rgba(255,149,0,.4);background:rgba(255,149,0,.13);color:var(--primary-dark);cursor:pointer;font-size:13px;font-weight:700;padding:0 16px;transition:all .15s;}
 .plan-today-btn:hover{background:rgba(255,149,0,.22);}
 .plan-today-btn:active{transform:scale(.94);}
-.plan-progress{display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
-.plan-progress-bar{flex:1;height:7px;background:var(--card-bg);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.07);}
+.plan-week-strip{display:flex;gap:8px;position:relative;z-index:1;margin-bottom:14px;}
+.pw-day{flex:1;height:64px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:all .15s;font-family:inherit;padding:0;}
+.pw-day:hover{border-color:rgba(255,149,0,.5);transform:translateY(-1px);box-shadow:var(--shadow);}
+.pw-day:active{transform:scale(.95);}
+.pw-dow{font-size:10px;color:var(--text-3);font-weight:600;line-height:1;height:10px;}
+.pw-num{font-size:15px;font-weight:700;color:var(--text-2);font-variant-numeric:tabular-nums;line-height:30px;height:30px;min-width:30px;text-align:center;border-radius:50%;}
+.pw-num.tdn{background:var(--primary);color:#fff;box-shadow:0 2px 6px rgba(255,149,0,.35);}
+.pw-dot{width:5px;height:5px;border-radius:50%;background:transparent;line-height:5px;}
+.pw-dot.part{background:var(--blue);}
+.pw-dot.full{background:var(--green);}
+.pw-day.sel{background:rgba(255,149,0,.13);border-color:rgba(255,149,0,.55);}
+.pw-day.sel .pw-dow{color:var(--primary-dark);}
+.pw-day.sel .pw-num{color:var(--primary-dark);}
+.pw-day.sel .pw-num.tdn{color:#fff;}
+.plan-progress{position:relative;z-index:1;}
+.plan-progress-bar{height:7px;background:var(--card-bg);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.07);}
 .plan-progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),#FFB340);border-radius:4px;transition:width .45s cubic-bezier(.22,.9,.35,1);}
 .plan-progress-txt{font-size:12px;color:var(--text-2);font-weight:600;white-space:nowrap;}
-.plan-sec{margin-bottom:18px;}
-.plan-sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;padding:0 2px;}
-.plan-sec-title{font-size:13.5px;font-weight:700;display:flex;align-items:center;gap:8px;color:var(--text);letter-spacing:.3px;}
-.plan-sec-ic{width:24px;height:24px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
-.plan-sec-ic svg{width:13px;height:13px;}
+.plan-sec{margin-bottom:12px;}
+.plan-sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;padding:0 2px;}
+.plan-sec-title{font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:7px;color:var(--text);letter-spacing:.3px;}
+.plan-sec-ic{width:20px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.plan-sec-ic svg{width:11px;height:11px;}
 .plan-sec-ic.ic-am{background:rgba(255,149,0,.15);color:var(--primary-dark);}
 .plan-sec-ic.ic-pm{background:rgba(10,132,255,.13);color:var(--blue);}
 .plan-sec-ic.ic-ev{background:rgba(175,82,222,.13);color:var(--purple);}
-.plan-sec-badge{font-size:10.5px;color:var(--text-3);font-weight:500;background:var(--input-bg);padding:2px 9px;border-radius:10px;border:1px solid var(--card-border);margin-left:2px;}
-.plan-sec-count{font-size:11px;color:var(--text-3);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.3px;}
+.plan-sec-badge{font-size:9.5px;color:var(--text-3);font-weight:500;background:var(--input-bg);padding:1.5px 7px;border-radius:9px;border:1px solid var(--card-border);margin-left:2px;}
+.plan-sec-count{font-size:10.5px;color:var(--text-3);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.3px;}
 .plan-sec-count b{color:var(--green);font-weight:800;}
-.plan-task{display:flex;align-items:center;gap:10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:9px 12px;margin-bottom:7px;transition:box-shadow .15s,border-color .15s,transform .15s;position:relative;}
+.plan-task{display:flex;align-items:center;gap:8px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:9px;padding:6px 10px;margin-bottom:6px;transition:box-shadow .15s,border-color .15s,transform .15s;position:relative;}
 .plan-task:hover{box-shadow:var(--shadow);border-color:rgba(0,0,0,.14);transform:translateY(-1px);}
 .plan-task-rail{position:absolute;left:0;top:7px;bottom:7px;width:3px;border-radius:0 3px 3px 0;opacity:.9;transition:opacity .2s;}
 .plan-task.done{opacity:.6;}
@@ -777,23 +809,23 @@ body{
 @keyframes planFlash{0%{background:rgba(255,149,0,.28);border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,149,0,.18);}100%{background:var(--card-bg);border-color:var(--card-border);}}
 .plan-task.done .plan-task-rail{opacity:.25;}
 .plan-task.done .plan-task-title{text-decoration:line-through;color:var(--text-3);}
-.plan-check{width:21px;height:21px;border-radius:50%;border:2px solid var(--text-3);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0;color:#fff;font-size:11px;transition:all .15s;line-height:1;}
+.plan-check{width:18px;height:18px;border-radius:50%;border:2px solid var(--text-3);background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0;color:#fff;font-size:10px;transition:all .15s;line-height:1;}
 .plan-check:hover{border-color:var(--green);transform:scale(1.08);}
 .plan-check.checked{background:var(--green);border-color:var(--green);}
 .plan-task-body{flex:1;min-width:0;}
-.plan-task-title{font-size:13.5px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.plan-task-detail{font-size:11.5px;color:var(--text-3);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.plan-task-tag{font-size:10px;font-weight:600;padding:1.5px 8px;border-radius:8px;flex-shrink:0;}
-.plan-roll-tag{font-size:10px;font-weight:700;color:#C93400;background:rgba(201,52,0,.09);border:1px dashed rgba(201,52,0,.4);padding:1.5px 8px;border-radius:8px;flex-shrink:0;white-space:nowrap;}
+.plan-task-title{font-size:12.5px;font-weight:600;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plan-task-detail{font-size:11px;color:var(--text-3);margin-top:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.plan-task-tag{font-size:9.5px;font-weight:600;padding:1px 7px;border-radius:7px;flex-shrink:0;}
+.plan-roll-tag{font-size:9.5px;font-weight:700;color:#C93400;background:rgba(201,52,0,.09);border:1px dashed rgba(201,52,0,.4);padding:1px 7px;border-radius:7px;flex-shrink:0;white-space:nowrap;}
 .plan-task.rolled{background:linear-gradient(90deg,rgba(255,149,0,.07),rgba(255,149,0,0) 70%);border-color:rgba(255,149,0,.35);}
 .plan-task.rolled .plan-task-rail{opacity:1;}
-.plan-task-time{font-size:11.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-2);background:var(--input-bg);padding:3px 9px;border-radius:6px;cursor:pointer;flex-shrink:0;border:1px solid var(--card-border);white-space:nowrap;transition:all .12s;font-weight:500;}
+.plan-task-time{font-size:11px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-2);background:var(--input-bg);padding:2px 8px;border-radius:5px;cursor:pointer;flex-shrink:0;border:1px solid var(--card-border);white-space:nowrap;transition:all .12s;font-weight:500;}
 .plan-task-time.unset{border-style:dashed;color:var(--text-3);}
 .plan-task-time:hover{border-color:var(--primary);color:var(--primary-dark);background:rgba(255,149,0,.07);}
 .plan-task-del{width:22px;height:22px;border:none;background:none;color:var(--text-3);cursor:pointer;font-size:15px;flex-shrink:0;opacity:0;border-radius:6px;transition:all .12s;line-height:1;}
 .plan-task:hover .plan-task-del{opacity:1;}
 .plan-task-del:hover{color:var(--red);background:var(--red-light);}
-.plan-add{width:100%;border:1.5px dashed var(--card-border);background:none;color:var(--text-3);padding:8px;border-radius:10px;font-size:12.5px;cursor:pointer;margin-top:4px;transition:all .15s;}
+.plan-add{width:100%;border:1.5px dashed var(--card-border);background:none;color:var(--text-3);padding:6px;border-radius:9px;font-size:12px;cursor:pointer;margin-top:3px;transition:all .15s;}
 .plan-add:hover{color:var(--primary-dark);border-color:var(--primary);background:rgba(255,149,0,.05);}
 .plan-add-form{display:flex;gap:8px;align-items:center;margin-top:4px;padding:10px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-sm);}
 .plan-add-form input[type=text]{flex:1;border:1px solid var(--input-border);background:var(--input-bg);border-radius:8px;padding:7px 10px;font-size:13px;color:var(--text);outline:none;}
@@ -802,7 +834,7 @@ body{
 .plan-add-ok{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;}
 .plan-add-ok:hover{background:var(--primary-dark);}
 .plan-add-cancel{background:none;border:none;color:var(--text-3);font-size:12.5px;cursor:pointer;padding:7px 6px;}
-.plan-ai-card{background:linear-gradient(135deg,rgba(255,149,0,.10),rgba(175,82,222,.08));border:1px solid rgba(255,149,0,.3);border-radius:var(--radius);padding:13px 15px;margin-top:16px;position:relative;overflow:hidden;}
+.plan-ai-card{background:linear-gradient(135deg,rgba(255,149,0,.10),rgba(175,82,222,.08));border:1px solid rgba(255,149,0,.3);border-radius:var(--radius);padding:11px 13px;margin-top:12px;position:relative;overflow:hidden;}
 .plan-ai-card::after{content:'';position:absolute;right:-30px;top:-36px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,149,0,.13),transparent 70%);pointer-events:none;}
 .plan-ai-title{font-size:12px;font-weight:700;color:var(--primary-dark);margin-bottom:5px;display:flex;align-items:center;gap:5px;}
 .plan-ai-text{font-size:12.5px;color:var(--text-2);line-height:1.6;}
@@ -1343,19 +1375,19 @@ body{
       <div id="planDayView">
         <div class="plan-hero">
           <div class="plan-day-head">
-            <div class="plan-day-nav">
-              <button class="plan-day-btn" onclick="planShiftDay(-1)" title="前一天">‹</button>
-              <div class="plan-day-label" id="planDayLabel"></div>
-              <button class="plan-day-btn" onclick="planShiftDay(1)" title="后一天">›</button>
-            </div>
-            <div class="plan-hero-stats">
+            <button class="plan-day-btn plan-day-navbtn" onclick="planShiftDay(-1)" title="前一天（←）">‹</button>
+            <div class="plan-day-label" id="planDayLabel" onclick="planPickDate()" title="点击选择日期"></div>
+            <button class="plan-day-btn plan-day-navbtn" onclick="planShiftDay(1)" title="后一天（→）">›</button>
+            <input type="date" id="planDatePicker" class="plan-date-picker" onchange="planJumpDate(this.value)">
+            <div class="plan-day-head-right">
               <div class="plan-hero-numbox">
                 <div class="plan-hero-num" id="planHeroPct">0%</div>
                 <div class="plan-hero-cnt" id="planProgressTxt">0/0 完成</div>
               </div>
-              <button class="plan-today-btn" onclick="planJumpToday()" title="回到今天">今天</button>
+              <button class="plan-today-btn" id="planTodayBtn" onclick="planJumpToday()" title="回到今天">今天</button>
             </div>
           </div>
+          <div class="plan-week-strip" id="planWeekStrip"></div>
           <div class="plan-progress">
             <div class="plan-progress-bar"><div class="plan-progress-fill" id="planProgressFill" style="width:0%"></div></div>
           </div>
@@ -1510,7 +1542,8 @@ function ld(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){retur
 function sv(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function lg(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
 function sg(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function ts(){return new Date().toISOString().slice(0,10)}
+function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function ts(){return dstr(new Date())}
 function fmt(d){const dt=new Date(d);return dt.getMonth()+1+'/'+dt.getDate();}
 function ds(d){return Math.floor((new Date()-new Date(d))/86400000)}
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -1519,12 +1552,12 @@ function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function initSamples(){
   if(localStorage.getItem(K.init))return;
   const t=ts();
-  const y=new Date(Date.now()-864e5).toISOString().slice(0,10);
-  const d3=new Date(Date.now()-3*864e5).toISOString().slice(0,10);
-  const d5=new Date(Date.now()-5*864e5).toISOString().slice(0,10);
-  const d10=new Date(Date.now()-10*864e5).toISOString().slice(0,10);
+  const y=dstr(new Date(Date.now()-864e5));
+  const d3=dstr(new Date(Date.now()-3* 864e5));
+  const d5=dstr(new Date(Date.now()-5* 864e5));
+  const d10=dstr(new Date(Date.now()-10* 864e5));
   sv(K.goals,[{id:'g1',n:'掌握Agent架构设计',c:40,tg:100},{id:'g2',n:'AI产品案例拆解',c:3,tg:20}]);
-  sv(K.tasks,[{id:'t1',ti:'精读Harness Engineering体系',p:'0',d:t,dn:false},{id:'t2',ti:'拆解3个AI产品ROI模型',p:'0',d:t,dn:false},{id:'t3',ti:'输出一篇Agent产品分析报告',p:'1',d:new Date(Date.now()+2*864e5).toISOString().slice(0,10),dn:false},{id:'t4',ti:'整理SKILL工程方法论笔记',p:'1',d:new Date(Date.now()+3*864e5).toISOString().slice(0,10),dn:false}]);
+  sv(K.tasks,[{id:'t1',ti:'精读Harness Engineering体系',p:'0',d:t,dn:false},{id:'t2',ti:'拆解3个AI产品ROI模型',p:'0',d:t,dn:false},{id:'t3',ti:'输出一篇Agent产品分析报告',p:'1',d:dstr(new Date(Date.now()+2* 864e5)),dn:false},{id:'t4',ti:'整理SKILL工程方法论笔记',p:'1',d:dstr(new Date(Date.now()+3* 864e5)),dn:false}]);
   sv(K.exercises,[]);
   sv(K.weights,[{id:'w1',w:68.5,f:22,d:d5},{id:'w2',w:68.0,f:21.5,d:d3},{id:'w3',w:67.8,f:21.2,d:y}]);
   sv(K.books,[{id:'b1',ti:'这就是ChatGPT',c:89,tl:312},{id:'b2',ti:'AI产品经理实战',c:45,tl:400}]);
@@ -1800,7 +1833,7 @@ function renderHome(){
   const overdue=undone.filter(x=>x.d<t).length;
   document.getElementById('dashTasks').textContent=undone.length;
 
-  const exs=ld(K.exercises);const wAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+  const exs=ld(K.exercises);const wAgo=dstr(new Date(Date.now()-7* 864e5));
   const weekEx=exs.filter(e=>e.d>=wAgo);const weekMin=weekEx.reduce((s,e)=>s+e.dr,0);
   document.getElementById('dashExercise').textContent=weekMin+'min';
 
@@ -1974,7 +2007,7 @@ function renderHomePlan(){
   // Week dots
   const todayIdx=wp.length?wp.findIndex(d=>d.day===dow):-1;
   const checkins=lg(K.planCheckins,{});
-  const todayKey=(new Date()).toISOString().slice(0,10);
+  const todayKey=dstr(new Date());
   const todayDone=!!checkins[todayKey];
   if(wpEl){
     let dots='';
@@ -2048,7 +2081,7 @@ function renderExercise(){
   const textColor=isDark?'#F5F5F7':'#1D1D1F';
   const subColor=isDark?'#A1A1A6':'#6E6E73';
   const trackColor=isDark?'#3A3A3C':'#E8E8ED';
-  const exs=ld(K.exercises);const wAgo=new Date(Date.now()-7*864e5).toISOString().slice(0,10);
+  const exs=ld(K.exercises);const wAgo=dstr(new Date(Date.now()-7* 864e5));
   const weekEx=exs.filter(e=>e.d>=wAgo);const weekMin=weekEx.reduce((s,e)=>s+e.dr,0);
   const goal=150;const pct=Math.min(100,Math.round(weekMin/goal*100));
   const circ=Math.PI*68;const fill=(pct/100)*circ;
@@ -2476,7 +2509,7 @@ function renderReadingPlan(){
 
   const todayIdx=wp.length?wp.findIndex(d=>d.day===dow):-1;
   const checkins=lg(K.planCheckins,{});
-  const todayKey=(new Date()).toISOString().slice(0,10);
+  const todayKey=dstr(new Date());
   const todayDone=!!checkins[todayKey];
   if(dotsEl){
     let dots='';
@@ -2506,7 +2539,7 @@ function renderReadingPlan(){
 function togglePlanCheckIn(){
   const info=getTodayPlanInfo();
   if(!info||info.type==='rest')return;
-  const todayKey=(new Date()).toISOString().slice(0,10);
+  const todayKey=dstr(new Date());
   const checkins=lg(K.planCheckins,{});
   if(checkins[todayKey]){
     showDialog('取消标记','确定要取消今日阅读完成标记吗？',()=>{
@@ -2540,7 +2573,7 @@ function autoCheckinFromWeRead(){
 
 function checkPlanToday(){
   const checkins=lg(K.planCheckins,{});
-  const todayKey=(new Date()).toISOString().slice(0,10);
+  const todayKey=dstr(new Date());
   if(checkins[todayKey])return toast('今天已经标记过了');
   checkins[todayKey]=true;
   sg(K.planCheckins,checkins);
@@ -2645,7 +2678,7 @@ function syncAgentGoal(){
 function toggleAgentCheckIn(){
   const info=getTodayAgentInfo();
   if(!info||!info.today||info.today.type==='rest')return;
-  const t=(new Date()).toISOString().slice(0,10);
+  const t=dstr(new Date());
   const checkins=lg(K.agentCk,{});
   if(checkins[t]){
     showDialog('取消标记','确定要取消今日学习完成标记吗？',()=>{
@@ -2727,7 +2760,7 @@ function renderAgentCards(){
       document.getElementById('agProgText').textContent='已完成 '+info.doneCount+' / '+info.total+' 天（'+Math.round(info.doneCount/info.total*100)+'%）· '+((rolledStudy&&!rolledStudy.done)?'⏳ 顺延：'+rolledStudy.title.replace(/^学习：/,''):(info.today?info.today.topic:'计划已结束'));
       const dots=document.getElementById('agWeekDots');
       const checkins=lg(K.agentCk,{});
-      const t=(new Date()).toISOString().slice(0,10);
+      const t=dstr(new Date());
       dots.innerHTML=agentWeekSchedule(wk).map(s=>{
         let cls='plan-day-dot';
         if(checkins[s.date])cls+=' done';
@@ -2745,7 +2778,7 @@ function renderAgentCards(){
       const wk=info.today?info.today.week:info.data.totalWeeks;
       document.getElementById('agPanelTitle').textContent='AI Agent 冲刺备战 · '+(info.phaseName||'')+(wk?' 第'+wk+'周':'');
       const checkins=lg(K.agentCk,{});
-      const t=(new Date()).toISOString().slice(0,10);
+      const t=dstr(new Date());
       wp.querySelector('.ag-days').innerHTML=agentWeekSchedule(wk).map(s=>{
         const dn=!!checkins[s.date];
         const isToday=s.date===t;
@@ -2779,7 +2812,7 @@ function renderReading(){
   }
 
   const ch=lg(K.study,{});let html='';
-  for(let i=29;i>=0;i--){const d=new Date(Date.now()-i*864e5).toISOString().slice(0,10);let lv=0;if(ch[d]){let cnt=0;for(let j=0;j<=i;j++){const dd=new Date(Date.now()-j*864e5).toISOString().slice(0,10);if(ch[dd])cnt++;else break;}lv=Math.min(4,Math.ceil(cnt/2));}html+=`<div class="heat-cell h${lv}" title="${d}"></div>`;}
+  for(let i=29;i>=0;i--){const d=dstr(new Date(Date.now()-i* 864e5));let lv=0;if(ch[d]){let cnt=0;for(let j=0;j<=i;j++){const dd=dstr(new Date(Date.now()-j* 864e5));if(ch[dd])cnt++;else break;}lv=Math.min(4,Math.ceil(cnt/2));}html+=`<div class="heat-cell h${lv}" title="${d}"></div>`;}
   document.getElementById('heatmap').innerHTML=`<div class="heatmap">${html}</div><div class="heat-label">最近30天打卡 · 越深连续越久</div>`;
 
   // 读书笔记：优先微信读书近期笔记（划线/想法），无则 fallback 手动笔记
@@ -3093,7 +3126,7 @@ function rvMirrorToStorage(){
     localStorage.setItem(P+'review_today', e&&e.text?'1':'0');
   }catch(e){}
 }
-function rvDateOffset(n){const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);}
+function rvDateOffset(n){const d=new Date();d.setDate(d.getDate()+n);return dstr(d);}
 function rvEntry(date){return (REVIEW_CACHE&&REVIEW_CACHE.entries&&REVIEW_CACHE.entries[date])||null;}
 function rvToday(){return rvEntry(rvDateOffset(0));}
 function rvStreakCount(){
@@ -3508,14 +3541,41 @@ function renderPlanDay(){
   const days=['日','一','二','三','四','五','六'];
   const dow=dt.getDay(),isToday=date===ts();
   const subTxt=(dow===0||dow===6)?'周末 · 灵活安排':'工作日 · 白天工作，晚上提升';
-  document.getElementById('planDayLabel').innerHTML=(dt.getMonth()+1)+'月'+dt.getDate()+'日 · 周'+days[dow]+(isToday?'<span class="plan-day-today">今天</span>':'')+'<span class="sub">'+subTxt+'</span>';
+  document.getElementById('planDayLabel').innerHTML='<div class="plan-day-main">'+(dt.getMonth()+1)+'月'+dt.getDate()+'日 · 周'+days[dow]+'</div><div class="plan-day-sub">'+subTxt+'</div>';
+  const tbtn=document.getElementById('planTodayBtn');
+  if(tbtn)tbtn.style.visibility=isToday?'hidden':'';
   const all=planAllTasks(day);
   const done=all.filter(t=>t.done).length;
   const pct=all.length?Math.round(done/all.length*100):0;
   document.getElementById('planProgressFill').style.width=pct+'%';
   document.getElementById('planHeroPct').textContent=pct+'%';
   document.getElementById('planProgressTxt').textContent=done+'/'+all.length+' 完成';
+  renderPlanWeekStrip();
   ['morning','afternoon','evening'].forEach(s=>renderPlanSlot(date,s));
+}
+// 一周快捷跳转条：周一~周日，带完成度小圆点
+function renderPlanWeekStrip(){
+  const el=document.getElementById('planWeekStrip');if(!el)return;
+  const cur=new Date(planCursor+'T00:00:00');
+  const dow=(cur.getDay()+6)%7;
+  const monday=new Date(cur);monday.setDate(cur.getDate()-dow);
+  const names=['一','二','三','四','五','六','日'];
+  const today=ts();const daily=planGetDaily();
+  let html='';
+  for(let i=0;i<7;i++){
+    const d=new Date(monday);d.setDate(monday.getDate()+i);
+    const key=dstr(d);
+    const day=daily[key]||{};
+    const all=planAllTasks(day);
+    const done=all.filter(t=>t.done).length;
+    const dot=all.length?(done===all.length?' full':(done?' part':'')):'';
+    html+=`<button class="pw-day${key===planCursor?' sel':''}${key===today?' td':''}" onclick="planJumpDate('${key}')" title="${key}">
+      <span class="pw-dow">${names[i]}</span>
+      <span class="pw-num${key===today?' tdn':''}">${d.getDate()}</span>
+      <span class="pw-dot${dot}"></span>
+    </button>`;
+  }
+  el.innerHTML=html;
 }
 function renderPlanSlot(date,slot){
   const day=planEnsureDay(date);
@@ -3663,10 +3723,31 @@ function planApplySuggestion(){
 // ---------- 日度导航 ----------
 function planShiftDay(n){
   const d=new Date(planCursor+'T00:00:00');d.setDate(d.getDate()+n);
-  planCursor=d.toISOString().slice(0,10);
+  planCursor=dstr(d);
   renderPlanDay();renderPlanAiCard();
 }
 function planJumpToday(){planCursor=ts();renderPlanDay();renderPlanAiCard();}
+function planPickDate(){
+  const el=document.getElementById('planDatePicker');if(!el)return;
+  el.value=planCursor;el.focus();
+  if(el.showPicker){try{el.showPicker()}catch(e){}}
+}
+function planJumpDate(v){
+  if(!v)return;
+  planCursor=v;
+  const pk=document.getElementById('planDatePicker');if(pk)pk.blur();
+  renderPlanDay();renderPlanAiCard();
+}
+// 键盘 ←/→ 切换日期（仅规划页日度视图，输入框聚焦时不触发）
+document.addEventListener('keydown',e=>{
+  if(planView!=='day')return;
+  const pg=document.getElementById('page-plan');if(!pg||!pg.classList.contains('active'))return;
+  const t=e.target;
+  const tag=(t&&t.tagName||'').toLowerCase();
+  if(tag==='input'||tag==='select'||tag==='textarea'||(t&&t.isContentEditable))return;
+  if(e.key==='ArrowLeft'){planShiftDay(-1);e.preventDefault();}
+  else if(e.key==='ArrowRight'){planShiftDay(1);e.preventDefault();}
+});
 function planSwitchView(v){
   planView=v;
   document.getElementById('planSubDay').classList.toggle('active',v==='day');
@@ -3729,7 +3810,7 @@ function renderPlanMonth(){
   const todayStr=ts();
   const weekStart=new Date(now);weekStart.setDate(now.getDate()-((now.getDay()+6)%7));
   const weekEnd=new Date(weekStart);weekEnd.setDate(weekStart.getDate()+6);
-  const ws=weekStart.toISOString().slice(0,10),we=weekEnd.toISOString().slice(0,10);
+  const ws=dstr(weekStart),we=dstr(weekEnd);
   const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),exs=ld(K.exercises),rev=(REVIEW_CACHE&&REVIEW_CACHE.entries)?REVIEW_CACHE.entries:{};
   const exMap={};exs.forEach(e=>{if(e.d)exMap[e.d]=true;});
   const dotColor=c=>c==='blue'?'var(--blue)':c==='purple'?'var(--purple)':c==='green'?'var(--green)':c==='orange'?'var(--primary)':'var(--text-3)';
@@ -3768,7 +3849,7 @@ function renderPlanWeekFocus(ws,we,y,m){
   let html='';
   for(let i=0;i<7;i++){
     const d=new Date(ws+'T00:00:00');d.setDate(d.getDate()+i);
-    const ds=d.toISOString().slice(0,10);
+    const ds=dstr(d);
     const isToday=ds===todayStr;
     const label=(d.getMonth()+1)+'/'+d.getDate();
     const dp=planGetDaily()[ds];
