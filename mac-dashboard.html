@@ -1122,6 +1122,21 @@ body{
             </div>
           </div>
 
+          <!-- 今日表达 -->
+          <div class="rt-card" id="homeExprCard" onclick="openExprPanel(ts(),getExprTaskId())" style="display:none" data-page-node-id="xZb2kExrHomeCard01">
+            <div class="rt-icon" id="exrHomeIcon" style="background:rgba(255,45,85,.12);color:#FF2D55;" data-page-node-id="xZb2kExrHomeIcon01">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="xZb2kExrHomeMic01"><rect x="9" y="2" width="6" height="12" rx="3" data-page-node-id="xZb2kExrHomeMic02"/><path d="M5 10a7 7 0 0014 0M12 17v5" data-page-node-id="xZb2kExrHomeMic03"/></svg>
+            </div>
+            <div class="rt-body" data-page-node-id="xZb2kExrHomeBody01">
+              <div class="rt-label" id="exrHomeLabel" data-page-node-id="xZb2kExrHomeLabel01">今日表达</div>
+              <div class="rt-title" id="exrHomeTitle" data-page-node-id="xZb2kExrHomeTitle01">加载中...</div>
+              <div class="rt-sub" id="exrHomeSub" data-page-node-id="xZb2kExrHomeSub01"></div>
+            </div>
+            <div class="rt-check" id="exrHomeCheck" onclick="event.stopPropagation();openExprPanel(ts(),getExprTaskId())" data-page-node-id="xZb2kExrHomeCheck01">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" data-page-node-id="xZb2kExrHomeCheckSvg01"><polyline points="20 6 9 17 4 12" data-page-node-id="xZb2kExrHomeCheckSvg02"/></svg>
+            </div>
+          </div>
+
           <div class="card" data-page-node-id="DeZu89hCKf4JG7HopHdQJ1">
             <div class="card-title" data-page-node-id="RxMv5ZV9xptPvt0Ue4wYVm">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="7sDap4M2l8fxuTH2uFWJEI"><path d="M18 10h-1.26A8 8 0 109 20h9a2 2 0 002-2v-6a2 2 0 00-2-2z" data-page-node-id="rtgjzvpVjj9GGQDA6HPmIx"/><path d="M18 22a4 4 0 000-8" data-page-node-id="CFoWtVgLVCkyWgx7AoxxZl"/></svg>
@@ -2028,6 +2043,7 @@ function renderHome(){
   renderHomePlan();
   renderAgentCards();
   renderContactRemind();
+  renderHomeExprCard();
 }
 
 // 首页「最近读书笔记」：AI 总结（来自 weread_summary.json）+ 微信读书近期笔记，fallback 手动笔记
@@ -3742,7 +3758,7 @@ function planToggleTask(date,id){
     if(!confirm('取消今日表达打卡？已写的内容会一并清除'))return;
     const ec=lg(K.exprCk,{});delete ec[date];sg(K.exprCk,ec);
     t.done=false;planSaveDaily(daily);
-    renderPlanDay();renderPlanAiCard();renderHomeReviewCard();
+    renderPlanDay();renderPlanAiCard();renderHomeReviewCard();renderHomeExprCard();
     return;
   }
   t.done=!t.done;
@@ -3819,7 +3835,7 @@ function exprSave(){
   const daily=planGetDaily();const day=daily[date];
   if(day){['morning','afternoon','evening'].forEach(s=>{(day[s]||[]).forEach(t=>{if(t.id===exprTaskId)t.done=true;});});planSaveDaily(daily);}
   exprClose();
-  renderPlanDay();renderPlanAiCard();renderHomeReviewCard();
+  renderPlanDay();renderPlanAiCard();renderHomeReviewCard();renderHomeExprCard();
   if(planView==='day'){const p=document.getElementById('planAiCard');}
   toast('表达已沉淀 · 今日内化 +1 ✓');
 }
@@ -3829,6 +3845,52 @@ function exprTaskDetail(date,base){
   const rec=ec[date];
   if(rec)return '已表达 '+(rec.wc||0)+' 字 · 点击回顾';
   return base;
+}
+// 首页表达卡片：取今日表达任务 id（无任务返回 null）
+function getExprTaskId(){
+  try{const dt=getTodayDailyTasks();return dt.express?dt.express.id:null;}catch(e){return null;}
+}
+// 表达连续打卡天数（从今天或昨天往前数）
+function exprStreakCount(){
+  const ec=lg(K.exprCk,{});
+  let n=0,d=new Date();
+  while(true){
+    const k=dstr(d);
+    const rec=ec[k];
+    if(rec&&rec.text){n++;}
+    else if(n>0||k!==ts()){break;}
+    d.setDate(d.getDate()-1);
+  }
+  return n;
+}
+// 首页「今日表达」独立卡片渲染（与读书/运动/复盘同级模块）
+function renderHomeExprCard(){
+  const card=document.getElementById('homeExprCard');
+  if(!card)return;
+  const today=ts();
+  const ec=lg(K.exprCk,{});
+  const rec=ec[today];
+  const task=getExprTaskId();
+  const streak=exprStreakCount();
+  const label=document.getElementById('exrHomeLabel');
+  const title=document.getElementById('exrHomeTitle');
+  const sub=document.getElementById('exrHomeSub');
+  const check=document.getElementById('exrHomeCheck');
+  if(!task){card.style.display='none';return;}
+  card.style.display='flex';
+  card.onclick=()=>openExprPanel(today,task);
+  check.onclick=(ev)=>{ev.stopPropagation();openExprPanel(today,task);};
+  if(rec&&rec.text){
+    label.textContent='今日表达 · 连续 '+streak+' 天';
+    title.textContent='已完成 ✓ · 表达 '+(rec.wc||0)+' 字';
+    sub.textContent='点击回顾今天的表达，或继续打磨观点';
+    check.classList.add('done');
+  }else{
+    label.textContent='今日表达 · '+(streak>0?'连续 '+streak+' 天':'30-60s 训练');
+    title.textContent='30-60 秒讲清今天学到的一点';
+    sub.textContent='先输入（读书/学习）→ 再输出 → 最后复盘';
+    check.classList.remove('done');
+  }
 }
 // ---------- 时间调整 ----------
 function planOpenTimePick(ev,date,id){
