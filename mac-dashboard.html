@@ -704,6 +704,19 @@ body{
   border:0.5px solid var(--input-border);border-radius:10px;padding:10px 12px;margin-bottom:12px;
 }
 .expr-rule b{color:var(--primary-dark);font-weight:700;}
+.expr-frames{display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap;}
+.expr-frame-label{font-size:11px;font-weight:600;color:var(--text-3);margin-right:2px;}
+.expr-frame{
+  border:0.5px solid var(--input-border);background:var(--input-bg);color:var(--text-2);
+  border-radius:13px;padding:4px 10px;font-size:12px;cursor:pointer;transition:all .15s;font-family:inherit;
+}
+.expr-frame:hover{border-color:var(--primary);}
+.expr-frame.active{background:rgba(255,45,85,.1);border-color:rgba(255,45,85,.5);color:#FF2D55;font-weight:600;}
+.expr-frame-steps{
+  font-size:11.5px;line-height:1.65;color:var(--text-2);background:var(--input-bg);
+  border-left:3px solid rgba(255,45,85,.65);border-radius:6px;padding:7px 11px;margin-bottom:10px;
+}
+.expr-frame-steps b{color:#FF2D55;}
 .expr-input-label{font-size:11.5px;font-weight:600;color:var(--text-2);margin-bottom:6px;}
 .expr-chips{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
 .expr-chip{
@@ -1608,6 +1621,14 @@ body{
       <button class="expr-close" onclick="exprClose()" title="关闭" data-page-node-id="m4IH3MMRYp1sn0DGDYcDtf">×</button>
     </div>
     <div class="expr-rule" data-page-node-id="OOTMvsH7vvPZ8ozv3hmL4S">用 <b data-page-node-id="DZvoensGD77hregXhXkDMH">30–60 秒</b>，把今天学到<b data-page-node-id="sE82eFhgYEUe62H3RobpEJ">最有价值的一点</b>讲清楚 —— 费曼输出：讲得明白，才算真的学会。写完照着念一遍，就是今天的表达训练。</div>
+    <div class="expr-frames" id="exprFrames">
+      <span class="expr-frame-label">表达框架</span>
+      <button class="expr-frame active" data-frame="prep" onclick="selectExprFrame('prep')">🧭 结论先行</button>
+      <button class="expr-frame" data-frame="pyr" onclick="selectExprFrame('pyr')">🏔️ 金字塔</button>
+      <button class="expr-frame" data-frame="scqa" onclick="selectExprFrame('scqa')">💬 情境 SCQA</button>
+      <button class="expr-frame" data-frame="free" onclick="selectExprFrame('free')">✍️ 自由</button>
+    </div>
+    <div class="expr-frame-steps" id="exprFrameSteps"></div>
     <div class="expr-input-label" data-page-node-id="SYfqa4o4MT0JwB31dEYEyg">围绕今天的输入讲</div>
     <div class="expr-chips" id="exprChips" data-page-node-id="vnQAdJnu8oqO6771UyVX7p"></div>
     <div class="expr-hint" data-page-node-id="QUhtlCbL8CBvhXquyywxvv">参考字数：30s ≈ 80–120 字 · 60s ≈ 160–240 字</div>
@@ -3782,6 +3803,22 @@ function planDeleteTask(date,id){
   planSaveDaily(daily);renderPlanDay();renderPlanAiCard();
 }
 // ---------- 表达训练（今日观点表达 · 30-60s 费曼输出） ----------
+// 结构化表达框架：结论先行/PREP、金字塔、情境 SCQA、自由（搜索沉淀：麦肯锡 PREP、金字塔原理、SCQA 故事模型）
+const EXPR_FRAMES={
+  prep:{label:'🧭 结论先行',placeholder:'结论：一句话说清你的观点（今天最重要的一点认识）…\n理由：为什么这么认为？\n例子：一个具体的证据 / 今天的经历\n重申：这个观点对你意味着什么，接下来怎么做？',steps:['<b>① 结论</b>：一句话观点（先亮结论，10 秒抓住对方）','<b>② 理由</b>：为什么这么认为（1-2 个支撑）','<b>③ 例子</b>：具体证据 / 亲身经历（让观点可信）','<b>④ 重申</b>：观点落到行动（今天学到 → 明天怎么用）']},
+  pyr:{label:'🏔️ 金字塔',placeholder:'结论：一句话…\n支撑 1：…\n支撑 2：…\n支撑 3：…\n总结：…',steps:['<b>① 结论</b>：放在最顶端，先讲结果','<b>② 支撑</b>：2-3 个并列分论点（同一逻辑范畴）','<b>③ 论据</b>：每个分论点下补事实 / 数据','<b>④ 收束</b>：综上所述，重申核心结论']},
+  scqa:{label:'💬 情境 SCQA',placeholder:'情境：今天的一个背景事实…\n冲突：出现了什么问题 / 矛盾？\n疑问：要解决的核心问题是什么？\n回答：我的观点 / 答案',steps:['<b>① 情境 S</b>：背景事实（对方能认同的）','<b>② 冲突 C</b>：问题 / 矛盾点在哪','<b>③ 疑问 Q</b>：所以我们要解决什么','<b>④ 回答 A</b>：亮出你的观点（结论）']},
+  free:{label:'✍️ 自由',placeholder:'写下你想表达的观点：今天学到了什么？它为什么重要？你会怎么用？',steps:['自由表达 —— 仍建议<b>第一句先给结论</b>，再展开细节']}
+};
+let exprFrame='prep';
+function selectExprFrame(f){
+  exprFrame=EXPR_FRAMES[f]?f:'prep';
+  document.querySelectorAll('.expr-frame').forEach(b=>b.classList.toggle('active',b.dataset.frame===exprFrame));
+  const steps=document.getElementById('exprFrameSteps');
+  if(steps)steps.innerHTML=EXPR_FRAMES[exprFrame].steps.join('<br>');
+  const textEl=document.getElementById('exprText');
+  if(textEl&&!textEl.value.trim())textEl.placeholder=EXPR_FRAMES[exprFrame].placeholder;
+}
 let exprDate='',exprTaskId='';
 function openExprPanel(date,id){
   exprDate=date;exprTaskId=id||'';
@@ -3806,6 +3843,8 @@ function openExprPanel(date,id){
   }
   const textEl=document.getElementById('exprText');
   if(textEl){textEl.value=rec?rec.text:'';exprCountUpdate();}
+  // 恢复上次使用的表达框架（未保存过则默认结论先行 PREP）
+  selectExprFrame(rec&&rec.frame?rec.frame:'prep');
   const ov=document.getElementById('exprOverlay');
   if(ov)ov.classList.add('show');
   if(textEl)setTimeout(()=>textEl.focus(),60);
@@ -3829,7 +3868,7 @@ function exprSave(){
   if(!text){toast('先写两句，才算完成表达训练');return;}
   if(text.length<20){toast('再写几句（20 字以上），把观点讲完整');return;}
   const ec=lg(K.exprCk,{});
-  ec[date]={text,wc:text.length,ts:Date.now()};
+  ec[date]={text,wc:text.length,ts:Date.now(),frame:exprFrame};
   sg(K.exprCk,ec);
   // 同步标记计划任务为完成
   const daily=planGetDaily();const day=daily[date];
