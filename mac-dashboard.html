@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#FF9500">
+<html lang="zh-CN" data-page-node-id="1JE3cppt5mnFjQ1hl6dn8B">
+<head data-page-node-id="6mD7cYYuIPfmB3RuTfjGtp">
+<meta charset="UTF-8" data-page-node-id="0JunuJ0OeINrZ2vIDlXgoV">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" data-page-node-id="xBaojqCv6PPOqeOHOmdsnt">
+<meta name="theme-color" content="#FF9500" data-page-node-id="UmK73KlX4WSGjsFeDVtd3Y">
 <title>行者工作台</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -683,6 +683,62 @@ body{
 }
 .sheet-cancel:hover{background:var(--nav-active);}
 
+/* ===== EXPRESSION TRAINING PANEL (今日表达) ===== */
+.expr-overlay{
+  position:fixed;inset:0;z-index:250;background:rgba(0,0,0,.35);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:24px;
+}
+.expr-overlay.show{display:flex;animation:fadeIn .18s ease;}
+.expr-panel{
+  width:540px;max-width:94vw;max-height:86vh;overflow-y:auto;
+  background:var(--card-bg);border-radius:14px;box-shadow:var(--shadow-lg);
+  padding:20px 22px;animation:popIn .22s cubic-bezier(.2,.9,.3,1.2);
+}
+.expr-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.expr-title{font-size:16px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.expr-close{border:none;background:var(--input-bg);color:var(--text-2);width:28px;height:28px;border-radius:8px;font-size:15px;cursor:pointer;flex:0 0 28px;}
+.expr-close:hover{background:var(--nav-active);}
+.expr-rule{
+  font-size:12.5px;line-height:1.65;color:var(--text-2);background:var(--input-bg);
+  border:0.5px solid var(--input-border);border-radius:10px;padding:10px 12px;margin-bottom:12px;
+}
+.expr-rule b{color:var(--primary-dark);font-weight:700;}
+.expr-input-label{font-size:11.5px;font-weight:600;color:var(--text-2);margin-bottom:6px;}
+.expr-chips{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.expr-chip{
+  font-size:12px;line-height:1.5;color:var(--text);background:var(--input-bg);
+  border-left:3px solid var(--primary);border-radius:6px;padding:6px 10px;
+}
+.expr-chip.rd{border-left-color:#0A84FF;}
+.expr-chip.st{border-left-color:#AF52DE;}
+.expr-chip.rv{border-left-color:#FF9500;}
+.expr-chip.ai{border-left-color:#FF2D55;}
+.expr-hint{font-size:11px;color:var(--text-3);margin-bottom:6px;}
+.expr-text{
+  width:100%;min-height:110px;padding:10px 12px;border-radius:10px;font-size:13.5px;line-height:1.7;
+  background:var(--input-bg);border:0.5px solid var(--input-border);color:var(--text);
+  outline:none;resize:vertical;box-sizing:border-box;font-family:inherit;
+}
+.expr-text:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light);}
+.expr-count{font-size:11px;color:var(--text-3);text-align:right;margin:4px 2px 0 0;font-variant-numeric:tabular-nums;}
+.expr-count.ok{color:var(--green);font-weight:600;}
+.expr-btns{display:flex;gap:10px;margin-top:14px;}
+.expr-save{
+  flex:1;padding:10px 0;border-radius:9px;border:none;cursor:pointer;
+  background:var(--primary);color:#fff;font-size:13.5px;font-weight:700;transition:all .15s;
+}
+.expr-save:hover{filter:brightness(1.08);}
+.expr-cancel{
+  flex:1;padding:10px 0;border-radius:9px;cursor:pointer;
+  background:var(--input-bg);color:var(--text-2);font-size:13.5px;font-weight:600;border:0.5px solid var(--input-border);
+}
+.expr-cancel:hover{background:var(--nav-active);}
+
+/* 计划任务标题可点击（表达任务点击回顾） */
+.plan-task-title.clickable{cursor:pointer;}
+.plan-task-title.clickable:hover{color:var(--primary-dark);text-decoration:underline;}
+
 /* ===== DIALOG ===== */
 .dialog-overlay{
   position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.35);
@@ -901,212 +957,212 @@ body{
 }
 </style>
 </head>
-<body>
+<body data-page-node-id="I7LxA4HQvLgLosWwqmlLXN">
 
 <!-- Top Toolbar -->
-<header class="toolbar">
-  <div class="toolbar-logo">行</div>
-  <div style="display:flex;flex-direction:column;">
-    <div class="toolbar-title">行者工作台</div>
-    <div class="toolbar-sub">Mac 版</div>
+<header class="toolbar" data-page-node-id="xzZTxzo7EH68oQpMeXvoKW">
+  <div class="toolbar-logo" data-page-node-id="QKb4XOGxFCQP6aJZqskihW">行</div>
+  <div style="display:flex;flex-direction:column;" data-page-node-id="CjLF1CC29WsRmnUojaNEPQ">
+    <div class="toolbar-title" data-page-node-id="EIlCZh023GxQzSEyoLCTZr">行者工作台</div>
+    <div class="toolbar-sub" data-page-node-id="hbLDjKGQUTKY2E9VIVeXu2">Mac 版</div>
   </div>
-  <div class="toolbar-center">
-    <span class="toolbar-greeting" id="greeting">下午好</span>
-    <span class="toolbar-date" id="dateDisplay">8月13日 周四</span>
+  <div class="toolbar-center" data-page-node-id="cNLCeaGAusDzqSE7FXAxV9">
+    <span class="toolbar-greeting" id="greeting" data-page-node-id="bOA7yo9JdTed1FwCxDgfhZ">下午好</span>
+    <span class="toolbar-date" id="dateDisplay" data-page-node-id="kG9jkpW37oGAfltbvikBNF">8月13日 周四</span>
   </div>
-  <div class="toolbar-right">
-    <button class="tb-btn" onclick="refreshAll()" title="刷新数据">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+  <div class="toolbar-right" data-page-node-id="twWoiWQhk9PsHvgkjPNpIf">
+    <button class="tb-btn" onclick="refreshAll()" title="刷新数据" data-page-node-id="kkqkeU9HNi2VqTFsrgbB9y">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" data-page-node-id="s9M4XvOQuDGHX9osmhkRfM"><path d="M23 4v6h-6" data-page-node-id="5enbnp0tsfaa7drGDLBNgX"/><path d="M1 20v-6h6" data-page-node-id="8JBzywvHY8byJ5o2mANJfz"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" data-page-node-id="h5aFTd6D8Xo3FvkjKpGsvC"/></svg>
     </button>
-    <button class="tb-btn" id="notifyBell" onclick="requestNotifyPermission()" title="开启提醒">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+    <button class="tb-btn" id="notifyBell" onclick="requestNotifyPermission()" title="开启提醒" data-page-node-id="xhJjcVdzUWYkuEdVyupk78">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="Ki2ZBWjHgSvEyqms8dPsrN"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" data-page-node-id="po8FGnyQ1AWHvBUWzWLe1L"/><path d="M13.73 21a2 2 0 01-3.46 0" data-page-node-id="IA0CfUZFhRLrbstZWEbQfj"/></svg>
     </button>
-    <button class="tb-btn" onclick="exportData()" title="导出备份">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <button class="tb-btn" onclick="exportData()" title="导出备份" data-page-node-id="19sQJaiXrL4edsJDZsD9aH">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" data-page-node-id="iZD9kVi6x8VeDoaBezkbok"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" data-page-node-id="IqvnENTtKsYW0NsInsu109"/><polyline points="7 10 12 15 17 10" data-page-node-id="hiO0MTTcGcWKQAwXc46anH"/><line x1="12" y1="15" x2="12" y2="3" data-page-node-id="kR3LFvLFnIovFsG6auHaXa"/></svg>
     </button>
-    <button class="tb-btn" onclick="document.getElementById('importFile').click()" title="导入备份">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    <button class="tb-btn" onclick="document.getElementById('importFile').click()" title="导入备份" data-page-node-id="Jw0T5SyoPjV2fgfmhsLDfR">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" data-page-node-id="8B0zPqVccISY0twgt0u1wF"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" data-page-node-id="YLwQmjzLk7FokaRgcActj2"/><polyline points="17 8 12 3 7 8" data-page-node-id="GoPDf6ipjldrt5y9BRUW45"/><line x1="12" y1="3" x2="12" y2="15" data-page-node-id="g9CWuw1O17Uui9z86pxHZ7"/></svg>
     </button>
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" data-page-node-id="ItRFukp6YKb2ZDO4Jt9fL5">
   </div>
 </header>
 
-<div class="body-wrap">
+<div class="body-wrap" data-page-node-id="gTOzWEVGyiP71MObQqlmFZ">
   <!-- Sidebar -->
-  <aside class="sidebar">
-    <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span>首页</span>
+  <aside class="sidebar" data-page-node-id="ph64IAkn8N2jW4TeSeRb9V">
+    <button class="nav-item active" data-tab="home" onclick="switchTab('home')" data-page-node-id="WKyALgHsHqjgS0Eki4AtFj">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="pBouVtYt2BVF6dv2QWMgWV"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" data-page-node-id="6gDDBUL9iXTPJPzvLw8UdD"/><polyline points="9 22 9 12 15 12 15 22" data-page-node-id="E7UUjfCF73rTlYJAIkmHcr"/></svg>
+      <span data-page-node-id="nnuvI5aBVJyZHdvsqKhZrT">首页</span>
     </button>
-    <button class="nav-item" data-tab="plan" onclick="switchTab('plan')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
-      <span>规划</span>
-      <span class="nav-badge" id="taskBadge">0</span>
+    <button class="nav-item" data-tab="plan" onclick="switchTab('plan')" data-page-node-id="LUPvP6AfbmaQmygB2HvBha">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="P9mZDDrMYkKs30EIS7rCQE"><rect x="3" y="4" width="18" height="18" rx="2" data-page-node-id="Z3gAbVLC7G4i2E8KrpugO9"/><line x1="16" y1="2" x2="16" y2="6" data-page-node-id="r2GKkh0YOWzD9zRM48qvjJ"/><line x1="8" y1="2" x2="8" y2="6" data-page-node-id="SdDuBzqu8x9RFE29KRiQqQ"/><line x1="3" y1="10" x2="21" y2="10" data-page-node-id="PKiAN44HeL1PXAsVQPm0CH"/><path d="M9 16l2 2 4-4" data-page-node-id="vTihBCB6dNe0bOeNLZsF8B"/></svg>
+      <span data-page-node-id="LblaJYQQ1m0gk9UJD3oZRY">规划</span>
+      <span class="nav-badge" id="taskBadge" data-page-node-id="Z2zLAjCwa1G51UbM349Byr">0</span>
     </button>
-    <button class="nav-item" data-tab="exercise" onclick="switchTab('exercise')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-      <span>运动</span>
+    <button class="nav-item" data-tab="exercise" onclick="switchTab('exercise')" data-page-node-id="8Ft4qvPCsPHctalWwVY0Ig">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="0xGFyCe4F2jKQTMJe31uN2"><path d="M22 12h-4l-3 9L9 3l-3 9H2" data-page-node-id="0sLg4VxLTrgYgzrqtjG6K3"/></svg>
+      <span data-page-node-id="Kq6eXpPXVezz4UqVO9xDtD">运动</span>
     </button>
-    <button class="nav-item" data-tab="reading" onclick="switchTab('reading')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
-      <span>读书</span>
+    <button class="nav-item" data-tab="reading" onclick="switchTab('reading')" data-page-node-id="JudnBOlSb0B04i3DWyXka0">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="QmqkeC5b4tkhD5AYbNm89w"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" data-page-node-id="HCcANSvztbxAWCmM1rmOAY"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" data-page-node-id="MeZyrBR6TffkuhvVYLAovF"/></svg>
+      <span data-page-node-id="TOsfob756itcjXh1pI9Y2Y">读书</span>
     </button>
-    <button class="nav-item" data-tab="contact" onclick="switchTab('contact')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-      <span>人脉</span>
+    <button class="nav-item" data-tab="contact" onclick="switchTab('contact')" data-page-node-id="oN5QGyUZrC8GSYTiJucpH3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="jRUC2wq0csxuR9yTR5qBUU"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" data-page-node-id="M1H1dCowG1OMP4YQwdarK8"/><circle cx="9" cy="7" r="4" data-page-node-id="YogckAoZA4psJPDpTuhDhk"/><path d="M23 21v-2a4 4 0 00-3-3.87" data-page-node-id="74tvp57B2Z7aEoq8VYz58y"/><path d="M16 3.13a4 4 0 010 7.75" data-page-node-id="8nkuKT1I1HTGfScNcUBIOi"/></svg>
+      <span data-page-node-id="OAuKIUUAfxfFK8YdEL6aNr">人脉</span>
     </button>
-    <button class="nav-item" data-tab="review" onclick="switchTab('review')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
-      <span>复盘</span>
+    <button class="nav-item" data-tab="review" onclick="switchTab('review')" data-page-node-id="WK0BxESXyRJffAD5aBjxQo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="uziI5RmjZRuxH8DmgG7KEk"><path d="M12 20h9" data-page-node-id="sSixJn0IRAvBOmTSpCGZ9c"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z" data-page-node-id="hHKf2oIMw91Ho7ENC9GBSz"/></svg>
+      <span data-page-node-id="6dzwA5zAaA0EK0LEcLwFtZ">复盘</span>
     </button>
-    <div class="sidebar-spacer"></div>
-    <div class="sidebar-foot">
-      数据与手机版共享<br>
+    <div class="sidebar-spacer" data-page-node-id="OCWfOEQL20Zq6qulVrDgs5"></div>
+    <div class="sidebar-foot" data-page-node-id="IS3xZamUwhFlwlr7Px9zuf">
+      数据与手机版共享<br data-page-node-id="zdiI9kXqH9a7UqOvBHHGvU">
       阅读计划每日自动更新
     </div>
   </aside>
 
   <!-- Main Content -->
-  <main class="content" id="mainContent">
+  <main class="content" id="mainContent" data-page-node-id="rg648Rmn0RWkGHPeuG1CC3">
 
     <!-- Notify banner -->
-    <div class="notify-banner" id="notifyBanner" style="display:none">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-      <span class="nb-text" id="notifyBannerText"></span>
-      <button class="nb-close" onclick="document.getElementById('notifyBanner').style.display='none'">&times;</button>
+    <div class="notify-banner" id="notifyBanner" style="display:none" data-page-node-id="NlNGiWAzROpuQXD0sTQ2gI">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="ZKMh9YXKhnCeAAaKYeIQMv"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" data-page-node-id="kqLZG3XIGFXkCdFIzpTv9e"/><path d="M13.73 21a2 2 0 01-3.46 0" data-page-node-id="HJNY4GKPFg5Scj7zCgygeE"/></svg>
+      <span class="nb-text" id="notifyBannerText" data-page-node-id="uVXaUGqE1gk7DlUSGTfcjW"></span>
+      <button class="nb-close" onclick="document.getElementById('notifyBanner').style.display='none'" data-page-node-id="bcg7UxT87iUwQXKu5qIObx">&times;</button>
     </div>
 
     <!-- ==================== HOME ==================== -->
-    <div class="page active" id="page-home">
-      <div class="today-banner normal" id="todayBanner">
-        <div class="today-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <div class="page active" id="page-home" data-page-node-id="rYjeiGARM0d8DVBHQ2DQoG">
+      <div class="today-banner normal" id="todayBanner" data-page-node-id="wFGH82u7M4hk9IH93UBwuq">
+        <div class="today-label" data-page-node-id="lfs44RAvmWwPLWFKcj5s55">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="uZDqGW5WHMeIh2t4ufIxe5"><circle cx="12" cy="12" r="10" data-page-node-id="ve7CVoPacoINiGvZxVAgZT"/><polyline points="12 6 12 12 16 14" data-page-node-id="1fDQ2qkC5MiLgwgLLzyzro"/></svg>
           今日概览
         </div>
-        <div id="todayItems"><div class="empty-state"><span class="empty-desc">今天没有待处理事项</span></div></div>
+        <div id="todayItems" data-page-node-id="7yVrtjfUEqXYHde4hCzi5J"><div class="empty-state" data-page-node-id="T2ONYvFdV8VVNuXAhGt1lS"><span class="empty-desc" data-page-node-id="Tq00XBcEs03JLWw0ilX6bl">今天没有待处理事项</span></div></div>
       </div>
 
-      <div class="stats-grid">
-        <div class="stat-card" onclick="switchTab('plan');planSwitchView('tasks')">
-          <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
-          <div><div class="stat-label">工作日程</div><div class="stat-value" id="dashTasks">0</div><div class="stat-meta">待完成任务</div></div>
+      <div class="stats-grid" data-page-node-id="RTJqxPRXEHflCXHTIx7AMW">
+        <div class="stat-card" onclick="switchTab('plan');planSwitchView('tasks')" data-page-node-id="F8RDI6UW1gcPMxwdyLQWS8">
+          <div class="stat-icon blue" data-page-node-id="ljToasjfF7XQlNGWaRYMXM"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="T23hK2FsDC2SubpnRERAjD"><path d="M9 11l3 3L22 4" data-page-node-id="FYEbl8oCvAyTLHlqcTqKBU"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" data-page-node-id="hZRTtj7NLkLYOLFANWh2vQ"/></svg></div>
+          <div data-page-node-id="oXgdft4pkSOuf4lnUZGQiD"><div class="stat-label" data-page-node-id="JeGMw2EAPHssBqp2hKUf2w">工作日程</div><div class="stat-value" id="dashTasks" data-page-node-id="fdR1KUmLorwAWZCSTuPHva">0</div><div class="stat-meta" data-page-node-id="vtAQDC0v1OfezqXLRV24XE">待完成任务</div></div>
         </div>
-        <div class="stat-card" onclick="switchTab('exercise')">
-          <div class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-          <div><div class="stat-label">运动锻炼</div><div class="stat-value" id="dashExercise">0min</div><div class="stat-meta">本周运动</div></div>
+        <div class="stat-card" onclick="switchTab('exercise')" data-page-node-id="KpZ1CQ1zxjFLUFRCIwrAFZ">
+          <div class="stat-icon green" data-page-node-id="Z5NlB1iyKa0hKMd5AfJijP"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="TRnbMTGD9lgjSBssOXaDBQ"><path d="M22 12h-4l-3 9L9 3l-3 9H2" data-page-node-id="rvEXleeyQE9JKWcYhyAI3H"/></svg></div>
+          <div data-page-node-id="UwrgJsOFqoyQTRyHjltjW2"><div class="stat-label" data-page-node-id="Q7ZNmNprsEdORmSzyALsHB">运动锻炼</div><div class="stat-value" id="dashExercise" data-page-node-id="jsA0fd5VP6JC0IlPXkn91h">0min</div><div class="stat-meta" data-page-node-id="WBpgDjDaMjrUisHKBb7E6v">本周运动</div></div>
         </div>
-        <div class="stat-card" onclick="switchTab('reading')">
-          <div class="stat-icon orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></div>
-          <div><div class="stat-label">读书学习</div><div class="stat-value" id="dashBooks">0</div><div class="stat-meta">在读书目</div></div>
+        <div class="stat-card" onclick="switchTab('reading')" data-page-node-id="5WbZafxEDwS4fbAuV3q8cy">
+          <div class="stat-icon orange" data-page-node-id="HcfS9IB9N2eQyrHx6ImXe2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="O56YnuO3dHd27iWw4Nk4i7"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" data-page-node-id="UYIFT3uN2GOGyLunYoMH9D"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" data-page-node-id="GRgtR16iFB48BBLxbj7Rf5"/></svg></div>
+          <div data-page-node-id="1V08kYvHopPEz2dWdT77tb"><div class="stat-label" data-page-node-id="DjqfLA7b7Cu9SauHDUjXvg">读书学习</div><div class="stat-value" id="dashBooks" data-page-node-id="B7ARG09lC5H6cCx0qL6iti">0</div><div class="stat-meta" data-page-node-id="niXFIiqLngTrO337OlVqzl">在读书目</div></div>
         </div>
-        <div class="stat-card" onclick="switchTab('contact')">
-          <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
-          <div><div class="stat-label">人际联络</div><div class="stat-value" id="dashContacts">0</div><div class="stat-meta" id="dashContactWarn"></div></div>
+        <div class="stat-card" onclick="switchTab('contact')" data-page-node-id="84eWDbjBe2U38CqDBxmbDh">
+          <div class="stat-icon purple" data-page-node-id="GnSElCxDlQ4AA80W2nH3HG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="CaCfuDlrvjRwFkOEjRrAks"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" data-page-node-id="WmaR4HPHnsZFVaikOTk0jv"/><circle cx="9" cy="7" r="4" data-page-node-id="2ZgwtvFLOf3qlvorCfQ1q6"/><path d="M23 21v-2a4 4 0 00-3-3.87" data-page-node-id="Fo3b7FrXLy8ffUFfGc1Xo3"/><path d="M16 3.13a4 4 0 010 7.75" data-page-node-id="92F9oylvmBD2RyCxuQclcK"/></svg></div>
+          <div data-page-node-id="hsw5NfEDhPZeMSQGTH21C2"><div class="stat-label" data-page-node-id="zZG433kdw890kaDUQ6REvU">人际联络</div><div class="stat-value" id="dashContacts" data-page-node-id="xe3RgmJ9wmsG6Aeg4hMPai">0</div><div class="stat-meta" id="dashContactWarn" data-page-node-id="2VIDiEN8d71h3FsBMRYTer"></div></div>
         </div>
       </div>
 
-      <div class="home-grid">
-        <div class="home-left">
+      <div class="home-grid" data-page-node-id="nQJlvAyW7hXTtg0ESH3Bjc">
+        <div class="home-left" data-page-node-id="64SsCGX67lzUqXF7JEiyaf">
           <!-- 今日 Agent 学习 -->
-          <div class="rt-card agent" id="agentHomeCard" onclick="switchTab('reading')" style="display:none">
-            <div class="rt-icon" id="agHomeIcon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          <div class="rt-card agent" id="agentHomeCard" onclick="switchTab('reading')" style="display:none" data-page-node-id="jSYCZsfChdEaMZERakUxVg">
+            <div class="rt-icon" id="agHomeIcon" data-page-node-id="6tTjF5lDsIs8fc7z3ekbta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="dEn5ylioLijnPYiCsz5wlz"><circle cx="12" cy="12" r="10" data-page-node-id="GfWdyc0jNvThv5gxLDOykl"/><circle cx="12" cy="12" r="6" data-page-node-id="OUUBhBdh8CCzSNWuOYjiyk"/><circle cx="12" cy="12" r="2" data-page-node-id="3UpTIYlEkvgSwrzEVySNhj"/></svg>
             </div>
-            <div class="rt-body">
-              <div class="rt-label" id="agHomeLabel">🎯 Agent 学习计划</div>
-              <div class="rt-title" id="agHomeTitle">加载中...</div>
-              <div class="rt-sub" id="agHomeSub"></div>
+            <div class="rt-body" data-page-node-id="9Q0u0SNE8Aaz5eu61i46vD">
+              <div class="rt-label" id="agHomeLabel" data-page-node-id="sDAfO6qq0OQgH1HEjjKmWE">🎯 Agent 学习计划</div>
+              <div class="rt-title" id="agHomeTitle" data-page-node-id="i2kWcUqMsEJWt4JEr3W9H9">加载中...</div>
+              <div class="rt-sub" id="agHomeSub" data-page-node-id="aRH0CaTHGPfodERt0djrj0"></div>
             </div>
-            <div class="rt-check" id="agHomeCheck" onclick="event.stopPropagation();toggleAgentCheckIn()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="rt-check" id="agHomeCheck" onclick="event.stopPropagation();toggleAgentCheckIn()" data-page-node-id="CLbZrFOzLalGrJgJaPiwzQ">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-page-node-id="6FBVSVUFlpKGlyOreBnA7B"><polyline points="20 6 9 17 4 12" data-page-node-id="jcyDiYiO7IIjNq9AoF8FB8"/></svg>
             </div>
           </div>
           <!-- 今日读书 -->
-          <div class="rt-card" id="homeReadingCard" onclick="switchTab('reading')" style="display:none">
-            <div class="rt-icon" id="rtHomeIcon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+          <div class="rt-card" id="homeReadingCard" onclick="switchTab('reading')" style="display:none" data-page-node-id="9Glu6NIgBcjfwmLDmrtYLF">
+            <div class="rt-icon" id="rtHomeIcon" data-page-node-id="Fflu8YYVWD1CGyKIh9gwga">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="WtJ8ii6DfjFEZb6tWw8aRB"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" data-page-node-id="sQexTOydokAvaRM3JOZ8dJ"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" data-page-node-id="tqYtkamAsU9Kjzoia87ceD"/></svg>
             </div>
-            <div class="rt-body">
-              <div class="rt-label" id="rtHomeLabel">今日读书任务</div>
-              <div class="rt-title" id="rtHomeTitle">加载中...</div>
-              <div class="rt-sub" id="rtHomeSub"></div>
+            <div class="rt-body" data-page-node-id="9R3DZJ4hDJB7w7TKhffOqX">
+              <div class="rt-label" id="rtHomeLabel" data-page-node-id="bYKJLphiXDgOA0Yc4tkrhT">今日读书任务</div>
+              <div class="rt-title" id="rtHomeTitle" data-page-node-id="Ngm0m3GlnhH1by8o8PXGkd">加载中...</div>
+              <div class="rt-sub" id="rtHomeSub" data-page-node-id="zYDrPlZbGfTO2ULSCSMSHf"></div>
             </div>
-            <div class="rt-check" id="rtHomeCheck" onclick="event.stopPropagation();togglePlanCheckIn()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="rt-check" id="rtHomeCheck" onclick="event.stopPropagation();togglePlanCheckIn()" data-page-node-id="qHXVIZimFCWQWORD1T6X5w">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-page-node-id="ztUBMTE5BpYkGrWESaZRSu"><polyline points="20 6 9 17 4 12" data-page-node-id="J83UUGwxseuVyADpTFYcCv"/></svg>
             </div>
           </div>
 
           <!-- 今日运动 -->
-          <div class="rt-card" id="homeExerciseCard" onclick="switchTab('exercise')" style="display:none">
-            <div class="rt-icon" id="exHomeIcon" style="background:rgba(48,209,88,.12);color:#30D158;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5l11 11M21 21l-1-1M3 3l1 1M18 22l4-4M2 6l4-4M3 10h7M14 10h7M10 3v7M10 14v7"/></svg>
+          <div class="rt-card" id="homeExerciseCard" onclick="switchTab('exercise')" style="display:none" data-page-node-id="kqztb0dz1TqHrlIvDNwYIv">
+            <div class="rt-icon" id="exHomeIcon" style="background:rgba(48,209,88,.12);color:#30D158;" data-page-node-id="zyS2NGMZ8iIbDA3nOWFdUG">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="we10AxV9DTP3OpwBv7nEAJ"><path d="M6.5 6.5l11 11M21 21l-1-1M3 3l1 1M18 22l4-4M2 6l4-4M3 10h7M14 10h7M10 3v7M10 14v7" data-page-node-id="QrLG93VJuBBB3xsGNxQit6"/></svg>
             </div>
-            <div class="rt-body">
-              <div class="rt-label" id="exHomeLabel">今日运动</div>
-              <div class="rt-title" id="exHomeTitle">加载中...</div>
-              <div class="rt-sub" id="exHomeSub"></div>
+            <div class="rt-body" data-page-node-id="Ia1dmklbA4dKbhzyHFRTIY">
+              <div class="rt-label" id="exHomeLabel" data-page-node-id="45R4yJ2QtX7ylB9bvMgOQc">今日运动</div>
+              <div class="rt-title" id="exHomeTitle" data-page-node-id="4CCWUMQRnjQid5V2NknjU9">加载中...</div>
+              <div class="rt-sub" id="exHomeSub" data-page-node-id="R8QYK178R44pFopUnEOFs2"></div>
             </div>
-            <div class="rt-check" id="exHomeCheck" onclick="event.stopPropagation();openSheet('exercise')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="rt-check" id="exHomeCheck" onclick="event.stopPropagation();openSheet('exercise')" data-page-node-id="wDorkW0U7e7NMKfz5mHZc9">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" data-page-node-id="LqrVOo1zByHYMVWLsn05yr"><polyline points="20 6 9 17 4 12" data-page-node-id="fGDHIEUMbe1WW36t2XyZFd"/></svg>
             </div>
           </div>
 
           <!-- 今日复盘 -->
-          <div class="rt-card" id="homeReviewCard" onclick="switchTab('review')" style="display:none">
-            <div class="rt-icon" id="rvHomeIcon" style="background:rgba(255,149,0,.13);color:#FF9500;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/></svg>
+          <div class="rt-card" id="homeReviewCard" onclick="switchTab('review')" style="display:none" data-page-node-id="YW3BxKEzDf9fGJOrAUvJZ5">
+            <div class="rt-icon" id="rvHomeIcon" style="background:rgba(255,149,0,.13);color:#FF9500;" data-page-node-id="DUeg48J4xmVGdFAmaDKj04">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="H2CEo0N9kjCKbjxUg4HuGE"><path d="M12 20h9" data-page-node-id="g8EYUW0GuAycEYoMIm6cGP"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z" data-page-node-id="DvbFQgH0crmHuPReGNuPZX"/></svg>
             </div>
-            <div class="rt-body">
-              <div class="rt-label" id="rvHomeLabel">每日复盘</div>
-              <div class="rt-title" id="rvHomeTitle">加载中...</div>
-              <div class="rt-sub" id="rvHomeSub"></div>
+            <div class="rt-body" data-page-node-id="CYirGuA8NRGpI0nJAzmySj">
+              <div class="rt-label" id="rvHomeLabel" data-page-node-id="jb4YTzDUtfHWDSAw19RIWO">每日复盘</div>
+              <div class="rt-title" id="rvHomeTitle" data-page-node-id="JZbzXLBJQCLmpUo3O9McGq">加载中...</div>
+              <div class="rt-sub" id="rvHomeSub" data-page-node-id="SW5n52qXP5MpAExhRowwsd"></div>
             </div>
-            <div class="rt-check" id="rvHomeCheck" onclick="event.stopPropagation();switchTab('review')">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="rt-check" id="rvHomeCheck" onclick="event.stopPropagation();switchTab('review')" data-page-node-id="SQ8zpa2RDwjt9W2aQUXzr6">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" data-page-node-id="PRxp1MrSWlNWkA1pK8n1wG"><polyline points="20 6 9 17 4 12" data-page-node-id="5d5CsAVDLXdcojoTxCxOuB"/></svg>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 109 20h9a2 2 0 002-2v-6a2 2 0 00-2-2z"/><path d="M18 22a4 4 0 000-8"/></svg>
+          <div class="card" data-page-node-id="DeZu89hCKf4JG7HopHdQJ1">
+            <div class="card-title" data-page-node-id="RxMv5ZV9xptPvt0Ue4wYVm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="7sDap4M2l8fxuTH2uFWJEI"><path d="M18 10h-1.26A8 8 0 109 20h9a2 2 0 002-2v-6a2 2 0 00-2-2z" data-page-node-id="rtgjzvpVjj9GGQDA6HPmIx"/><path d="M18 22a4 4 0 000-8" data-page-node-id="CFoWtVgLVCkyWgx7AoxxZl"/></svg>
               最近读书笔记
-              <button class="sec-action" onclick="switchTab('reading')">全部</button>
+              <button class="sec-action" onclick="switchTab('reading')" data-page-node-id="Z2Erpe3mXT8Vrkg8yXBr1T">全部</button>
             </div>
-            <div id="homeNotesSummary"></div>
-            <div id="homeNotes"></div>
+            <div id="homeNotesSummary" data-page-node-id="g3wZ8IZt85dHTzss23AhQC"></div>
+            <div id="homeNotes" data-page-node-id="A9L0iZNLTfIXXLrMSbZnt4"></div>
           </div>
         </div>
 
-        <div class="home-right">
-          <div class="card" id="agentProgWrap" style="display:none">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        <div class="home-right" data-page-node-id="5nAXCsy6n1P6hTb9JUNiod">
+          <div class="card" id="agentProgWrap" style="display:none" data-page-node-id="gbaD9TfyDDmQVHWdpxU4vu">
+            <div class="card-title" data-page-node-id="k3jm0QEnPJcOugj5Wg4V9Z">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="Hec5fXWHRSD2f5ZwnliOoq"><circle cx="12" cy="12" r="10" data-page-node-id="X2nsQDPEo2ZdE2CNZz85MG"/><circle cx="12" cy="12" r="6" data-page-node-id="g10VUSPCfDYyNjF7dmEN2F"/><circle cx="12" cy="12" r="2" data-page-node-id="iYxzfDCyBP9RWSc46TDGMD"/></svg>
               AI Agent 冲刺备战
-              <button class="sec-action" onclick="switchTab('reading')">详情</button>
+              <button class="sec-action" onclick="switchTab('reading')" data-page-node-id="xi8cXZ1O8E5bm9CjZ7aq8a">详情</button>
             </div>
-            <div id="agWeekDots" style="display:flex;gap:5px;margin-bottom:10px;"></div>
-            <div id="agPhase" style="font-size:12px;color:var(--text-2);margin-bottom:8px;font-weight:600;"></div>
-            <div class="goal-bar" style="height:6px;margin-bottom:6px;"><div class="goal-fill" id="agBarFill" style="width:0%;background:var(--purple);"></div></div>
-            <div id="agProgText" style="font-size:12px;color:var(--text-3);"></div>
+            <div id="agWeekDots" style="display:flex;gap:5px;margin-bottom:10px;" data-page-node-id="TmckmQbU9ncHtYv2oFoHtd"></div>
+            <div id="agPhase" style="font-size:12px;color:var(--text-2);margin-bottom:8px;font-weight:600;" data-page-node-id="tZaBDSq2MKrnHDTFJeA66X"></div>
+            <div class="goal-bar" style="height:6px;margin-bottom:6px;" data-page-node-id="Wt9xT1rft2xrK9CUmpeg4k"><div class="goal-fill" id="agBarFill" style="width:0%;background:var(--purple);" data-page-node-id="CFG8WOpYMsbgMWgIlYt8dN"></div></div>
+            <div id="agProgText" style="font-size:12px;color:var(--text-3);" data-page-node-id="06ODcS7Uh5aiyi5JnD31bA"></div>
           </div>
-          <div class="card" id="contactRemindCard" style="display:none">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          <div class="card" id="contactRemindCard" style="display:none" data-page-node-id="jS9Go92AJHa5nsOFVqPWVc">
+            <div class="card-title" data-page-node-id="dpHQJ7HDag3IjY3c4QGK9t">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="S4F1FcBomcd5iXVEFDujzb"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" data-page-node-id="GmQjN8yTvNI82afOLykNJk"/><circle cx="9" cy="7" r="4" data-page-node-id="OVe11HNrONTaQygaaISbA8"/><path d="M23 21v-2a4 4 0 00-3-3.87" data-page-node-id="XszYNVwe6nVq8f93gFVoAr"/><path d="M16 3.13a4 4 0 010 7.75" data-page-node-id="e9WSx0PzE9SSVhcEASGYYC"/></svg>
               人脉提醒
-              <button class="sec-action" onclick="switchTab('contact')">全部</button>
+              <button class="sec-action" onclick="switchTab('contact')" data-page-node-id="TnToZMeNxdyRljYzQHU7i8">全部</button>
             </div>
-            <div id="contactRemindList"></div>
+            <div id="contactRemindList" data-page-node-id="IMp9hTQ50T6BIDPyA0pYD1"></div>
           </div>
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="16" x2="16" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <div class="card" data-page-node-id="tg0lPjzQZt3KYurwZqAEGH">
+            <div class="card-title" data-page-node-id="aUBmm15H8AYq3gmkn7YFQ7">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="IuBlgkCZ1Y2abGA6lw6L5K"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" data-page-node-id="SrnVDwzmnjEDjsy5mEAki9"/><polyline points="14 2 14 8 20 8" data-page-node-id="1Arg1Hql9lJqaBTVJuaqX4"/><line x1="8" y1="16" x2="16" y2="16" data-page-node-id="iHGw3exODzY7R5BpCqVhzw"/><line x1="8" y1="12" x2="16" y2="12" data-page-node-id="NwIKSA1BN0WRIR2U5XB0iY"/></svg>
               本周读书计划
             </div>
-            <div id="planWeekProgress" style="display:flex;gap:5px;margin-bottom:10px;"></div>
-            <div id="planPhase" style="font-size:12px;color:var(--text-2);margin-bottom:8px;font-weight:600;"></div>
-            <div id="planContent"><div class="wr-empty">⏳ 加载阅读计划中...</div></div>
-            <button class="plan-btn" id="planCheckBtn" style="width:100%;justify-content:center;margin-top:12px;" onclick="checkPlanToday()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 标记今日完成
+            <div id="planWeekProgress" style="display:flex;gap:5px;margin-bottom:10px;" data-page-node-id="xBUzDm6Y0Yj9UOQgqNPQks"></div>
+            <div id="planPhase" style="font-size:12px;color:var(--text-2);margin-bottom:8px;font-weight:600;" data-page-node-id="v3Bkd2RDqJ67SF2khLcoy8"></div>
+            <div id="planContent" data-page-node-id="kPkGpzXmvCU7igrtVLekSN"><div class="wr-empty" data-page-node-id="WokYHI4z7eJtBe1BVE428p">⏳ 加载阅读计划中...</div></div>
+            <button class="plan-btn" id="planCheckBtn" style="width:100%;justify-content:center;margin-top:12px;" onclick="checkPlanToday()" data-page-node-id="NBDHg2OXLrCyPcdFZy9yoT">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" data-page-node-id="tpIZizbPNf2i23w1PmLG7k"><polyline points="20 6 9 17 4 12" data-page-node-id="iToG4B87aQ7ccDFjx4kuHE"/></svg> 标记今日完成
             </button>
           </div>
         </div>
@@ -1115,375 +1171,376 @@ body{
 
     <!-- ==================== TASKS ==================== -->
     <!-- ==================== EXERCISE ==================== -->
-    <div class="page" id="page-exercise">
-      <div class="ex-grid">
-        <div class="card ex-row2" id="exercisePlanCard">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    <div class="page" id="page-exercise" data-page-node-id="pc35bEbndD70N4vwQKd4mz">
+      <div class="ex-grid" data-page-node-id="oNlOJRQPmaar8yocCVw5m8">
+        <div class="card ex-row2" id="exercisePlanCard" data-page-node-id="NSD73gSJH8zqYV99g0Q5SV">
+          <div class="card-title" data-page-node-id="2NX3HySc17XXmygDpktF29">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="V4ecE25eXAlZ2I0sdLnjUL"><rect x="3" y="4" width="18" height="18" rx="2" data-page-node-id="Qzyq5MrEBrKG6voFWHRruN"/><path d="M16 2v4M8 2v4M3 10h18" data-page-node-id="Bjb9iTKXWzEOCceIExSmAF"/></svg>
             本周训练计划
-            <span class="sec-action" style="cursor:default;color:var(--text-3)" id="hangProgressLabel">吊杠 0→100s</span>
+            <span class="sec-action" style="cursor:default;color:var(--text-3)" id="hangProgressLabel" data-page-node-id="KCxY8o06UpgNz0nTTEjklv">吊杠 0→100s</span>
           </div>
-          <div id="exercisePlanList"></div>
-          <div id="hangProgressBar"></div>
+          <div id="exercisePlanList" data-page-node-id="4k5ImMfDGVU6TAU92xYyos"></div>
+          <div id="hangProgressBar" data-page-node-id="KFukHpahjMn0VxQvWvOxOj"></div>
         </div>
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        <div class="card" data-page-node-id="2AJA7fKnH4Zm7GHiKeQQCM">
+          <div class="card-title" data-page-node-id="B3KH966KvAAOiMnWv2e7IB">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="edEay7V7aqyDyM5Z22bjyD"><path d="M22 12h-4l-3 9L9 3l-3 9H2" data-page-node-id="3agxgpSISx8Kl5MAJ09bkJ"/></svg>
             本周目标 150min
           </div>
-          <div class="ring-wrap" id="weeklyRing"></div>
+          <div class="ring-wrap" id="weeklyRing" data-page-node-id="Gfw6evHaBlNrJU0tGtFFWZ"></div>
         </div>
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21v-2M12 5V3M5 12H3M21 12h-2"/><path d="M12 9a3 3 0 100 6 3 3 0 000-6z"/></svg>
+        <div class="card" data-page-node-id="8IEqbdNv7gq93xEjNfcUZU">
+          <div class="card-title" data-page-node-id="bQjGRci1UedxtEup1JkZgh">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="T3l6yr4OzrMBwn3n7AyDGw"><path d="M12 21v-2M12 5V3M5 12H3M21 12h-2" data-page-node-id="bOnOsGHBDv3Ql6PPbnZOvY"/><path d="M12 9a3 3 0 100 6 3 3 0 000-6z" data-page-node-id="EnpFU52nXSB7hAu0WtIACV"/></svg>
             体重趋势
-            <button class="sec-action" id="addWeightBtn" style="cursor:pointer">+ 记录</button>
+            <button class="sec-action" id="addWeightBtn" style="cursor:pointer" data-page-node-id="rT2WsPPE7uizAOTwABpqAF">+ 记录</button>
           </div>
-          <div id="weightChart"></div>
+          <div id="weightChart" data-page-node-id="jCDIafCoyps2q2m4xsvbhN"></div>
         </div>
-        <div class="card ex-row2">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg>
+        <div class="card ex-row2" data-page-node-id="omWikymHPXznpoGHS4r9cv">
+          <div class="card-title" data-page-node-id="uTTjtfObjG9ydiYn24RZUe">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="k118W3k3EcsBeoxMOCC5vx"><circle cx="12" cy="12" r="10" data-page-node-id="YbyV0AKEYpu73ufRDYyIhz"/><path d="M8 14s1.5 2 4 2 4-2 4-2" data-page-node-id="HGhi6kMEXtnM0ehwliNbnK"/></svg>
             运动记录
-            <button class="sec-action" onclick="openSheet('exercise')">+ 打卡</button>
+            <button class="sec-action" onclick="openSheet('exercise')" data-page-node-id="isnx4fxTe1oct1rBh4Dm3a">+ 打卡</button>
           </div>
-          <div id="exerciseList"></div>
+          <div id="exerciseList" data-page-node-id="pGsluRsqaBT0y7LtVlGozd"></div>
         </div>
       </div>
     </div>
 
     <!-- ==================== READING ==================== -->
-    <div class="page" id="page-reading">
-      <div class="plan-hero">
-        <div class="plan-hero-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+    <div class="page" id="page-reading" data-page-node-id="fGKhd3ABfWtBzqDNcAXiyV">
+      <div class="plan-hero" data-page-node-id="Z2rqMBkoxtxz1u0rVR6iAQ">
+        <div class="plan-hero-icon" data-page-node-id="8xLRRcdi5VubMhbyJWF95m">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="rRl7wCgpDBDQLCOoD4Tnmu"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" data-page-node-id="WDWdRbGaONNz6lWvu39hGt"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" data-page-node-id="lf0GQV9xZEfRy8dD6Ws0iL"/></svg>
         </div>
-        <div class="plan-hero-body">
-          <div class="plan-hero-label" id="planPhaseLabel">行者计划 · 第1周</div>
-          <div class="plan-hero-book" id="planHeroBook">《加载中...》</div>
-          <div class="plan-hero-point" id="planHeroPoint"></div>
+        <div class="plan-hero-body" data-page-node-id="8VhEGcJilNfTntqG2bj9pB">
+          <div class="plan-hero-label" id="planPhaseLabel" data-page-node-id="E4uV77ZPAmAYJK1kW5OvpI">行者计划 · 第1周</div>
+          <div class="plan-hero-book" id="planHeroBook" data-page-node-id="LrIHfGiXlKd2MfFJAYXL7Q">《加载中...》</div>
+          <div class="plan-hero-point" id="planHeroPoint" data-page-node-id="kG0ICAlNph5uptdkbNE41I"></div>
         </div>
-        <div class="plan-hero-right">
-          <div class="week-dots" id="planWeekDots"></div>
-          <button class="plan-btn" id="planCheckBtn2" onclick="checkPlanToday()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 标记今日完成
+        <div class="plan-hero-right" data-page-node-id="nKIAd0ReImxEBVfacI7fK9">
+          <div class="week-dots" id="planWeekDots" data-page-node-id="AUvqFpLwBOwUTzW8mrlhbg"></div>
+          <button class="plan-btn" id="planCheckBtn2" onclick="checkPlanToday()" data-page-node-id="cz2coYqK9UdWCd6kHkPet3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" data-page-node-id="RwQrVAfiTu2FTNoLgAO4Ax"><polyline points="20 6 9 17 4 12" data-page-node-id="ef5vMx7ESOwkqJB6ScI72C"/></svg> 标记今日完成
           </button>
         </div>
       </div>
 
-      <div class="card" id="agentWeekPanel" style="margin-bottom:16px;display:none">
-        <div class="card-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-          <span id="agPanelTitle">AI Agent 冲刺备战</span>
-          <span style="font-size:11px;color:var(--text-3);font-weight:400;margin-left:auto;">来源：内置学习计划</span>
+      <div class="card" id="agentWeekPanel" style="margin-bottom:16px;display:none" data-page-node-id="erDG0E8h5rFKD3vmMmDypQ">
+        <div class="card-title" data-page-node-id="QHRyHpdDovK6O4ffDKPwC4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="9wxcR4K5CQIuiboytvtkmg"><circle cx="12" cy="12" r="10" data-page-node-id="INCBTD6qKgiGwTAo34KBaj"/><circle cx="12" cy="12" r="6" data-page-node-id="GkqJEop4Eqnm4AY8b1pAeQ"/><circle cx="12" cy="12" r="2" data-page-node-id="HTMWrzzVkcQq0AMax39MCK"/></svg>
+          <span id="agPanelTitle" data-page-node-id="zs9x9fCzQq9Q59P4pJqLjz">AI Agent 冲刺备战</span>
+          <span style="font-size:11px;color:var(--text-3);font-weight:400;margin-left:auto;" data-page-node-id="WSNAkq3dBIDpLlvzvdxEu5">来源：内置学习计划</span>
         </div>
-        <div class="ag-days"></div>
+        <div class="ag-days" data-page-node-id="u2RiEQpsflpG5EATWc6Al4"></div>
       </div>
 
-      <div class="reading-grid">
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      <div class="reading-grid" data-page-node-id="NaEyKXTPchPsHFR5ZFIHv1">
+        <div class="card" data-page-node-id="out3CsNthcPDxUHJnRlIPl">
+          <div class="card-title" data-page-node-id="Tyo6Vi0iRYEKGPQiKAmGjY">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="ooy73u5AiEDWDUYqPIzc5N"><circle cx="12" cy="12" r="10" data-page-node-id="BIygSn1AUl4tPv8MuvHVwr"/><path d="M2 12h20" data-page-node-id="7Dn9IeFVlkID1yTIjJ2EMv"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" data-page-node-id="wf3iIOEbjMyEJjyLMRU0wU"/></svg>
             微信读书
-            <button class="sec-action wr-sync-btn" onclick="refreshWeRead()">刷新数据</button>
-            <button class="sec-action" onclick="toggleWeReadSync()">粘贴导入</button>
+            <button class="sec-action wr-sync-btn" onclick="refreshWeRead()" data-page-node-id="u718wnvp8SAWTl1TKhKVs0">刷新数据</button>
+            <button class="sec-action" onclick="toggleWeReadSync()" data-page-node-id="48Sk121EvWySvxvU40yDil">粘贴导入</button>
           </div>
-          <div id="wereadContent"></div>
-          <div class="sync-area" id="wrSyncArea">
+          <div id="wereadContent" data-page-node-id="zOHOOcvUwgiyAJGevZrC7z"></div>
+          <div class="sync-area" id="wrSyncArea" data-page-node-id="BdDixyKmFz111M2BAtt6Gc">
             <textarea class="sync-input" id="wrSyncInput" rows="3" placeholder="粘贴 weread_sync.py 输出的 JSON..."></textarea>
-            <div class="sync-row">
-              <button class="sync-btn" onclick="importWeReadData()">导入</button>
-              <button class="sync-btn sync-cancel" onclick="toggleWeReadSync()">取消</button>
+            <div class="sync-row" data-page-node-id="l2zj9uKcRljrN3tJYhEzNL">
+              <button class="sync-btn" onclick="importWeReadData()" data-page-node-id="b4M0PRivy4HYXiokGfYWSu">导入</button>
+              <button class="sync-btn sync-cancel" onclick="toggleWeReadSync()" data-page-node-id="sD8vonJOi2HIGFCBzmBLcZ">取消</button>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <div class="card" data-page-node-id="cKnFfvDAytLLUUJZMP2ROc">
+          <div class="card-title" data-page-node-id="0MClxT4eNUD1Ms2JEURSuC">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="pLxFF3DzpCbolqo2b3FqBl"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" data-page-node-id="mqchb7FnQnuw633nFA98R4"/></svg>
             Obsidian 知识库
-            <button class="sec-action" onclick="toggleObsSync()">导入报告</button>
+            <button class="sec-action" onclick="toggleObsSync()" data-page-node-id="f2rIp7RlKHVmBcz48FqJe1">导入报告</button>
           </div>
-          <div id="obsidianContent"></div>
-          <div class="sync-area" id="obsSyncArea">
+          <div id="obsidianContent" data-page-node-id="666Bf1NeRuWPoOFYXGL3R3"></div>
+          <div class="sync-area" id="obsSyncArea" data-page-node-id="CNHFaSCFkqy3OUyLqvqx9C">
             <textarea class="sync-input" id="obsSyncInput" rows="3" placeholder="粘贴 obsidian_scanner.py 输出..."></textarea>
-            <div class="sync-row">
-              <button class="sync-btn" onclick="importObsidianData()">导入</button>
-              <button class="sync-btn sync-cancel" onclick="toggleObsSync()">取消</button>
+            <div class="sync-row" data-page-node-id="xo5qEfMdITsNZ9vgm0MJJ2">
+              <button class="sync-btn" onclick="importObsidianData()" data-page-node-id="GGe8FkRs9bGjSEnPBsH0Sh">导入</button>
+              <button class="sync-btn sync-cancel" onclick="toggleObsSync()" data-page-node-id="t8dLooJI5Ik3o12N3jAGXH">取消</button>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+        <div class="card" data-page-node-id="BguToQAAZUEmJZ2QLfKP5u">
+          <div class="card-title" data-page-node-id="CXnloFQwNBhyliAG38B79S">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="1yRPQoP7hoWLg6NDNqFNFu"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" data-page-node-id="8UR1Qg2NL4oeAug2rL7oJ0"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" data-page-node-id="TCkG1WdaF13ePbYDl0Zkct"/></svg>
             在读书目
-            <button class="sec-action" id="addBookBtn" style="cursor:pointer">+ 添加</button>
+            <button class="sec-action" id="addBookBtn" style="cursor:pointer" data-page-node-id="MvzspAUzk6Myqs17JjFQfR">+ 添加</button>
           </div>
-          <div id="bookList"></div>
-          <div style="margin-top:14px;">
-            <div class="card-title" style="margin-bottom:6px;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <div id="bookList" data-page-node-id="uJEK4J8Bbsa0YQj2IGQ33a"></div>
+          <div style="margin-top:14px;" data-page-node-id="FVZ7FdRjuyU6Ooo4Z6Cv5c">
+            <div class="card-title" style="margin-bottom:6px;" data-page-node-id="Zmi367mNK1pPfSUIYBfiNR">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="g50DmzRoYu5X0ECDKLXmip"><circle cx="12" cy="12" r="10" data-page-node-id="VGJXnOG9gp5sad0CMj9bxx"/><path d="M12 6v6l4 2" data-page-node-id="EqtVXzZ9WbEpAm0FFcZUvf"/></svg>
               学习打卡
             </div>
-            <div id="heatmap"></div>
+            <div id="heatmap" data-page-node-id="UWc3nap1WhxAdLCsEaLkzC"></div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        <div class="card" data-page-node-id="nrMlZkZt2QOF8bb9Xalgo7">
+          <div class="card-title" data-page-node-id="ydXN449mupc47zcAAbhSwE">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="iGA0IAN1uhZeqDKOUev5Dd"><path d="M12 20h9" data-page-node-id="lNyZn1lmKCB7H2OKLDYYwp"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z" data-page-node-id="ZrR5dzvEEQjk5ERVqopVXq"/></svg>
             读书笔记
-            <button class="sec-action" onclick="openSheet('note')">+ 记一笔</button>
+            <button class="sec-action" onclick="openSheet('note')" data-page-node-id="vRqXryy2u2lFBSoqLjyyL7">+ 记一笔</button>
           </div>
-          <div id="noteList"></div>
+          <div id="noteList" data-page-node-id="944SICMbfnQSytlmDtC0QY"></div>
         </div>
       </div>
     </div>
 
     <!-- ==================== CONTACT ==================== -->
-    <div class="page" id="page-contact">
-      <div class="contact-grid">
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+    <div class="page" id="page-contact" data-page-node-id="GgeiyjzZKj0rcEHgpbroO3">
+      <div class="contact-grid" data-page-node-id="4j5E6dvhIYaESNlY4kSVv5">
+        <div class="card" data-page-node-id="BXNcAixRTm2okpJD07hBGt">
+          <div class="card-title" data-page-node-id="DWSQMB2MAObMkFwzWJx1i0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="hDuK2vF19AAfUrXuh1mXmV"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" data-page-node-id="bcWf2esfcu10AHlal9t5o7"/><circle cx="9" cy="7" r="4" data-page-node-id="UqCiDlR5sAAJynf6xkVPjB"/><path d="M23 21v-2a4 4 0 00-3-3.87" data-page-node-id="1PAB7xyAAIcQntjFub1yGI"/><path d="M16 3.13a4 4 0 010 7.75" data-page-node-id="V0pZ4MRxdRxeY1fgEcEWIR"/></svg>
             联系人
-            <button class="sec-action" onclick="exportContactsCsv()">导出</button>
-            <button class="sec-action" onclick="downloadContactCsvTemplate()">模板</button>
-            <button class="sec-action" onclick="document.getElementById('contactCsvInput').click()">导入</button>
-            <button class="sec-action" onclick="pasteImportContacts()">粘贴导入</button>
-            <input type="file" id="contactCsvInput" accept=".csv" style="display:none" onchange="importContactsCsv(event)">
-            <button class="sec-action" onclick="openSheet('contact')">+ 添加</button>
+            <button class="sec-action" onclick="exportContactsCsv()" data-page-node-id="lLREo6S5WSe3IUC2Pw4MGq">导出</button>
+            <button class="sec-action" onclick="downloadContactCsvTemplate()" data-page-node-id="aOX1VjRXnYVfp2jgH2PeRv">模板</button>
+            <button class="sec-action" onclick="document.getElementById('contactCsvInput').click()" data-page-node-id="DvkwB1oXEtEX6DPro9S021">导入</button>
+            <button class="sec-action" onclick="pasteImportContacts()" data-page-node-id="ui31FSYhZO4ngNzaJj9FHO">粘贴导入</button>
+            <input type="file" id="contactCsvInput" accept=".csv" style="display:none" onchange="importContactsCsv(event)" data-page-node-id="HabcKRYRroPYbOVHebIPZ4">
+            <button class="sec-action" onclick="openSheet('contact')" data-page-node-id="kdhKOKePREtiKWDVuBdg9F">+ 添加</button>
           </div>
-          <div class="contact-toolbar">
-            <input class="c-search" id="cSearch" placeholder="搜索姓名 / 公司 / 职位 / 标签 / 备注..." oninput="renderContact()">
-            <div class="chip-row" id="cCatChips"></div>
+          <div class="contact-toolbar" data-page-node-id="BPUgquOlTN7yd0bSF7wZAZ">
+            <input class="c-search" id="cSearch" placeholder="搜索姓名 / 公司 / 职位 / 标签 / 备注..." oninput="renderContact()" data-page-node-id="1Au6f6FOffjDuQivFR5PB7">
+            <div class="chip-row" id="cCatChips" data-page-node-id="GtIa4gihvb4A591joxgKWm"></div>
           </div>
-          <div id="contactList"></div>
+          <div id="contactList" data-page-node-id="zvIel2yajxhXEg1Aj9R72j"></div>
         </div>
-        <div class="card">
-          <div class="card-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <div class="card" data-page-node-id="k6FEspO4gLJ9B2qiSZgkFJ">
+          <div class="card-title" data-page-node-id="THd5VeXw2sGMHzXSDEky0R">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="1zxkxjXYiOL4k3XmXyDSCs"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" data-page-node-id="xi6y680otJheN9Igbx2l2G"/></svg>
             最近动态
-            <button class="sec-action" onclick="openSheet('comm')">+ 联系</button>
-            <button class="sec-action" onclick="openSheet('visit')">+ 拜访</button>
+            <button class="sec-action" onclick="openSheet('comm')" data-page-node-id="J6fVq1HyLDyyGVDzM5WaUA">+ 联系</button>
+            <button class="sec-action" onclick="openSheet('visit')" data-page-node-id="2nxsxuLkvN1oJVaypwB8Jh">+ 拜访</button>
           </div>
-          <div id="commLogList"></div>
+          <div id="commLogList" data-page-node-id="P6Wgg0BjbIpYqg6sOAZYce"></div>
         </div>
       </div>
     </div>
 
     <!-- Contact detail drawer -->
-    <div class="drawer-overlay" id="contactDrawer" onclick="closeContactDetail()">
-      <div class="drawer" onclick="event.stopPropagation()">
-        <div class="drawer-head">
-          <div class="drawer-title" id="cdName">联系人</div>
-          <button class="drawer-close" onclick="closeContactDetail()">✕</button>
+    <div class="drawer-overlay" id="contactDrawer" onclick="closeContactDetail()" data-page-node-id="mJTIvSLBsoN5SZSPFloRFx">
+      <div class="drawer" onclick="event.stopPropagation()" data-page-node-id="y96RZSnGswklq1fES2MFbd">
+        <div class="drawer-head" data-page-node-id="CRRaXOakI9E9y8dS3y75V4">
+          <div class="drawer-title" id="cdName" data-page-node-id="floFqffGFDNFdkhWLe8cRB">联系人</div>
+          <button class="drawer-close" onclick="closeContactDetail()" data-page-node-id="1DHrhBnllMMizPbAfD9Paa">✕</button>
         </div>
-        <div class="drawer-body" id="cdBody"></div>
+        <div class="drawer-body" id="cdBody" data-page-node-id="i5jFUikdXXCKreFKp13tsy"></div>
       </div>
     </div>
 
     <!-- ==================== REVIEW ==================== -->
-    <div class="page" id="page-review">
-      <div class="review-grid">
-        <div class="card rv-write-card">
-          <div class="rv-card-hero">
-            <div class="rv-hero-star" style="left:62%;top:18%;width:3px;height:3px;animation-delay:0s;"></div>
-            <div class="rv-hero-star" style="left:76%;top:42%;width:2px;height:2px;animation-delay:.7s;"></div>
-            <div class="rv-hero-star" style="left:32%;top:12%;width:2px;height:2px;animation-delay:1.2s;"></div>
-            <div class="rv-hero-star" style="left:48%;top:60%;width:2.6px;height:2.6px;animation-delay:.3s;"></div>
-            <div class="rv-hero-star" style="left:12%;top:36%;width:2px;height:2px;animation-delay:1.6s;"></div>
-            <div class="rv-hero-star" style="left:88%;top:24%;width:1.8px;height:1.8px;animation-delay:2s;"></div>
-            <div class="rv-hero-bg">🌙</div>
-            <div class="rv-hero-greet" id="rvGreeting"></div>
-            <div class="rv-hero-sub">夜深了，把今天轻轻放下来，写两句就够。没人打分，只写给自己。</div>
-            <div class="rv-hero-row">
-              <span class="rv-hero-date" id="rvDate"></span>
-              <span class="rv-hero-streak" id="rvStreak" title="连续复盘天数">🔥 0 天</span>
+    <div class="page" id="page-review" data-page-node-id="YxMT80SmO7jM5dNNV9kVNz">
+      <div class="review-grid" data-page-node-id="23LDJ6zswW3NUaQW43ZDxP">
+        <div class="card rv-write-card" data-page-node-id="CDOKvebG0BGYocg4kXbc4M">
+          <div class="rv-card-hero" data-page-node-id="VyVnjdNuvrhmLy2tEKJjQT">
+            <div class="rv-hero-star" style="left:62%;top:18%;width:3px;height:3px;animation-delay:0s;" data-page-node-id="zHFvGM7tvzc8XyqqEC7YTt"></div>
+            <div class="rv-hero-star" style="left:76%;top:42%;width:2px;height:2px;animation-delay:.7s;" data-page-node-id="xC0S0ib50dxSCCtlO9LGlH"></div>
+            <div class="rv-hero-star" style="left:32%;top:12%;width:2px;height:2px;animation-delay:1.2s;" data-page-node-id="GyzGLoyWtp6L6M9AmyQN88"></div>
+            <div class="rv-hero-star" style="left:48%;top:60%;width:2.6px;height:2.6px;animation-delay:.3s;" data-page-node-id="oXv2zez0UvExrT2tr2WbKr"></div>
+            <div class="rv-hero-star" style="left:12%;top:36%;width:2px;height:2px;animation-delay:1.6s;" data-page-node-id="MqjqRPUMjUlSmWeR7GCk9f"></div>
+            <div class="rv-hero-star" style="left:88%;top:24%;width:1.8px;height:1.8px;animation-delay:2s;" data-page-node-id="S1xi0fKwFzrbByhgsQQAF1"></div>
+            <div class="rv-hero-bg" data-page-node-id="wKu0unXM2ehUBiK1Kef2GV">🌙</div>
+            <div class="rv-hero-greet" id="rvGreeting" data-page-node-id="CHZiz3UqInw28czeAlUi91"></div>
+            <div class="rv-hero-sub" data-page-node-id="ldc5Bq141YgCogsFkAovCs">夜深了，把今天轻轻放下来，写两句就够。没人打分，只写给自己。</div>
+            <div class="rv-hero-row" data-page-node-id="00ZmXFwcjeVmjbCFW3fURa">
+              <span class="rv-hero-date" id="rvDate" data-page-node-id="Qx1RhmmV259Js5MhzBjnBp"></span>
+              <span class="rv-hero-streak" id="rvStreak" title="连续复盘天数" data-page-node-id="PPKfAV3GY4cf5cJvwYaH4y">🔥 0 天</span>
             </div>
           </div>
-          <div class="rv-body">
-            <div id="rvPrevSug" style="display:none"></div>
-            <div id="rvAiSummary" class="rv-ai" style="display:none"></div>
-            <div class="rv-guide">
-              <div class="rv-guide-title">不知道写什么？点一个照着想</div>
-              <div class="rv-guide-chips">
-                <button class="rv-chip" onclick="fillReviewTemplate('triple')">✨ 三问</button>
-                <button class="rv-chip" onclick="fillReviewTemplate('kpt')">🔄 KPT</button>
-                <button class="rv-chip" onclick="fillReviewTemplate('energy')">😌 情绪</button>
-                <button class="rv-chip" onclick="fillReviewTemplate('goal')">🎯 目标</button>
-                <button class="rv-chip" onclick="fillReviewTemplate('gratitude')">💛 感恩</button>
+          <div class="rv-body" data-page-node-id="LKgm3sP5QXxa4iFSnBbmyH">
+            <div id="rvPrevSug" style="display:none" data-page-node-id="tftsAPNs2kuz9BRNNxcrjw"></div>
+            <div id="rvAiSummary" class="rv-ai" style="display:none" data-page-node-id="K7nlEsrZIJvhhx9kauGsGp"></div>
+            <div class="rv-guide" data-page-node-id="R0iOhAF5rYThWKfkESALtn">
+              <div class="rv-guide-title" data-page-node-id="QV2DGMBu43z9hPa1Z7Wyqn">不知道写什么？点一个照着想</div>
+              <div class="rv-guide-chips" data-page-node-id="CcNnP1TumMDSFKDC7cPhYx">
+                <button class="rv-chip" onclick="fillReviewTemplate('triple')" data-page-node-id="zEoRCKzz68FfAfhvXk7T1H">✨ 三问</button>
+                <button class="rv-chip" onclick="fillReviewTemplate('kpt')" data-page-node-id="vvALH1w0acp7S2fWaKsLMu">🔄 KPT</button>
+                <button class="rv-chip" onclick="fillReviewTemplate('energy')" data-page-node-id="e67mUrqB7JwpfWGMI2IXIm">😌 情绪</button>
+                <button class="rv-chip" onclick="fillReviewTemplate('goal')" data-page-node-id="nvR2Rt3DOFO9AD9rbUH9uO">🎯 目标</button>
+                <button class="rv-chip" onclick="fillReviewTemplate('gratitude')" data-page-node-id="gClGGsAxCwP95GJqoMTOiN">💛 感恩</button>
               </div>
-              <div class="rv-guide-tip">想不起格式也没关系，一句「今天还行」也算数。</div>
+              <div class="rv-guide-tip" data-page-node-id="GeBn4sqP8cKlFmnCTj609i">想不起格式也没关系，一句「今天还行」也算数。</div>
             </div>
-            <div class="rv-paper">
+            <div class="rv-paper" data-page-node-id="k4FxOiSwIangY4U4HFNwy6">
               <textarea id="rvText" class="rv-textarea" oninput="rvCountWords()" placeholder="今天过得怎么样？有什么想说的？&#10;&#10;一句话也行，随便写，这里没有人评判你。"></textarea>
-              <div class="rv-paper-foot">
-                <span id="rvCount" class="rv-count">还没动笔，慢慢来</span>
-                <span>✨ 23:00 自动帮你分析</span>
+              <div class="rv-paper-foot" data-page-node-id="njlDSTAmV2gZSTF58x8XYw">
+                <span id="rvCount" class="rv-count" data-page-node-id="nKUhhuPz5DxNYJ8dC7fGpe">还没动笔，慢慢来</span>
+                <span data-page-node-id="tYUzyMjP66uzlUTlh8oEhK">✨ 23:00 自动帮你分析</span>
               </div>
             </div>
-            <div class="rv-energy">
-              <div class="rv-energy-label">今天的状态是？</div>
-              <div class="rv-energy-faces">
-                <button class="rv-face" data-e="1" onclick="setEnergy(1)"><span class="em">😩</span><span class="lb">累坏了</span></button>
-                <button class="rv-face" data-e="2" onclick="setEnergy(2)"><span class="em">😕</span><span class="lb">有点低</span></button>
-                <button class="rv-face" data-e="3" onclick="setEnergy(3)"><span class="em">😐</span><span class="lb">还行</span></button>
-                <button class="rv-face" data-e="4" onclick="setEnergy(4)"><span class="em">🙂</span><span class="lb">不错</span></button>
-                <button class="rv-face" data-e="5" onclick="setEnergy(5)"><span class="em">😄</span><span class="lb">超棒</span></button>
+            <div class="rv-energy" data-page-node-id="TDkAQJWKZpkvxSS42wMXSh">
+              <div class="rv-energy-label" data-page-node-id="srIjsUICDXLIIBSk9Mgz4w">今天的状态是？</div>
+              <div class="rv-energy-faces" data-page-node-id="gDmwrF6z2b8ZO9KIWAiGAw">
+                <button class="rv-face" data-e="1" onclick="setEnergy(1)" data-page-node-id="PLT4XqtdSbVXMH5gLCs3Rz"><span class="em" data-page-node-id="6e5EQMiz42WhKLXBHKG8Ze">😩</span><span class="lb" data-page-node-id="sSYxEOnGBBB4Th7a5lK5D7">累坏了</span></button>
+                <button class="rv-face" data-e="2" onclick="setEnergy(2)" data-page-node-id="8SCWdC8ZCYgNnsLoseSODK"><span class="em" data-page-node-id="vp3s4fL7eHEsl5Ay3OqiNg">😕</span><span class="lb" data-page-node-id="dbYKakhTXOZUqkUhjwspSx">有点低</span></button>
+                <button class="rv-face" data-e="3" onclick="setEnergy(3)" data-page-node-id="FKjhc9OtIGSA0Yc6kYtzHu"><span class="em" data-page-node-id="Fbux3IKnTAF9gDPVJE3GfU">😐</span><span class="lb" data-page-node-id="WT36ihO5YkDWAYjz03iCSf">还行</span></button>
+                <button class="rv-face" data-e="4" onclick="setEnergy(4)" data-page-node-id="OB5EFXqH0aAkSJyNOCCVGV"><span class="em" data-page-node-id="7p1DkYul52AOEE5uQTbGFg">🙂</span><span class="lb" data-page-node-id="GJ42oJHI0Qkgf7tS8CCsqS">不错</span></button>
+                <button class="rv-face" data-e="5" onclick="setEnergy(5)" data-page-node-id="B1uwWqrl7Dikju4qUdXveT"><span class="em" data-page-node-id="cIE0y41fBDpt55OwUilsy5">😄</span><span class="lb" data-page-node-id="AAVbI8ApcGuTUf0VLnYccx">超棒</span></button>
               </div>
             </div>
-            <input type="range" id="rvEnergy" min="1" max="5" step="1" value="3" style="display:none">
-            <span id="rvEnergyVal" class="rv-energy-val">3</span>
-            <button class="plan-btn rv-save" onclick="saveReview()">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <input type="range" id="rvEnergy" min="1" max="5" step="1" value="3" style="display:none" data-page-node-id="oUwcE0HGbeztusESJXKV1V">
+            <span id="rvEnergyVal" class="rv-energy-val" data-page-node-id="ZTQDLn6EA0EyPQMDudWx06">3</span>
+            <button class="plan-btn rv-save" onclick="saveReview()" data-page-node-id="tYxKXk4rgB434dJvHHhhDD">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" data-page-node-id="5EfHrVvc6yleQCT25oa8S7"><polyline points="20 6 9 17 4 12" data-page-node-id="dxemEKzdtulnmbVO9pTo8w"/></svg>
               收好今天
             </button>
-            <div class="rv-tip">保存后，昨晚的建议会被回看；明天首页会出现今天的建议。</div>
+            <div class="rv-tip" data-page-node-id="KdaZscVwcwvhHRSxJJEEJ0">保存后，昨晚的建议会被回看；明天首页会出现今天的建议。</div>
           </div>
         </div>
-        <div>
-          <div class="card rv-side-card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+        <div data-page-node-id="Y2ZTN4aNTPNksMde61iFAQ">
+          <div class="card rv-side-card" data-page-node-id="yGxHBUecZd5G2WYCYbLkmR">
+            <div class="card-title" data-page-node-id="wwWY7xd64Iesbsf9N9fFfW">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="UOdQeT2rD2BeaKyrRBrZCC"><path d="M3 3v18h18" data-page-node-id="oErBZBgN8TfKvapc99hSTV"/><path d="M18 17V9" data-page-node-id="9oxA1KBER9Yyu5GimGHYpR"/><path d="M13 17V5" data-page-node-id="nUsTsUMOadCXAe96A4XK3d"/><path d="M8 17v-3" data-page-node-id="S9tANoOUANF74RTb1DVD8C"/></svg>
               本周复盘记录
             </div>
-            <div id="rvWeekList"><div class="wr-empty">加载中...</div></div>
+            <div id="rvWeekList" data-page-node-id="p9THcw8Jr4j1tFwDAyrKlA"><div class="wr-empty" data-page-node-id="WQBt41fTkHUuCIn2ZMYe8r">加载中...</div></div>
           </div>
-          <div class="card rv-side-card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <div class="card rv-side-card" data-page-node-id="8pLZZZUx0VfTG8IMUqkmxY">
+            <div class="card-title" data-page-node-id="V09bh0shKSKfFfYZnAPfBo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="hFYhZVpX7vmh6suWursSsR"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" data-page-node-id="7fN0tmqcOVdcCcks8Tk6lr"/></svg>
               自动周报
-              <button class="sec-action" onclick="loadReview(true)">刷新</button>
+              <button class="sec-action" onclick="loadReview(true)" data-page-node-id="BxzTyvbQcFzkDZ0w7InrqF">刷新</button>
             </div>
-            <div id="rvWeeklyList"><div class="wr-empty">周报在每周日 23 点自动生成</div></div>
+            <div id="rvWeeklyList" data-page-node-id="glUdl9qodCm8Mm8DLmOA0r"><div class="wr-empty" data-page-node-id="wOhQ7J17JqZpAIhp4L4QTU">周报在每周日 23 点自动生成</div></div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ==================== PLAN ==================== -->
-    <div class="page" id="page-plan">
-      <div class="plan-subtabs">
-        <button class="plan-subtab active" id="planSubDay" onclick="planSwitchView('day')">日度</button>
-        <button class="plan-subtab" id="planSubMonth" onclick="planSwitchView('month')">周月</button>
-        <button class="plan-subtab" id="planSubTasks" onclick="planSwitchView('tasks')">待办</button>
+    <div class="page" id="page-plan" data-page-node-id="nRfjOE39h6EnaRH8H3YMBn">
+      <div class="plan-subtabs" data-page-node-id="uEionZ8qC6RKhXTMlZ6jqb">
+        <button class="plan-subtab active" id="planSubDay" onclick="planSwitchView('day')" data-page-node-id="J3QwmDu3vbEycptw43mTVF">日度</button>
+        <button class="plan-subtab" id="planSubMonth" onclick="planSwitchView('month')" data-page-node-id="29atcMwp4uT5FDhwd0FDtp">周月</button>
+        <button class="plan-subtab" id="planSubTasks" onclick="planSwitchView('tasks')" data-page-node-id="NPLVC7KpDSCDlNpckVNQFr">待办</button>
       </div>
 
       <!-- 日度视图 -->
-      <div id="planDayView">
-        <div class="plan-hero">
-          <div class="plan-day-head">
-            <button class="plan-day-btn plan-day-navbtn" onclick="planShiftDay(-1)" title="前一天（←）">‹</button>
-            <div class="plan-day-label" id="planDayLabel" onclick="planPickDate()" title="点击选择日期"></div>
-            <button class="plan-day-btn plan-day-navbtn" onclick="planShiftDay(1)" title="后一天（→）">›</button>
-            <input type="date" id="planDatePicker" class="plan-date-picker" onchange="planJumpDate(this.value)">
-            <div class="plan-day-head-right">
-              <div class="plan-hero-numbox">
-                <div class="plan-hero-num" id="planHeroPct">0%</div>
-                <div class="plan-hero-cnt" id="planProgressTxt">0/0 完成</div>
+      <div id="planDayView" data-page-node-id="0VskJaxMqgrTXqdAtaC9CO">
+        <div class="plan-hero" data-page-node-id="WQ306bKGBWvpmlz8JoTQTO">
+          <div class="plan-day-head" data-page-node-id="o4uHOzGiEyY5LltFb0KxCr">
+            <button class="plan-day-btn plan-day-navbtn" onclick="planShiftDay(-1)" title="前一天（←）" data-page-node-id="04Xc9fEgdkRD8ik6ri1Nrx">‹</button>
+            <div class="plan-day-label" id="planDayLabel" onclick="planPickDate()" title="点击选择日期" data-page-node-id="3EB1W3DjbcCuRyUXHACKOM"></div>
+            <button class="plan-day-btn plan-day-navbtn" onclick="planShiftDay(1)" title="后一天（→）" data-page-node-id="D0P78rO23RIr0E3MwKQpRA">›</button>
+            <input type="date" id="planDatePicker" class="plan-date-picker" onchange="planJumpDate(this.value)" data-page-node-id="Ih4CP9Cy0BGez3S4bpohqR">
+            <div class="plan-day-head-right" data-page-node-id="QFhbA2qC6DXVrweECfnXu9">
+              <div class="plan-hero-numbox" data-page-node-id="5udN0rAy0Zccgo4ziE0J5U">
+                <div class="plan-hero-num" id="planHeroPct" data-page-node-id="jXUd9AzOnCPPgmgh0qaDRD">0%</div>
+                <div class="plan-hero-cnt" id="planProgressTxt" data-page-node-id="BPqAxmqMk1MOExTphG6BQG">0/0 完成</div>
               </div>
-              <button class="plan-today-btn" id="planTodayBtn" onclick="planJumpToday()" title="回到今天">今天</button>
+              <button class="plan-today-btn" id="planTodayBtn" onclick="planJumpToday()" title="回到今天" data-page-node-id="x8TxZZzIqXU3K7YtgVLB0Z">今天</button>
             </div>
           </div>
-          <div class="plan-week-strip" id="planWeekStrip"></div>
-          <div class="plan-progress">
-            <div class="plan-progress-bar"><div class="plan-progress-fill" id="planProgressFill" style="width:0%"></div></div>
+          <div class="plan-week-strip" id="planWeekStrip" data-page-node-id="1liWCfQY1ZiZPj1xiySLK5"></div>
+          <div class="plan-progress" data-page-node-id="zRA1CxVaKOGEZ4e3OOGBRK">
+            <div class="plan-progress-bar" data-page-node-id="H0oFbbCP8bzDyXmHw6zJBy"><div class="plan-progress-fill" id="planProgressFill" style="width:0%" data-page-node-id="9A7hVeOIyLOZqjPD3JrlCS"></div></div>
           </div>
         </div>
-        <div class="plan-sec">
-          <div class="plan-sec-head">
-            <span class="plan-sec-title"><span class="plan-sec-ic ic-am"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>上午<span class="plan-sec-badge">工作时段 · 自由添加</span></span>
-            <span class="plan-sec-count" id="planCntMorning"></span>
+        <div class="plan-sec" data-page-node-id="rFjcFREaQ8sigcr5yuxtav">
+          <div class="plan-sec-head" data-page-node-id="ew5gzplzvvvM7hifLHx2rN">
+            <span class="plan-sec-title" data-page-node-id="aIRj05X682Ufpoqc3yhXTv"><span class="plan-sec-ic ic-am" data-page-node-id="QVC2b605mYn6sXFJB7SqIZ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="EcmWHkgj81hFuFzos7FAVW"><circle cx="12" cy="12" r="4" data-page-node-id="H52DOdV0ajojwYNvrn3idR"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" data-page-node-id="DOJC3RuF6Gb6XaJpyk1YTq"/></svg></span>上午<span class="plan-sec-badge" data-page-node-id="6aecHlh43OCUxRHscUUvSv">工作时段 · 自由添加</span></span>
+            <span class="plan-sec-count" id="planCntMorning" data-page-node-id="CSwkp7KRbI4Br4j4dhQK8o"></span>
           </div>
-          <div id="planMorning"></div>
+          <div id="planMorning" data-page-node-id="EmJz0IHhy9uxnu9pUjs8yD"></div>
         </div>
-        <div class="plan-sec">
-          <div class="plan-sec-head">
-            <span class="plan-sec-title"><span class="plan-sec-ic ic-pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>下午<span class="plan-sec-badge">工作时段 · 自由添加</span></span>
-            <span class="plan-sec-count" id="planCntAfternoon"></span>
+        <div class="plan-sec" data-page-node-id="7eJmmKHH9EcYBXNV2QNmYw">
+          <div class="plan-sec-head" data-page-node-id="eeHpDCsXMOrs0a7KH0KBSL">
+            <span class="plan-sec-title" data-page-node-id="4U4eGd5zHLrv867m0ea7lL"><span class="plan-sec-ic ic-pm" data-page-node-id="WX0E9mHr4yLizcAdvsFQ9G"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="YmcOylfjzGcFMv45mWOnT6"><circle cx="12" cy="12" r="9" data-page-node-id="JWenFddav4SFHBZAmt76Gj"/><path d="M12 7v5l3 2" data-page-node-id="oEV5F8iGZszaO27MwjbKKE"/></svg></span>下午<span class="plan-sec-badge" data-page-node-id="MVHgdyYGkGlzFwx9GKd6J6">工作时段 · 自由添加</span></span>
+            <span class="plan-sec-count" id="planCntAfternoon" data-page-node-id="E5sWJAEHKlHkbZEUCjtfx3"></span>
           </div>
-          <div id="planAfternoon"></div>
+          <div id="planAfternoon" data-page-node-id="uFi8TAzlBAfa6nRvaTH0G1"></div>
         </div>
-        <div class="plan-sec">
-          <div class="plan-sec-head">
-            <span class="plan-sec-title"><span class="plan-sec-ic ic-ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span>晚上<span class="plan-sec-badge">个人提升 · 计划自动排入</span></span>
-            <span class="plan-sec-count" id="planCntEvening"></span>
+        <div class="plan-sec" data-page-node-id="sBDKevvq7UHd5ed1c53T7L">
+          <div class="plan-sec-head" data-page-node-id="UIV9JEQuql2gB9aP0J10mU">
+            <span class="plan-sec-title" data-page-node-id="FhioCaj6G5PhXb3kwkHheJ"><span class="plan-sec-ic ic-ev" data-page-node-id="UlPEq0NvfrI8dUAlqtc8ks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="DhuGUGaRFUGtoI0TfnSFbT"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" data-page-node-id="vsUpVFmL9pWvvTwALwkMxi"/></svg></span>晚上<span class="plan-sec-badge" data-page-node-id="GVxqPFUeMGmUYkCnZqFpcC">个人提升 · 计划自动排入</span></span>
+            <span class="plan-sec-count" id="planCntEvening" data-page-node-id="kE9c1bTXQihLBjJgzVDjjr"></span>
           </div>
-          <div id="planEvening"></div>
+          <div id="planEvening" data-page-node-id="eI4W6ZBSCaw8ZGDrgsRjRa"></div>
         </div>
-        <div id="planAiCard"></div>
+        <div id="planAiCard" data-page-node-id="135Qe6dhZYw2bFAWEIPYD9"></div>
       </div>
 
       <!-- 周月视图 -->
-      <div id="planMonthView" style="display:none">
-        <div class="plan-month-head">
-          <div class="plan-day-nav">
-            <button class="plan-day-btn" onclick="planShiftMonth(-1)" title="上个月">‹</button>
-            <div class="plan-day-label" id="planMonthLabel"></div>
-            <button class="plan-day-btn" onclick="planShiftMonth(1)" title="下个月">›</button>
+      <div id="planMonthView" style="display:none" data-page-node-id="rRw6G55THegPEnZeSFbCOw">
+        <div class="plan-month-head" data-page-node-id="ZQAD4FwRt5HpPlj9PDBylU">
+          <div class="plan-day-nav" data-page-node-id="9ts85DfeW1X5B6t4qWbRMe">
+            <button class="plan-day-btn" onclick="planShiftMonth(-1)" title="上个月" data-page-node-id="P00MmKCCtwkRChzC9g96iY">‹</button>
+            <div class="plan-day-label" id="planMonthLabel" data-page-node-id="3XyHlzdvvMm4s85dmSuLVU"></div>
+            <button class="plan-day-btn" onclick="planShiftMonth(1)" title="下个月" data-page-node-id="Xheg1mhkXVCg6euE2IkqQ6">›</button>
           </div>
-          <button class="plan-today-btn" onclick="planJumpMonthNow()" title="回到本月">本月</button>
+          <button class="plan-today-btn" onclick="planJumpMonthNow()" title="回到本月" data-page-node-id="faXi87TM9foLicblv6zxUV">本月</button>
         </div>
-        <div class="plan-cal-heads" id="planCalHeads"></div>
-        <div class="plan-cal" id="planCal"></div>
-        <div class="plan-cal-legend">
-          <span><span class="plan-dot" style="background:var(--blue);display:inline-block;vertical-align:middle;"></span> 读书</span>
-          <span><span class="plan-dot" style="background:var(--purple);display:inline-block;vertical-align:middle;"></span> 学习</span>
-          <span><span class="plan-dot" style="background:var(--green);display:inline-block;vertical-align:middle;"></span> 运动</span>
-          <span><span class="plan-dot" style="background:var(--primary);display:inline-block;vertical-align:middle;"></span> 复盘</span>
+        <div class="plan-cal-heads" id="planCalHeads" data-page-node-id="aberr10A3IyZiRf0v6vDcs"></div>
+        <div class="plan-cal" id="planCal" data-page-node-id="IQGPEA0Fr0kWLS3psirBJz"></div>
+        <div class="plan-cal-legend" data-page-node-id="XdQn7aqf61Opg38LCbRqI3">
+          <span data-page-node-id="exRyoMc6LYrlTQOzvXHby8"><span class="plan-dot" style="background:var(--blue);display:inline-block;vertical-align:middle;" data-page-node-id="u2GIT4eOyRxWRCh2pR0foq"></span> 读书</span>
+          <span data-page-node-id="NYeZ9EpXXvcwb9jLHMMoDh"><span class="plan-dot" style="background:var(--purple);display:inline-block;vertical-align:middle;" data-page-node-id="IRPU25TCBOx7Z91RuxkdOH"></span> 学习</span>
+          <span data-page-node-id="Zs8E5anXBYycBZGC1u7g3j"><span class="plan-dot" style="background:var(--green);display:inline-block;vertical-align:middle;" data-page-node-id="7kHPRc6xQCXAAvWDTR4fZq"></span> 运动</span>
+          <span data-page-node-id="INZNRBqQRAP9eeuyrvUbDd"><span class="plan-dot" style="background:#FF2D55;display:inline-block;vertical-align:middle;" data-page-node-id="slf4vZBPN4KFF2RTUH0GEq"></span> 表达</span>
+          <span data-page-node-id="lknGGUI4AnjBPVh6KMo7x0"><span class="plan-dot" style="background:var(--primary);display:inline-block;vertical-align:middle;" data-page-node-id="XIUlUw9rtFO0ChXKaAxGwP"></span> 复盘</span>
         </div>
-        <div class="plan-mg">
-          <div class="card">
-            <div class="card-title">
-              <span class="plan-sec-ic ic-pm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-              本周聚焦 <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px" id="planWeekRange"></span>
+        <div class="plan-mg" data-page-node-id="FBAHZODVhbwnFd2K0anzcF">
+          <div class="card" data-page-node-id="jZLvpCDcFgXk5daT0tWn00">
+            <div class="card-title" data-page-node-id="EPTyrHH5Ys4z7pV2cfHydn">
+              <span class="plan-sec-ic ic-pm" data-page-node-id="l6HTtqG1lSIzPja4ZuZ0q1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="xkjTSghGUzXwyzicx9XpG2"><rect x="3" y="4" width="18" height="18" rx="2" data-page-node-id="QzMGDFfeemeV5jX2dUcbmq"/><line x1="16" y1="2" x2="16" y2="6" data-page-node-id="4rEi0BtDVDC78RDtCyDMK8"/><line x1="8" y1="2" x2="8" y2="6" data-page-node-id="M6ZAx5oAtDaWyGHPxUPpaQ"/><line x1="3" y1="10" x2="21" y2="10" data-page-node-id="MCDY3hs7hO9WoLe3Sdh2PN"/></svg></span>
+              本周聚焦 <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px" id="planWeekRange" data-page-node-id="r3MS3GZRQHiPaC8EqeaIov"></span>
             </div>
-            <div id="planWeekFocus"></div>
+            <div id="planWeekFocus" data-page-node-id="OgFs3LA8Z1Bo1nnaaJfwam"></div>
           </div>
-          <div class="card">
-            <div class="card-title">
-              <span class="plan-sec-ic ic-am"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
-              月度进展 <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px" id="planMonthRange"></span>
+          <div class="card" data-page-node-id="a11JHJAZgwcabQT8k4KkSW">
+            <div class="card-title" data-page-node-id="c3Br7DPeFZnf05qWkI2wXr">
+              <span class="plan-sec-ic ic-am" data-page-node-id="LZBGiFIAsU1E8yJrA9B26n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="hK4oUHKz2hpJFRWNpbWgBB"><path d="M22 12h-4l-3 9L9 3l-3 9H2" data-page-node-id="qFK9jFJAFyv0nrHGawEXAW"/></svg></span>
+              月度进展 <span style="font-size:11px;color:var(--text-3);font-weight:500;margin-left:6px" id="planMonthRange" data-page-node-id="VfYRejdRqTlq5UIRhPbSDS"></span>
             </div>
-            <div id="planMonthProgress"></div>
+            <div id="planMonthProgress" data-page-node-id="WBkZkHYRAVOlY2nvCPOf1m"></div>
           </div>
         </div>
       </div>
 
       <!-- 待办视图（并入规划） -->
-      <div id="planTasksView" style="display:none">
-        <div class="tasks-grid">
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      <div id="planTasksView" style="display:none" data-page-node-id="FJATNq2JfgW4zc9Bry8kM3">
+        <div class="tasks-grid" data-page-node-id="unGhInXSH7bHZs5wAPrbBv">
+          <div class="card" data-page-node-id="fuo0s70qsic0yrbFlJoEJL">
+            <div class="card-title" data-page-node-id="COQU6w9SbipgdGexBYpoPK">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="ysbwjt9pV4uuXXDAPxxM2R"><circle cx="12" cy="12" r="10" data-page-node-id="ophorZhYX7iuDok2Jiq6Sl"/><circle cx="12" cy="12" r="6" data-page-node-id="2uAAbk2dm6U2VekkQ91WA8"/><circle cx="12" cy="12" r="2" data-page-node-id="FhRjjufdRKJxz5iW5VxeeK"/></svg>
               核心目标
-              <button class="sec-action" onclick="openSheet('goal')">+ 添加</button>
+              <button class="sec-action" onclick="openSheet('goal')" data-page-node-id="cNW6YdiNX4T1AH9hMUx7wx">+ 添加</button>
             </div>
-            <div id="goalList"></div>
+            <div id="goalList" data-page-node-id="AcVvAZdl7AwhSwTgW7OXid"></div>
           </div>
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          <div class="card" data-page-node-id="mOK51E52p8LGlT1jBsD9U2">
+            <div class="card-title" data-page-node-id="Y8LjsEBKPYV2qPqumJRKFd">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="MgsEU0EhcQd4gTRvnrN3jA"><path d="M9 11l3 3L22 4" data-page-node-id="hnGogCMdReJzjKonsei0QB"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" data-page-node-id="DsZDeB7G9YOCrsYF9pocrs"/></svg>
               待办清单
-              <button class="sec-action" id="clearDoneBtn" style="display:none" onclick="clearDoneTasks()">清除已完成</button>
-              <button class="sec-action" onclick="openSheet('task')">+ 新建</button>
+              <button class="sec-action" id="clearDoneBtn" style="display:none" onclick="clearDoneTasks()" data-page-node-id="o1gv3br8wydOD8LMvORaCe">清除已完成</button>
+              <button class="sec-action" onclick="openSheet('task')" data-page-node-id="FFVOPUrKtOvBneFC1lzt0f">+ 新建</button>
             </div>
-            <div class="rt-card" id="tasksReadingCard" onclick="switchTab('reading')" style="display:none">
-              <div class="rt-icon" id="rtTasksIcon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+            <div class="rt-card" id="tasksReadingCard" onclick="switchTab('reading')" style="display:none" data-page-node-id="FJjrNceJiTqtL3il44mRja">
+              <div class="rt-icon" id="rtTasksIcon" data-page-node-id="386NDzBbf0O9GmZ9gFrggm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="LGE4oBi1utvOQBkj69OAfw"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z" data-page-node-id="PmAiK7q26mgTOjJhNnhuhp"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" data-page-node-id="Gje1cppPv9Md51wTOqpRsx"/></svg>
               </div>
-              <div class="rt-body">
-                <div class="rt-label" id="rtTasksLabel">今日读书任务</div>
-                <div class="rt-title" id="rtTasksTitle">加载中...</div>
-                <div class="rt-sub" id="rtTasksSub"></div>
+              <div class="rt-body" data-page-node-id="Hnz1W7jluhVMaTCEal6vQB">
+                <div class="rt-label" id="rtTasksLabel" data-page-node-id="sGeNuAtGOTiGPbjWjqr2Ly">今日读书任务</div>
+                <div class="rt-title" id="rtTasksTitle" data-page-node-id="1NjpR4caW9zSy5cQD4E2an">加载中...</div>
+                <div class="rt-sub" id="rtTasksSub" data-page-node-id="sIvrEVsz5ZELaiTiUZpLwY"></div>
               </div>
-              <div class="rt-check" id="rtTasksCheck" onclick="event.stopPropagation();togglePlanCheckIn()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <div class="rt-check" id="rtTasksCheck" onclick="event.stopPropagation();togglePlanCheckIn()" data-page-node-id="O1uEEO9SfOAjD0gVEYUfQn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" data-page-node-id="EgWdpuldQGRcAowM0sLkc3"><polyline points="20 6 9 17 4 12" data-page-node-id="PHDQOX7NLwpnc1Vkbn61gb"/></svg>
               </div>
             </div>
-            <div id="taskList"></div>
+            <div id="taskList" data-page-node-id="VCTeoQF4OKHGSDICciAA9H"></div>
           </div>
         </div>
       </div>
@@ -1493,50 +1550,70 @@ body{
 </div>
 
 <!-- FAB -->
-<button class="fab" id="fabBtn" onclick="toggleFab()" title="快速添加">
-  <svg id="fabIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+<button class="fab" id="fabBtn" onclick="toggleFab()" title="快速添加" data-page-node-id="mc5INRXg11Dh8tyKW9DVlu">
+  <svg id="fabIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" data-page-node-id="CyIzp5fUIICLwKfudWUnU5"><line x1="12" y1="5" x2="12" y2="19" data-page-node-id="GSuZbYBukkDanUJiPrcNFw"/><line x1="5" y1="12" x2="19" y2="12" data-page-node-id="PAXkFnJfESI1Fyw23dnnH0"/></svg>
 </button>
-<div class="fab-menu" id="fabMenu">
-  <button onclick="openSheet('task')">📋 新建任务</button>
-  <button onclick="openSheet('exercise')">🏃 运动打卡</button>
-  <button onclick="openSheet('note')">📝 读书笔记</button>
-  <button onclick="openSheet('goal')">🎯 添加目标</button>
-  <button onclick="openSheet('book')">📚 添加书目</button>
-  <button onclick="openSheet('contact')">👤 添加联系人</button>
-  <button onclick="openSheet('comm')">💬 记录联系</button>
-  <button onclick="openSheet('weight')">⚖️ 记录体重</button>
+<div class="fab-menu" id="fabMenu" data-page-node-id="sLfa2PINJsJEvxoPCBfjXo">
+  <button onclick="openSheet('task')" data-page-node-id="DzdQGgvPiBolBOZlChkIxp">📋 新建任务</button>
+  <button onclick="openSheet('exercise')" data-page-node-id="hbT9TTGK00sAIiphnEcuaz">🏃 运动打卡</button>
+  <button onclick="openSheet('note')" data-page-node-id="bmFTHMBJzXQYDiWC0kU9xv">📝 读书笔记</button>
+  <button onclick="openSheet('goal')" data-page-node-id="Y0r0PPhCVXbvXB7iw4foGT">🎯 添加目标</button>
+  <button onclick="openSheet('book')" data-page-node-id="INSFeD89gNQd819EnD8BYf">📚 添加书目</button>
+  <button onclick="openSheet('contact')" data-page-node-id="JIIPadmcCMYy85NRPrv4Mq">👤 添加联系人</button>
+  <button onclick="openSheet('comm')" data-page-node-id="QNtZU5EZhGjvyNJMCJQx0Z">💬 记录联系</button>
+  <button onclick="openSheet('weight')" data-page-node-id="0UqIYPGkfXNx4QcQ2nWe1o">⚖️ 记录体重</button>
 </div>
 
 <!-- Modal Sheet -->
-<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()">
-  <div class="sheet" onclick="event.stopPropagation()">
-    <div class="sheet-title" id="sheetTitle">新建</div>
-    <div id="sheetContent"></div>
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()" data-page-node-id="vDpiHzvxz24Srdy65KkXWp">
+  <div class="sheet" onclick="event.stopPropagation()" data-page-node-id="qFiOewL65tFX6zLZGWSa1X">
+    <div class="sheet-title" id="sheetTitle" data-page-node-id="oykxW3gXIeD7LWHyEozAC8">新建</div>
+    <div id="sheetContent" data-page-node-id="QTFvEDO8ey565TOcTOLMEp"></div>
   </div>
 </div>
 
 <!-- Dialog -->
-<div class="dialog-overlay" id="dialog">
-  <div class="dialog">
-    <div class="dialog-title" id="dialogTitle">确认</div>
-    <div class="dialog-text" id="dialogText"></div>
+<div class="dialog-overlay" id="dialog" data-page-node-id="hbv5F5Y4sG8FckH5cwS4oB">
+  <div class="dialog" data-page-node-id="TLKyegHEKjRm2DYrZ05Sod">
+    <div class="dialog-title" id="dialogTitle" data-page-node-id="Zu3njvYc3Flsd3vOas9qG8">确认</div>
+    <div class="dialog-text" id="dialogText" data-page-node-id="3TsQlGRYoVBANAnkI919Lw"></div>
     <textarea class="dialog-csv-area" id="dialogCsvArea" spellcheck="false"></textarea>
-    <div class="dialog-btns">
-      <button class="dialog-btn cancel" onclick="closeDialog()">取消</button>
-      <button class="dialog-btn confirm" id="dialogConfirm">确定</button>
+    <div class="dialog-btns" data-page-node-id="3z5pbs3X0MtMEAKeCp8GAu">
+      <button class="dialog-btn cancel" onclick="closeDialog()" data-page-node-id="bTCTZtyhlyi77erWcFyN9s">取消</button>
+      <button class="dialog-btn confirm" id="dialogConfirm" data-page-node-id="cnTa0gN0nRHZXBBGBjRl9W">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- Expression Training Panel（今日表达训练） -->
+<div class="expr-overlay" id="exprOverlay" onclick="if(event.target===this)exprClose()" data-page-node-id="HPS4yvLsS7znV0Uq8mSnIs">
+  <div class="expr-panel" data-page-node-id="1jCJVs8K3le1TzQ2wJAu3P">
+    <div class="expr-head" data-page-node-id="3CzoboyJqsXisTIia98n1G">
+      <div class="expr-title" data-page-node-id="yJFA18CjDsNXWXYpqRrjaC">🗣️ 今日表达训练</div>
+      <button class="expr-close" onclick="exprClose()" title="关闭" data-page-node-id="m4IH3MMRYp1sn0DGDYcDtf">×</button>
+    </div>
+    <div class="expr-rule" data-page-node-id="OOTMvsH7vvPZ8ozv3hmL4S">用 <b data-page-node-id="DZvoensGD77hregXhXkDMH">30–60 秒</b>，把今天学到<b data-page-node-id="sE82eFhgYEUe62H3RobpEJ">最有价值的一点</b>讲清楚 —— 费曼输出：讲得明白，才算真的学会。写完照着念一遍，就是今天的表达训练。</div>
+    <div class="expr-input-label" data-page-node-id="SYfqa4o4MT0JwB31dEYEyg">围绕今天的输入讲</div>
+    <div class="expr-chips" id="exprChips" data-page-node-id="vnQAdJnu8oqO6771UyVX7p"></div>
+    <div class="expr-hint" data-page-node-id="QUhtlCbL8CBvhXquyywxvv">参考字数：30s ≈ 80–120 字 · 60s ≈ 160–240 字</div>
+    <textarea class="expr-text" id="exprText" oninput="exprCountUpdate()" placeholder="写下你想表达的观点：今天学到了什么？它为什么重要？你会怎么用？"></textarea>
+    <div class="expr-count" id="exprCount" data-page-node-id="ECBS2U59Ry8zWR3LMxz5DZ">0 字</div>
+    <div class="expr-btns" data-page-node-id="ykV2DCPAB7O7naw8oah1sF">
+      <button class="expr-save" onclick="exprSave()" data-page-node-id="h0RC09UrgNiVw2QzP1TweQ">保存并打卡 ✓</button>
+      <button class="expr-cancel" onclick="exprClose()" data-page-node-id="SZrvwtuJW9QtMhIXmepKEH">取消</button>
     </div>
   </div>
 </div>
 
 <!-- PWA install banner (unused on desktop) -->
-<div id="installBanner" class="install-banner"></div>
+<div id="installBanner" class="install-banner" data-page-node-id="EB3Dhx2dKvpDfzbuf8UE2j"></div>
 
-<div class="snackbar" id="snackbar"></div>
+<div class="snackbar" id="snackbar" data-page-node-id="rRRadeWvrZ7VG6AWPGbGpI"></div>
 
 <script>
 // ==================== DATA KEYS (shared with mobile version) ====================
 const P='wb_life_';
-const K={goals:P+'goals',tasks:P+'tasks',exercises:P+'exercises',weights:P+'weights',books:P+'books',notes:P+'notes',study:P+'study_checkin',contacts:P+'contacts',logs:P+'comm_logs',visitLogs:P+'visit_logs',obsidian:P+'obsidian',weread:P+'weread',planData:P+'plan',planCheckins:P+'plan_ck',init:P+'initialized',agentPlan:P+'agent_plan',agentCk:P+'agent_ck',agentMig:P+'agent_mig',cMig:P+'contact_mig',cLegacy:P+'contacts_legacy',planDaily:P+'plan_daily',planWeekly:P+'plan_weekly'};
+const K={goals:P+'goals',tasks:P+'tasks',exercises:P+'exercises',weights:P+'weights',books:P+'books',notes:P+'notes',study:P+'study_checkin',contacts:P+'contacts',logs:P+'comm_logs',visitLogs:P+'visit_logs',obsidian:P+'obsidian',weread:P+'weread',planData:P+'plan',planCheckins:P+'plan_ck',init:P+'initialized',agentPlan:P+'agent_plan',agentCk:P+'agent_ck',agentMig:P+'agent_mig',cMig:P+'contact_mig',cLegacy:P+'contacts_legacy',planDaily:P+'plan_daily',planWeekly:P+'plan_weekly',exprCk:P+'expr_ck'};
 
 function ld(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}}
 function sv(k,v){localStorage.setItem(k,JSON.stringify(v))}
@@ -1873,6 +1950,11 @@ function renderHome(){
   const rvTodayEntry=rvToday();
   if((!rvTodayEntry||!rvTodayEntry.text)&&new Date().getHours()>=20){
     items.push({dot:'#FF9500',text:'✍️ <b>今日复盘</b>：还没写，写两分钟',action:()=>switchTab('review')});
+  }
+  // 表达训练：常驻首页今日概览（未完成即显示，30-60s 费曼输出）——与读书/学习/运动同级的重要每日例行
+  if(dtasks.express&&!dtasks.express.done){
+    const ed=ts();
+    items.push({dot:'#FF2D55',text:'🗣️ <b>今日表达'+rollMark(dtasks.express)+'</b>：30-60 秒讲清今天学到的一点',action:()=>openExprPanel(ed,dtasks.express.id)});
   }
   if(!todayEx.length){
     const ep=EX_WEEK_PLAN.find(p=>p.dow===new Date().getDay());
@@ -3346,6 +3428,11 @@ function checkReminders(){
   if(rvNow.getHours()===21&&rvNow.getMinutes()>=30&&(!rvEntryToday||!rvEntryToday.text)){
     parts.push('该写今日复盘了');
   }
+  // 表达训练提醒：21:00 后还没做今日表达（30-60s 费曼输出）
+  const ec=lg(K.exprCk,{});
+  if(rvNow.getHours()>=21&&!ec[t]){
+    parts.push('今日表达：30 秒讲清今天学到的一点');
+  }
 
   if(overdueTasks.length||dueCs.length){
     const banner=document.getElementById('notifyBanner');
@@ -3376,11 +3463,11 @@ var planMonthCursor=null;
 var planAddOpen=null;
 
 // 默认时间段表（数据源无时间字段时按此赋默认值）
-var PLAN_TIME_DEF={exercise:'20:00-20:30',reading:'20:30-21:30',study:'21:30-22:00',review:'22:30-23:00',ai:'21:00-21:30',contact:'21:00-21:30',work:'09:30-10:00',custom:'09:30-10:00'};
+var PLAN_TIME_DEF={exercise:'20:00-20:30',reading:'20:30-21:30',study:'21:30-22:00',express:'22:00-22:20',review:'22:30-23:00',ai:'21:00-21:30',contact:'21:00-21:30',work:'09:30-10:00',custom:'09:30-10:00'};
 // 计划数据 schema 版本：随顺延/生成逻辑升级而递增，用于让已缓存的「今天计划」在代码更新后失效并重算
-var PLAN_SCHEMA=3;
+var PLAN_SCHEMA=4;
 var PLAN_PRESETS=['09:00-09:30','09:30-10:30','10:30-12:00','14:00-15:00','15:00-16:30','16:30-18:00','20:00-20:30','20:30-21:30','21:00-21:30','21:30-22:00','22:00-22:30','22:30-23:00'];
-var PLAN_CAT_META={reading:{label:'📖 读书',color:'#0A84FF'},study:{label:'🎯 学习',color:'#AF52DE'},exercise:{label:'🏃 运动',color:'#34C759'},review:{label:'📝 复盘',color:'#FF9500'},ai:{label:'✨ AI建议',color:'#FF9500'},work:{label:'💼 工作',color:'#8E8E93'},contact:{label:'🤝 人脉',color:'#5AC8FA'},custom:{label:'📌 任务',color:'#8E8E93'}};
+var PLAN_CAT_META={reading:{label:'📖 读书',color:'#0A84FF'},study:{label:'🎯 学习',color:'#AF52DE'},exercise:{label:'🏃 运动',color:'#34C759'},express:{label:'🗣️ 表达',color:'#FF2D55'},review:{label:'📝 复盘',color:'#FF9500'},ai:{label:'✨ AI建议',color:'#FF9500'},work:{label:'💼 工作',color:'#8E8E93'},contact:{label:'🤝 人脉',color:'#5AC8FA'},custom:{label:'📌 任务',color:'#8E8E93'}};
 function planCatMeta(c){return PLAN_CAT_META[c]||PLAN_CAT_META.custom;}
 function planUid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 
@@ -3465,13 +3552,15 @@ function ensurePlanForDate(date){
   add('exercise','运动：今日打卡','完成一组训练，或去「运动」页记录');
   const sug=getYesterdaySuggestion();
   if(sug)add('ai','昨日建议：'+sug.slice(0,24)+(sug.length>24?'…':''),sug);
+  add('express','表达：今日观点（30-60s）','用 30-60 秒讲清今天学到最有价值的一点 · 费曼输出');
   add('review','复盘：今日总结','收好今天，23:00 自动分析');
   // 已有打卡状态回填
-  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),exs=ld(K.exercises),rv=rvEntry(date);
+  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),ec=lg(K.exprCk,{}),exs=ld(K.exercises),rv=rvEntry(date);
   tasks.forEach(t=>{
     if(t.cat==='reading'&&pc[date])t.done=true;
     else if(t.cat==='study'&&ac[date])t.done=true;
     else if(t.cat==='exercise'&&exs.some(e=>e.d===date))t.done=true;
+    else if(t.cat==='express'&&ec[date])t.done=true;
     else if(t.cat==='review'&&rv&&rv.text)t.done=true;
   });
   // 重算时保留用户已添加的上午/下午任务，仅重建晚间例行
@@ -3501,12 +3590,13 @@ function planSyncTodayFromCheckins(){
   const date=ts();
   const daily=planGetDaily();
   const day=daily[date];if(!day||!day.generated)return false;
-  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{});
+  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),ec=lg(K.exprCk,{});
   let ch=false;
   ['morning','afternoon','evening'].forEach(s=>{(day[s]||[]).forEach(t=>{
     let want=null;
     if(t.cat==='reading')want=!!pc[date];
     else if(t.cat==='study')want=!!ac[date];
+    else if(t.cat==='express')want=!!ec[date];
     if(want!==null&&want!==t.done){t.done=want;ch=true;}
   });});
   if(ch)planSaveDaily(daily);
@@ -3521,9 +3611,10 @@ function getTodayDailyTasks(){
     return {
       reading:all.find(t=>t.cat==='reading')||null,
       study:all.find(t=>t.cat==='study')||null,
-      exercise:all.find(t=>t.cat==='exercise')||null
+      exercise:all.find(t=>t.cat==='exercise')||null,
+      express:all.find(t=>t.cat==='express')||null
     };
-  }catch(e){console.warn('getTodayDailyTasks failed',e);return{reading:null,study:null,exercise:null};}
+  }catch(e){console.warn('getTodayDailyTasks failed',e);return{reading:null,study:null,exercise:null,express:null};}
 }
 
 // ---------- 渲染 ----------
@@ -3587,12 +3678,14 @@ function renderPlanSlot(date,slot){
     const meta=planCatMeta(t.cat);
     const ttag=(t.cat==='work'||t.cat==='custom')?'':`<span class="plan-task-tag" style="background:${meta.color}1a;color:${meta.color}">${meta.label}</span>`;
     const rtag=(t.rolled&&!t.done)?`<span class="plan-roll-tag" title="未完成 · 自 ${esc(t.rolledFrom||'')} 顺延">⏳ 延期</span>`:'';
+    const isExpr=t.cat==='express';
+    const det=isExpr?exprTaskDetail(date,t.detail):(t.detail||'');
     return `<div class="plan-task ${t.done?'done':''} ${t.rolled&&!t.done?'rolled':''}" id="ptask-${t.id}">
       <span class="plan-task-rail" style="background:${meta.color}"></span>
       <button class="plan-check ${t.done?'checked':''}" onclick="planToggleTask('${date}','${t.id}')">${t.done?'✓':''}</button>
       <div class="plan-task-body">
-        <div class="plan-task-title">${esc(t.title)}</div>
-        ${t.detail?`<div class="plan-task-detail">${esc(t.detail)}</div>`:''}
+        <div class="plan-task-title${isExpr?' clickable':''}" ${isExpr?`onclick="openExprPanel('${date}','${t.id}')" title="打开表达面板"`:''}>${esc(t.title)}</div>
+        ${det?`<div class="plan-task-detail">${esc(det)}</div>`:''}
       </div>
       ${rtag}
       ${ttag}
@@ -3610,6 +3703,7 @@ function planAddForm(date,slot){
       <option value="custom">📌 其他</option>
       <option value="exercise">🏃 运动</option>
       <option value="study">🎯 学习</option>
+      <option value="express">🗣️ 表达</option>
       <option value="contact">🤝 人脉</option>
     </select>
     <select id="planAddTime"><option value="">时间</option>${PLAN_PRESETS.map(t=>`<option value="${t}">${t}</option>`).join('')}</select>
@@ -3643,6 +3737,14 @@ function planToggleTask(date,id){
   if(!t)return;
   if(date!==ts()){toast('只能打卡「今天」的任务');return;}
   if(t.cat==='review'&&!t.done){switchTab('review');toast('去复盘页写两句，就收好今天了');return;}
+  if(t.cat==='express'){
+    if(!t.done){openExprPanel(date,t.id);return;}
+    if(!confirm('取消今日表达打卡？已写的内容会一并清除'))return;
+    const ec=lg(K.exprCk,{});delete ec[date];sg(K.exprCk,ec);
+    t.done=false;planSaveDaily(daily);
+    renderPlanDay();renderPlanAiCard();renderHomeReviewCard();
+    return;
+  }
   t.done=!t.done;
   planSaveDaily(daily);
   if(t.cat==='reading'){const c=lg(K.planCheckins,{});if(t.done){c[date]=true;advanceReadingCursor();}else{delete c[date];rewindReadingCursor();}sg(K.planCheckins,c);}
@@ -3662,6 +3764,71 @@ function planDeleteTask(date,id){
   const daily=planGetDaily();const day=daily[date];if(!day)return;
   ['morning','afternoon','evening'].forEach(s=>{day[s]=(day[s]||[]).filter(x=>x.id!==id);});
   planSaveDaily(daily);renderPlanDay();renderPlanAiCard();
+}
+// ---------- 表达训练（今日观点表达 · 30-60s 费曼输出） ----------
+let exprDate='',exprTaskId='';
+function openExprPanel(date,id){
+  exprDate=date;exprTaskId=id||'';
+  const ec=lg(K.exprCk,{});
+  const rec=ec[date]||null;
+  // 今日输入联动：读书/学习/复盘/昨日建议，供表达取材
+  const chips=[];
+  try{
+    const dts=getTodayDailyTasks();
+    if(dts.reading)chips.push({cls:'rd',txt:'📖 '+String(dts.reading.title||'').replace(/^读书：/,'')+(dts.reading.detail?(dts.reading.done?'':' · '+planDetailBrief(dts.reading)):'')});
+    if(dts.study)chips.push({cls:'st',txt:'🎯 '+String(dts.study.title||'').replace(/^学习：/,'')+(dts.study.detail&&!dts.study.done?(' · '+planDetailBrief(dts.study)):'')});
+    const rv=rvToday();
+    if(rv&&rv.text)chips.push({cls:'rv',txt:'📝 今日复盘：'+String(rv.text).slice(0,56)+(String(rv.text).length>56?'…':'')});
+    const sug=getYesterdaySuggestion();
+    if(sug)chips.push({cls:'ai',txt:'🔄 昨日建议：'+String(sug).slice(0,48)+(String(sug).length>48?'…':'')});
+  }catch(e){}
+  const chipsEl=document.getElementById('exprChips');
+  if(chipsEl){
+    chipsEl.innerHTML=chips.length
+      ? chips.map(c=>`<div class="expr-chip ${c.cls}">${esc(c.txt)}</div>`).join('')
+      : '<div class="expr-chip">今天还没有输入素材 —— 讲一件今天让你最有感触的事，或一个想通了的道理。</div>';
+  }
+  const textEl=document.getElementById('exprText');
+  if(textEl){textEl.value=rec?rec.text:'';exprCountUpdate();}
+  const ov=document.getElementById('exprOverlay');
+  if(ov)ov.classList.add('show');
+  if(textEl)setTimeout(()=>textEl.focus(),60);
+}
+function exprCountUpdate(){
+  const el=document.getElementById('exprText');if(!el)return;
+  const c=el.value.length;
+  const cnt=document.getElementById('exprCount');if(!cnt)return;
+  cnt.textContent=c+' 字';
+  cnt.classList.toggle('ok',c>=80&&c<=300);
+}
+function exprClose(){
+  const ov=document.getElementById('exprOverlay');
+  if(ov)ov.classList.remove('show');
+  exprDate='';exprTaskId='';
+}
+function exprSave(){
+  const el=document.getElementById('exprText');if(!el)return;
+  const text=el.value.trim();
+  const date=exprDate||ts();
+  if(!text){toast('先写两句，才算完成表达训练');return;}
+  if(text.length<20){toast('再写几句（20 字以上），把观点讲完整');return;}
+  const ec=lg(K.exprCk,{});
+  ec[date]={text,wc:text.length,ts:Date.now()};
+  sg(K.exprCk,ec);
+  // 同步标记计划任务为完成
+  const daily=planGetDaily();const day=daily[date];
+  if(day){['morning','afternoon','evening'].forEach(s=>{(day[s]||[]).forEach(t=>{if(t.id===exprTaskId)t.done=true;});});planSaveDaily(daily);}
+  exprClose();
+  renderPlanDay();renderPlanAiCard();renderHomeReviewCard();
+  if(planView==='day'){const p=document.getElementById('planAiCard');}
+  toast('表达已沉淀 · 今日内化 +1 ✓');
+}
+// 表达任务渲染辅助：已完成时 detail 显示字数
+function exprTaskDetail(date,base){
+  const ec=lg(K.exprCk,{});
+  const rec=ec[date];
+  if(rec)return '已表达 '+(rec.wc||0)+' 字 · 点击回顾';
+  return base;
 }
 // ---------- 时间调整 ----------
 function planOpenTimePick(ev,date,id){
@@ -3811,9 +3978,9 @@ function renderPlanMonth(){
   const weekStart=new Date(now);weekStart.setDate(now.getDate()-((now.getDay()+6)%7));
   const weekEnd=new Date(weekStart);weekEnd.setDate(weekStart.getDate()+6);
   const ws=dstr(weekStart),we=dstr(weekEnd);
-  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),exs=ld(K.exercises),rev=(REVIEW_CACHE&&REVIEW_CACHE.entries)?REVIEW_CACHE.entries:{};
+  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),exs=ld(K.exercises),ec=lg(K.exprCk,{}),rev=(REVIEW_CACHE&&REVIEW_CACHE.entries)?REVIEW_CACHE.entries:{};
   const exMap={};exs.forEach(e=>{if(e.d)exMap[e.d]=true;});
-  const dotColor=c=>c==='blue'?'var(--blue)':c==='purple'?'var(--purple)':c==='green'?'var(--green)':c==='orange'?'var(--primary)':'var(--text-3)';
+  const dotColor=c=>c==='blue'?'var(--blue)':c==='purple'?'var(--purple)':c==='green'?'var(--green)':c==='red'?'#FF2D55':c==='orange'?'var(--primary)':'var(--text-3)';
   let cells='';
   for(let i=0;i<startDow;i++)cells+='<div class="plan-cal-cell other"></div>';
   for(let d=1;d<=daysInMonth;d++){
@@ -3822,7 +3989,7 @@ function renderPlanMonth(){
     const isToday=dateStr===todayStr;
     const future=dateStr>todayStr;
     const cls='plan-cal-cell'+(inWeek?' week':'')+(isToday?' today':'')+(future?' other':'')+(future?'':' clickable');
-    const dots=((!future&&pc[dateStr])?'blue ':'')+((!future&&ac[dateStr])?'purple ':'')+((!future&&exMap[dateStr])?'green ':'')+((!future&&rev[dateStr]&&rev[dateStr].text)?'orange':'').trim();
+    const dots=((!future&&pc[dateStr])?'blue ':'')+((!future&&ac[dateStr])?'purple ':'')+((!future&&exMap[dateStr])?'green ':'')+((!future&&ec[dateStr])?'red ':'')+((!future&&rev[dateStr]&&rev[dateStr].text)?'orange':'').trim();
     const dotHtml=dots?`<div class="plan-cal-dots">${dots.split(' ').map(c=>`<span class="plan-dot" style="background:${dotColor(c)}"></span>`).join('')}</div>`:'';
     cells+=`<div class="${cls}" title="${dateStr}" onclick="planDayFromCal('${dateStr}')"><span class="d">${d}</span>${dotHtml}</div>`;
   }
@@ -3842,7 +4009,7 @@ function planDayFromCal(dateStr){
 }
 function renderPlanWeekFocus(ws,we,y,m){
   const el=document.getElementById('planWeekFocus');
-  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),exs=ld(K.exercises),rev=(REVIEW_CACHE&&REVIEW_CACHE.entries)?REVIEW_CACHE.entries:{};
+  const pc=lg(K.planCheckins,{}),ac=lg(K.agentCk,{}),exs=ld(K.exercises),ec=lg(K.exprCk,{}),rev=(REVIEW_CACHE&&REVIEW_CACHE.entries)?REVIEW_CACHE.entries:{};
   const exMap={};exs.forEach(e=>{if(e.d)exMap[e.d]=true;});
   const todayStr=ts();
   const days=['一','二','三','四','五','六','日'];
@@ -3855,7 +4022,7 @@ function renderPlanWeekFocus(ws,we,y,m){
     const dp=planGetDaily()[ds];
     const rdTask=dp&&(dp.evening||[]).find(t=>t.cat==='reading');
     const rd=rdTask?rdTask.title.replace(/^读书：/,''):'';
-    const marks=[['📖',!!pc[ds]],['🎯',!!ac[ds]],['🏃',!!exMap[ds]],['📝',!!(rev[ds]&&rev[ds].text)]];
+    const marks=[['📖',!!pc[ds]],['🎯',!!ac[ds]],['🏃',!!exMap[ds]],['🗣️',!!ec[ds]],['📝',!!(rev[ds]&&rev[ds].text)]];
     const dotHtml=marks.map(x=>`<span style="opacity:${x[1]?1:.22}">${x[0]}</span>`).join(' ');
     html+=`<div class="plan-focus-item">
       <span class="plan-focus-date">${label} ${days[i]}${isToday?' ·今':''}</span>
@@ -3868,7 +4035,7 @@ function renderPlanWeekFocus(ws,we,y,m){
     <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(planWeekGoal())}</span>
     <button onclick="planEditWeekGoal()" style="background:none;border:1px solid var(--card-border);border-radius:6px;padding:3px 9px;font-size:11px;color:var(--text-2);cursor:pointer">编辑</button>
   </div>
-  <div style="font-size:11px;color:var(--text-3);margin-top:7px">📖读书 🎯学习 🏃运动 📝复盘 · 图标变亮=已完成 · 点击月历日期可回看</div>`;
+  <div style="font-size:11px;color:var(--text-3);margin-top:7px">📖读书 🎯学习 🏃运动 🗣️表达 📝复盘 · 图标变亮=已完成 · 点击月历日期可回看</div>`;
   el.innerHTML=html;
 }
 function renderPlanMonthProgress(y,m){

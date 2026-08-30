@@ -11,7 +11,7 @@ LS_DB = os.path.expanduser(
     '~/Library/WebKit/com.xingzhe.dashboard/WebsiteData/Default/'
     '3seobT5AUYd7dAcPCK_0MeLaOvXbQfHIs-MvWXuYyus/3seobT5AUYd7dAcPCK_0MeLaOvXbQfHIs-MvWXuYyus/LocalStorage/localstorage.sqlite3')
 
-CAT_LABEL = {'reading': '读书', 'study': '学习', 'exercise': '运动', 'review': '复盘'}
+CAT_LABEL = {'reading': '读书', 'study': '学习', 'exercise': '运动', 'express': '表达', 'review': '复盘'}
 
 
 def ls_get(key):
@@ -48,7 +48,7 @@ def main():
         if missing:
             problems.append('今日计划缺任务: %s' % '、'.join(missing))
         else:
-            oks.append('今日计划四类任务(读书/学习/运动/复盘)完整')
+            oks.append('今日计划五类任务(读书/学习/运动/表达/复盘)完整')
 
     # 3) 昨天复盘 AI 分析
     try:
