@@ -752,6 +752,86 @@ body{
 .plan-task-title.clickable{cursor:pointer;}
 .plan-task-title.clickable:hover{color:var(--primary-dark);text-decoration:underline;}
 
+/* ===== SKILL ===== */
+.skill-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 6px;}
+.skill-head-title{font-size:16.5px;font-weight:700;}
+.skill-head-sub{font-size:11.5px;color:var(--text-3);margin-top:3px;}
+.skill-head-total{
+  font-size:12px;font-weight:600;color:var(--primary);background:var(--primary-light);
+  border-radius:13px;padding:5px 12px;flex:0 0 auto;font-variant-numeric:tabular-nums;
+}
+.skill-zone{margin:10px 16px 4px;}
+.skill-zone-head{display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap;}
+.skill-zone-badge{font-size:10px;font-weight:800;border-radius:9px;padding:2px 7px;letter-spacing:.3px;}
+.skill-zone-name{font-size:13px;font-weight:700;}
+.skill-zone-desc{font-size:11px;color:var(--text-3);}
+.skill-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:9px;}
+.skill-card{
+  background:var(--card-bg);border:0.5px solid var(--input-border);border-radius:12px;
+  padding:11px 12px;cursor:pointer;transition:all .15s;min-width:0;
+}
+.skill-card:hover{border-color:var(--primary);box-shadow:var(--shadow-sm);transform:translateY(-1px);}
+.skill-card.future{opacity:.55;cursor:default;}
+.skill-card.future:hover{transform:none;border-color:var(--input-border);box-shadow:none;}
+.skill-card-head{display:flex;align-items:center;gap:9px;min-width:0;}
+.skill-card-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 32px;}
+.skill-card-name{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.skill-card-lv{font-size:10.5px;font-weight:700;margin-top:1px;}
+.skill-bar{height:5px;background:var(--input-bg);border-radius:3px;margin:9px 0 7px;overflow:hidden;}
+.skill-bar-fill{height:100%;border-radius:3px;transition:width .4s ease;}
+.skill-card-foot{display:flex;justify-content:space-between;font-size:10.5px;color:var(--text-3);font-variant-numeric:tabular-nums;}
+.skill-p-head{display:flex;align-items:center;gap:12px;padding:16px 18px 6px;flex-wrap:wrap;}
+.skill-p-back{
+  border:0.5px solid var(--input-border);background:var(--input-bg);color:var(--text-2);
+  border-radius:9px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:inherit;flex:0 0 auto;
+}
+.skill-p-back:hover{background:var(--nav-active);}
+.skill-p-icon{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex:0 0 44px;}
+.skill-p-title{flex:1;min-width:0;}
+.skill-p-name{font-size:16px;font-weight:700;}
+.skill-p-meta{font-size:11.5px;color:var(--text-3);margin-top:2px;}
+.skill-p-level{font-size:12px;font-weight:700;border:1.5px solid;border-radius:13px;padding:4px 12px;flex:0 0 auto;}
+.skill-p-stats{display:flex;gap:8px;margin:12px 18px 4px;}
+.skill-p-stat{
+  flex:1;background:var(--card-bg);border:0.5px solid var(--input-border);border-radius:11px;
+  padding:10px;text-align:center;
+}
+.skill-p-stat b{display:block;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;}
+.skill-p-stat span{font-size:10.5px;color:var(--text-3);}
+.skill-p-section{margin:10px 18px 4px;background:var(--card-bg);border:0.5px solid var(--input-border);border-radius:12px;padding:13px 14px;}
+.skill-p-sec-title{font-size:13px;font-weight:700;margin-bottom:9px;}
+.skill-p-sec-sub{font-size:10.5px;color:var(--text-3);font-weight:400;margin-left:4px;}
+.skill-p-goal{width:100%;box-sizing:border-box;padding:8px 10px;border-radius:8px;font-size:12.5px;background:var(--input-bg);border:0.5px solid var(--input-border);color:var(--text);outline:none;font-family:inherit;}
+.skill-p-goal:focus{border-color:var(--primary);}
+.skill-p-3f{display:flex;flex-direction:column;gap:7px;}
+.skill-p-3f-row{display:flex;align-items:center;gap:8px;}
+.skill-p-3f-key{font-size:10.5px;font-weight:800;border-radius:7px;padding:3px 8px;flex:0 0 auto;width:70px;text-align:center;font-variant-numeric:tabular-nums;}
+.skill-p-3f-in{flex:1;min-width:0;padding:7px 10px;border-radius:8px;font-size:12px;background:var(--input-bg);border:0.5px solid var(--input-border);color:var(--text);outline:none;font-family:inherit;}
+.skill-p-3f-in:focus{border-color:var(--primary);}
+.skill-p-btns{display:flex;gap:8px;margin-top:11px;flex-wrap:wrap;}
+.skill-p-btn{
+  padding:8px 14px;border-radius:9px;border:none;cursor:pointer;color:#fff;font-size:12.5px;font-weight:700;font-family:inherit;transition:all .15s;
+}
+.skill-p-btn:hover{filter:brightness(1.08);}
+.skill-p-fogg{
+  padding:8px 14px;border-radius:9px;cursor:pointer;font-size:12.5px;font-weight:600;font-family:inherit;
+  background:var(--input-bg);color:var(--text-2);border:0.5px solid var(--input-border);
+}
+.skill-p-fogg:hover{background:var(--nav-active);}
+.skill-p-actions{margin:12px 18px 20px;}
+.skill-p-log{display:flex;gap:8px;align-items:baseline;font-size:12px;padding:6px 0;border-bottom:0.5px dashed var(--input-border);}
+.skill-p-log-date{flex:0 0 46px;font-size:10.5px;color:var(--text-3);font-variant-numeric:tabular-nums;}
+.skill-p-log-fix{color:var(--text-3);font-size:11px;flex:1;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.skill-p-empty{font-size:11.5px;color:var(--text-3);padding:8px 2px;line-height:1.6;}
+.skill-fogg-tip{font-size:11.5px;color:var(--text-3);margin:6px 0 10px;line-height:1.55;text-align:left;}
+.skill-fogg-opt{
+  display:flex;align-items:center;gap:8px;text-align:left;font-size:12.5px;line-height:1.5;
+  padding:8px 10px;margin-bottom:6px;border-radius:9px;border:0.5px solid var(--input-border);
+  background:var(--input-bg);cursor:pointer;
+}
+.skill-fogg-opt input{flex:0 0 auto;}
+.skill-fogg-adv{font-size:12px;line-height:1.6;color:var(--text-2);background:var(--input-bg);border-left:3px solid var(--primary);border-radius:6px;padding:7px 10px;margin:5px 0;text-align:left;}
+
 /* ===== DIALOG ===== */
 .dialog-overlay{
   position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.35);
@@ -1027,6 +1107,10 @@ body{
     <button class="nav-item" data-tab="review" onclick="switchTab('review')" data-page-node-id="WK0BxESXyRJffAD5aBjxQo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" data-page-node-id="uziI5RmjZRuxH8DmgG7KEk"><path d="M12 20h9" data-page-node-id="sSixJn0IRAvBOmTSpCGZ9c"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z" data-page-node-id="hHKf2oIMw91Ho7ENC9GBSz"/></svg>
       <span data-page-node-id="6dzwA5zAaA0EK0LEcLwFtZ">复盘</span>
+    </button>
+    <button class="nav-item" data-tab="skill" onclick="switchTab('skill')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>技能</span>
     </button>
     <div class="sidebar-spacer" data-page-node-id="OCWfOEQL20Zq6qulVrDgs5"></div>
     <div class="sidebar-foot" data-page-node-id="IS3xZamUwhFlwlr7Px9zuf">
@@ -1447,6 +1531,19 @@ body{
       </div>
     </div>
 
+    <!-- ==================== SKILL ==================== -->
+    <div class="page" id="page-skill">
+      <div class="skill-head">
+        <div>
+          <div class="skill-head-title">🎯 技能训练</div>
+          <div class="skill-head-sub">刻意练习 × 习惯养成 —— 把想练的能力，变成每天可执行的最小动作</div>
+        </div>
+        <div class="skill-head-total" id="skillTotal">今日 --/--</div>
+      </div>
+      <div id="skillGrid"></div>
+      <div id="skillProfile" style="display:none"></div>
+    </div>
+
     <!-- ==================== PLAN ==================== -->
     <div class="page" id="page-plan" data-page-node-id="nRfjOE39h6EnaRH8H3YMBn">
       <div class="plan-subtabs" data-page-node-id="uEionZ8qC6RKhXTMlZ6jqb">
@@ -1641,6 +1738,22 @@ body{
   </div>
 </div>
 
+<!-- Skill Fogg Diagnose（断卡诊断 · 福格 B=MAP） -->
+<div class="dialog-overlay" id="skillFoggOverlay">
+  <div class="dialog" style="width:380px;text-align:left;">
+    <div class="dialog-title" id="skillFoggTitle">🤔 断卡诊断</div>
+    <div class="skill-fogg-tip">连续断卡时，别硬扛 —— 用福格行为模型 B=MAP 定位：行为 = 动机 × 能力 × 提示。卡在哪一环，就补哪一环。</div>
+    <label class="skill-fogg-opt"><input type="checkbox" id="foggM">😴 <b>动机不足</b> —— 没劲 / 不想做 / 觉得没意义</label>
+    <label class="skill-fogg-opt"><input type="checkbox" id="foggA">🧗 <b>能力不足</b> —— 太难 / 太花时间 / 不知道怎么做</label>
+    <label class="skill-fogg-opt"><input type="checkbox" id="foggP">⏰ <b>提示缺失</b> —— 忘了 / 没固定时间 / 没有提醒</label>
+    <div id="skillFoggAdvice"></div>
+    <div class="dialog-btns">
+      <button class="dialog-btn cancel" onclick="skillFoggClose()">关闭</button>
+      <button class="dialog-btn confirm" id="skillFoggGo">出建议</button>
+    </div>
+  </div>
+</div>
+
 <!-- PWA install banner (unused on desktop) -->
 <div id="installBanner" class="install-banner" data-page-node-id="EB3Dhx2dKvpDfzbuf8UE2j"></div>
 
@@ -1649,7 +1762,7 @@ body{
 <script>
 // ==================== DATA KEYS (shared with mobile version) ====================
 const P='wb_life_';
-const K={goals:P+'goals',tasks:P+'tasks',exercises:P+'exercises',weights:P+'weights',books:P+'books',notes:P+'notes',study:P+'study_checkin',contacts:P+'contacts',logs:P+'comm_logs',visitLogs:P+'visit_logs',obsidian:P+'obsidian',weread:P+'weread',planData:P+'plan',planCheckins:P+'plan_ck',init:P+'initialized',agentPlan:P+'agent_plan',agentCk:P+'agent_ck',agentMig:P+'agent_mig',cMig:P+'contact_mig',cLegacy:P+'contacts_legacy',planDaily:P+'plan_daily',planWeekly:P+'plan_weekly',exprCk:P+'expr_ck'};
+const K={goals:P+'goals',tasks:P+'tasks',exercises:P+'exercises',weights:P+'weights',books:P+'books',notes:P+'notes',study:P+'study_checkin',contacts:P+'contacts',logs:P+'comm_logs',visitLogs:P+'visit_logs',obsidian:P+'obsidian',weread:P+'weread',planData:P+'plan',planCheckins:P+'plan_ck',init:P+'initialized',agentPlan:P+'agent_plan',agentCk:P+'agent_ck',agentMig:P+'agent_mig',cMig:P+'contact_mig',cLegacy:P+'contacts_legacy',planDaily:P+'plan_daily',planWeekly:P+'plan_weekly',exprCk:P+'expr_ck',skillMeta:P+'skill_meta',skillLog:P+'skill_log'};
 
 function ld(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch(e){return[]}}
 function sv(k,v){localStorage.setItem(k,JSON.stringify(v))}
@@ -2047,17 +2160,17 @@ function renderHome(){
     document.getElementById('exHomeSub').textContent=subParts.join(' · ');
     const checkEl=document.getElementById('exHomeCheck');
     if(todayEx2.length){
-      checkEl.classList.add('done');
+      checkEl.classList.add('checked');
       checkEl.onclick=()=>{event.stopPropagation();switchTab('exercise');};
     }else{
-      checkEl.classList.remove('done');
+      checkEl.classList.remove('checked');
     }
   }else{
     exCard.style.display='flex';
     document.getElementById('exHomeLabel').textContent='今日运动 · 周日';
     document.getElementById('exHomeTitle').textContent='休息/主动恢复';
     document.getElementById('exHomeSub').textContent='散步/拉伸/泡沫轴';
-    if(todayEx2.length)document.getElementById('exHomeCheck').classList.add('done');
+    if(todayEx2.length)document.getElementById('exHomeCheck').classList.add('checked');
   }
 
   renderReadingTaskCards();
@@ -3417,17 +3530,17 @@ function renderHomeReviewCard(){
     label.textContent='今日复盘 · '+rvStreakCount()+' 天';
     title.textContent='已完成 ✓'+(ai?' · 建议已生成':' · 待分析');
     sub.textContent=ai?'明日建议：'+ai:(sug?'昨日建议：'+sug:'保持节奏');
-    check.classList.add('done');
+    check.classList.add('checked');
   }else if(sug){
     label.textContent='每日复盘 · '+rvStreakCount()+' 天';
     title.textContent='昨日建议：'+sug;
     sub.textContent='写今日复盘，回看执行情况';
-    check.classList.remove('done');
+    check.classList.remove('checked');
   }else{
     label.textContent='每日复盘 · '+rvStreakCount()+' 天';
     title.textContent='今天还没复盘';
     sub.textContent='写两分钟，23 点自动分析';
-    check.classList.remove('done');
+    check.classList.remove('checked');
   }
 }
 function checkReminders(){
@@ -3875,6 +3988,7 @@ function exprSave(){
   if(day){['morning','afternoon','evening'].forEach(s=>{(day[s]||[]).forEach(t=>{if(t.id===exprTaskId)t.done=true;});});planSaveDaily(daily);}
   exprClose();
   renderPlanDay();renderPlanAiCard();renderHomeReviewCard();renderHomeExprCard();
+  if(currentTab==='skill')renderSkill();
   if(planView==='day'){const p=document.getElementById('planAiCard');}
   toast('表达已沉淀 · 今日内化 +1 ✓');
 }
@@ -3923,13 +4037,242 @@ function renderHomeExprCard(){
     label.textContent='今日表达 · 连续 '+streak+' 天';
     title.textContent='已完成 ✓ · 表达 '+(rec.wc||0)+' 字';
     sub.textContent='点击回顾今天的表达，或继续打磨观点';
-    check.classList.add('done');
+    check.classList.add('checked');
   }else{
     label.textContent='今日表达 · '+(streak>0?'连续 '+streak+' 天':'30-60s 训练');
     title.textContent='30-60 秒讲清今天学到的一点';
     sub.textContent='先输入（读书/学习）→ 再输出 → 最后复盘';
-    check.classList.remove('done');
+    check.classList.remove('checked');
   }
+}
+// ==================== SKILL TRAINING（技能训练 · 刻意练习 × 习惯养成） ====================
+var SKILL_ZONES=[
+  {id:'P0',label:'认知与表达',desc:'最重要 · 一切能力的放大器',color:'#FF2D55'},
+  {id:'P1',label:'身体与精力',desc:'其次 · 一切的本钱',color:'#30D158'},
+  {id:'P2',label:'专业与创作',desc:'深度 · 吃饭的本事',color:'#AF52DE'},
+  {id:'P3',label:'人际与领导',desc:'广度 · 杠杆的来源',color:'#5AC8FA'}
+];
+var SKILLS=[
+  {id:'expr',name:'表达训练',icon:'🎙️',zone:'P0',color:'#FF2D55',bind:'expr',desc:'30-60s 讲清今天学到的一点',action:'打开表达面板',jump:function(){openExprPanel(ts(),getExprTaskId());}},
+  {id:'think',name:'结构化思维',icon:'🧩',zone:'P0',color:'#FF9500',bind:null,desc:'结论先行 · 金字塔 · SCQA（规划中）'},
+  {id:'fitness',name:'运动训练',icon:'🏃',zone:'P1',color:'#30D158',bind:'exercise',desc:'推拉腿 · 力量与体能',action:'去运动页',jump:function(){switchTab('exercise');}},
+  {id:'energy',name:'精力管理',icon:'🔋',zone:'P1',color:'#64D2FF',bind:null,desc:'睡眠 · 恢复 · 节奏（规划中）'},
+  {id:'agent',name:'AI Agent 工程',icon:'🤖',zone:'P2',color:'#AF52DE',bind:'agent',desc:'16 周冲刺 · Agent 技术栈',action:'去看学习计划',jump:function(){switchTab('reading');}},
+  {id:'reading',name:'深度阅读',icon:'📖',zone:'P2',color:'#0A84FF',bind:'reading',desc:'每天一章 · 内化输入',action:'去读书页',jump:function(){switchTab('reading');}},
+  {id:'finance',name:'金融投资分析',icon:'📈',zone:'P2',color:'#FFD60A',bind:null,desc:'市场跟踪 · 机构观点（规划中）'},
+  {id:'writing',name:'写作输出',icon:'✍️',zone:'P2',color:'#FF9F0A',bind:null,desc:'结构化写作 · 知识卡片（规划中）'},
+  {id:'comm',name:'沟通协作',icon:'💬',zone:'P3',color:'#5AC8FA',bind:null,desc:'向上沟通 · 跨团队协作（规划中）'},
+  {id:'network',name:'人脉经营',icon:'🤝',zone:'P3',color:'#32ADE6',bind:'contact',desc:'定期联系 · 价值交换',action:'去人脉页',jump:function(){switchTab('contact');}}
+];
+function skillGet(id){return SKILLS.find(x=>x.id===id)||null;}
+function skillSrc(id){
+  const s=skillGet(id);if(!s||!s.bind)return null;
+  if(s.bind==='expr')return lg(K.exprCk,{});
+  if(s.bind==='exercise')return ld(K.exercises);
+  if(s.bind==='agent')return lg(K.agentCk,{});
+  if(s.bind==='reading')return lg(K.planCheckins,{});
+  if(s.bind==='contact')return ld(K.contacts);
+  return null;
+}
+function skillDoneToday(id){
+  const s=skillGet(id);if(!s||!s.bind)return false;
+  const src=skillSrc(id),t=ts();
+  if(s.bind==='expr'){const r=src[t];return !!(r&&r.text);}
+  if(s.bind==='exercise')return src.some(e=>e&&e.d===t);
+  if(s.bind==='contact')return false;
+  return !!src[t];
+}
+function skillTotalDays(id){
+  const s=skillGet(id);if(!s||!s.bind)return 0;
+  const src=skillSrc(id);
+  if(s.bind==='expr')return Object.keys(src).filter(k=>src[k]&&src[k].text).length;
+  if(s.bind==='exercise')return new Set(src.map(e=>e&&e.d).filter(Boolean)).size;
+  if(s.bind==='contact')return 0;
+  return Object.keys(src).filter(k=>src[k]).length;
+}
+function skillStreak(id){
+  const s=skillGet(id);if(!s||!s.bind)return 0;
+  const src=skillSrc(id),t=ts();
+  let n=0,d=new Date();
+  while(true){
+    const k=dstr(d);let ok=false;
+    if(s.bind==='expr'){const r=src[k];ok=!!(r&&r.text);}
+    else if(s.bind==='exercise')ok=src.some(e=>e&&e.d===k);
+    else if(s.bind==='contact')ok=false;
+    else ok=!!src[k];
+    if(ok)n++;else if(n>0||k!==t)break;
+    d.setDate(d.getDate()-1);
+  }
+  return n;
+}
+function skillLevel(days){
+  if(days>=90)return{lv:3,name:'大师',pct:100};
+  if(days>=30)return{lv:2,name:'精通',pct:Math.min(100,68+Math.round((days-30)/60*30))};
+  if(days>=7)return{lv:1,name:'熟练',pct:Math.min(68,36+Math.round((days-7)/23*30))};
+  return{lv:0,name:'新手',pct:Math.max(4,Math.round(days/7*34))};
+}
+var skillProfileOpen='';
+function renderSkill(){
+  const grid=document.getElementById('skillGrid');if(!grid)return;
+  const prof=document.getElementById('skillProfile');
+  if(skillProfileOpen){grid.style.display='none';prof.style.display='block';renderSkillProfile(skillProfileOpen);return;}
+  grid.style.display='';prof.style.display='none';
+  let totalDone=0,totalBound=0,html='';
+  SKILL_ZONES.forEach(z=>{
+    const sk=SKILLS.filter(s=>s.zone===z.id);
+    html+=`<div class="skill-zone">
+      <div class="skill-zone-head">
+        <span class="skill-zone-badge" style="background:${z.color}1a;color:${z.color}">${z.id}</span>
+        <span class="skill-zone-name">${z.label}</span>
+        <span class="skill-zone-desc">${z.desc}</span>
+      </div>
+      <div class="skill-cards">`;
+    sk.forEach(s=>{
+      if(s.bind)totalBound++;
+      const done=s.bind?skillDoneToday(s.id):false;
+      if(done)totalDone++;
+      const days=s.bind?skillTotalDays(s.id):0;
+      const lv=s.bind?skillLevel(days):{name:'规划中',pct:0};
+      const streak=s.bind?skillStreak(s.id):0;
+      const todayTxt=s.bind?(done?'✓ 今日完成':'今日未练'):'规划中';
+      html+=`<div class="skill-card ${s.bind?'':'future'}" ${s.bind?`onclick="openSkillProfile('${s.id}')"`:''}>
+        <div class="skill-card-head">
+          <div class="skill-card-icon" style="background:${s.color}1a">${s.icon}</div>
+          <div style="min-width:0">
+            <div class="skill-card-name">${s.name}</div>
+            <div class="skill-card-lv" style="color:${s.color}">${s.bind?'L'+lv.lv+' · '+lv.name:lv.name}</div>
+          </div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:${lv.pct}%;background:${s.color}"></div></div>
+        <div class="skill-card-foot">
+          <span>${todayTxt}</span>
+          <span>${s.bind?(streak>0?'🔥 '+streak+' 天':days+' 天'):''}</span>
+        </div>
+      </div>`;
+    });
+    html+=`</div></div>`;
+  });
+  grid.innerHTML=html;
+  const st=document.getElementById('skillTotal');
+  if(st)st.textContent='今日 '+totalDone+'/'+totalBound;
+}
+function openSkillProfile(id){
+  skillProfileOpen=id;renderSkill();
+  document.getElementById('mainContent').scrollTop=0;
+}
+function skillBackToGrid(){
+  skillProfileOpen='';renderSkill();
+  document.getElementById('mainContent').scrollTop=0;
+}
+function renderSkillProfile(id){
+  const s=skillGet(id);if(!s)return;
+  const prof=document.getElementById('skillProfile');if(!prof)return;
+  const days=skillTotalDays(id),lv=skillLevel(days),streak=skillStreak(id),done=skillDoneToday(id);
+  const meta=lg(K.skillMeta,{});
+  const goal=(meta[id]&&meta[id].goal)||'';
+  const log=lg(K.skillLog,{});
+  const todayRec=(log[id]||[]).find(x=>x.date===ts())||{};
+  const recent=(log[id]||[]).filter(x=>x.type!=='fogg').slice(-7).reverse();
+  const nextDays=lv.lv===0?7:lv.lv===1?30:lv.lv===2?90:999;
+  const nextTxt=lv.lv<3?('距 '+['熟练','精通','大师'][lv.lv]+' 还需 '+(nextDays-days)+' 天'):'已达最高等级 🏆';
+  prof.innerHTML=`
+    <div class="skill-p-head">
+      <button class="skill-p-back" onclick="skillBackToGrid()">← 返回</button>
+      <div class="skill-p-icon" style="background:${s.color}1a">${s.icon}</div>
+      <div class="skill-p-title">
+        <div class="skill-p-name">${s.name}</div>
+        <div class="skill-p-meta">${s.desc}</div>
+      </div>
+      <div class="skill-p-level" style="border-color:${s.color};color:${s.color}">L${lv.lv} ${lv.name}</div>
+    </div>
+    <div class="skill-p-stats">
+      <div class="skill-p-stat"><b>${days}</b><span>累计天数</span></div>
+      <div class="skill-p-stat"><b>${streak}</b><span>连续天数</span></div>
+      <div class="skill-p-stat"><b>${done?'✓':'—'}</b><span>今日状态</span></div>
+      <div class="skill-p-stat"><b style="font-size:14px">${nextTxt}</b><span>升级路径</span></div>
+    </div>
+    <div class="skill-p-section">
+      <div class="skill-p-sec-title">🎯 当前目标</div>
+      <input class="skill-p-goal" id="skillGoalInput" value="${esc(goal)}" placeholder="例：30 秒内把结论讲清楚" onchange="skillSaveGoal('${id}')">
+      <div style="font-size:10.5px;color:var(--text-3);margin-top:4px">目标要具体、可检验（原子习惯：明确的开始信号 + 明确的完成状态）</div>
+    </div>
+    <div class="skill-p-section">
+      <div class="skill-p-sec-title">🔁 3F 反馈本<span class="skill-p-sec-sub">刻意练习三要素：专注 Focus → 反馈 Feedback → 修正 Fix</span></div>
+      <div class="skill-p-3f">
+        <div class="skill-p-3f-row">
+          <span class="skill-p-3f-key" style="background:${s.color}1a;color:${s.color}">Focus</span>
+          <input id="skFocus" class="skill-p-3f-in" placeholder="今天练什么？（如：用 PREP 框架讲今日所学）" value="${esc(todayRec.focus||'')}">
+        </div>
+        <div class="skill-p-3f-row">
+          <span class="skill-p-3f-key" style="background:${s.color}1a;color:${s.color}">Feedback</span>
+          <input id="skFeedback" class="skill-p-3f-in" placeholder="反馈来源？（录音回听 / 自评 / AI 点评）" value="${esc(todayRec.feedback||'')}">
+        </div>
+        <div class="skill-p-3f-row">
+          <span class="skill-p-3f-key" style="background:${s.color}1a;color:${s.color}">Fix</span>
+          <input id="skFix" class="skill-p-3f-in" placeholder="下次改进？（减少口头禅 / 结论再短一点）" value="${esc(todayRec.fix||'')}">
+        </div>
+      </div>
+      <div class="skill-p-btns">
+        <button class="skill-p-btn" style="background:${s.color}" onclick="skillSave3F('${id}')">保存今日反馈</button>
+        <button class="skill-p-fogg" onclick="skillFoggOpen('${id}')">🤔 断卡诊断（福格 B=MAP）</button>
+      </div>
+    </div>
+    <div class="skill-p-section">
+      <div class="skill-p-sec-title">📅 练习记录<span class="skill-p-sec-sub">最近反馈</span></div>
+      <div>${recent.length?recent.map(r=>`<div class="skill-p-log"><span class="skill-p-log-date">${r.date.slice(5)}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.focus||'—')}</span><span class="skill-p-log-fix">→ ${esc(r.fix||'')}</span></div>`).join(''):'<div class="skill-p-empty">还没有反馈记录 —— 练完一次，回来写一句 Focus / Fix，积累就从今天开始。</div>'}</div>
+    </div>
+    ${s.jump?`<div class="skill-p-actions"><button class="skill-p-btn" style="background:${s.color};width:100%;padding:11px 0;font-size:13.5px" onclick="skillJump('${id}')">去练习 → ${s.action}</button></div>`:''}`;
+}
+function skillSaveGoal(id){
+  const el=document.getElementById('skillGoalInput');if(!el)return;
+  const meta=lg(K.skillMeta,{});
+  meta[id]={goal:el.value.trim(),updated:Date.now()};
+  sg(K.skillMeta,meta);toast('🎯 目标已保存');
+}
+function skillSave3F(id){
+  const f=document.getElementById('skFocus'),fb=document.getElementById('skFeedback'),fx=document.getElementById('skFix');
+  if(!f)return;
+  const log=lg(K.skillLog,{});
+  if(!log[id])log[id]=[];
+  const t=ts(),i=log[id].findIndex(x=>x.date===t&&x.type!=='fogg');
+  const rec={date:t,type:'3f',focus:f.value.trim(),feedback:fb.value.trim(),fix:fx.value.trim(),ts:Date.now()};
+  if(i>=0)log[id][i]=rec;else log[id].push(rec);
+  if(log[id].length>60)log[id]=log[id].slice(-60);
+  sg(K.skillLog,log);
+  renderSkillProfile(id);
+  toast('🔁 3F 反馈已沉淀');
+}
+function skillJump(id){
+  const s=skillGet(id);if(s&&s.jump)s.jump();
+}
+// 福格断卡诊断 B=MAP
+function skillFoggOpen(id){
+  const s=skillGet(id);if(!s)return;
+  document.getElementById('skillFoggTitle').textContent='🤔 断卡诊断 · '+s.name;
+  document.getElementById('skillFoggGo').onclick=function(){skillFoggAnalyze(id);};
+  ['foggM','foggA','foggP'].forEach(x=>{const el=document.getElementById(x);if(el)el.checked=false;});
+  document.getElementById('skillFoggAdvice').innerHTML='';
+  document.getElementById('skillFoggOverlay').classList.add('show');
+}
+function skillFoggClose(){
+  document.getElementById('skillFoggOverlay').classList.remove('show');
+}
+function skillFoggAnalyze(id){
+  const m=document.getElementById('foggM').checked;
+  const a=document.getElementById('foggA').checked;
+  const p=document.getElementById('foggP').checked;
+  const adv=[];
+  if(m)adv.push('😴 <b>动机不足</b> → 用「习惯叠加」：把它绑在每天必做的事后面（如：学完就读、读完就表达）；再把标准降到「2 分钟启动版」——先开始，再谈质量。');
+  if(a)adv.push('🧗 <b>能力不足</b> → 用「两分钟法则」：把任务拆到 2 分钟就能完成的最小动作；主动降难度，烂开始好过不开始。');
+  if(p)adv.push('⏰ <b>提示缺失</b> → 把练习锚定到固定时间+地点（如 22:00 书桌前）；打开工作台提醒，或放一件物品当触发器。');
+  if(!m&&!a&&!p)adv.push('三环都通 —— 那多半只是累了。允许休息一天，但约定「明天必须恢复」，别让断卡变成放弃。');
+  const box=document.getElementById('skillFoggAdvice');
+  box.innerHTML=adv.map(x=>'<div class="skill-fogg-adv">'+x+'</div>').join('');
+  const log=lg(K.skillLog,{});
+  if(!log[id])log[id]=[];
+  log[id].push({date:ts(),type:'fogg',m:m,ability:a,prompt:p,ts:Date.now()});
+  if(log[id].length>60)log[id]=log[id].slice(-60);
+  sg(K.skillLog,log);
 }
 // ---------- 时间调整 ----------
 function planOpenTimePick(ev,date,id){
@@ -4183,6 +4526,7 @@ function renderAll(){
   if(currentTab==='reading')renderReading();
   if(currentTab==='contact')renderContact();
   if(currentTab==='review')renderReview();
+  if(currentTab==='skill')renderSkill();
   renderHomeReviewCard();
   updateTabBadges();
 }

@@ -50,7 +50,15 @@ def main():
         else:
             oks.append('今日计划五类任务(读书/学习/运动/表达/复盘)完整')
 
-    # 3) 昨天复盘 AI 分析
+    # 3) 技能板块数据
+    skill_meta = ls_get('wb_life_skill_meta')
+    skill_log = ls_get('wb_life_skill_log')
+    if skill_meta is not None and skill_log is not None:
+        oks.append('技能板块数据键存在(meta/log)')
+    else:
+        problems.append('技能板块数据未初始化 —— 打开「技能」页后自动创建')
+
+    # 4) 昨天复盘 AI 分析
     try:
         rv = json.load(open(os.path.join(DIR, 'review.json'), encoding='utf-8'))
         ye = rv.get('entries', {}).get(YESTERDAY)
