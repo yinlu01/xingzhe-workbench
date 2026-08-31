@@ -4032,9 +4032,9 @@ function exprCoachCardHtml(rec,date){
   const a=rec.a||rec.text||'';
   const wc=a.length;
   return '<div class="expr-coach-card">'
-    +'<div class="expr-coach-date">'+esc(date)+(rec.mode==='coach'?' · 对话式训练':'')+'</div>'
-    +'<div class="expr-coach-row q"><span class="expr-coach-tag">问题</span><div class="expr-coach-txt">'+esc(rec.q||'')+'</div></div>'
-    +'<div class="expr-coach-row a"><span class="expr-coach-tag">我的回答</span><div class="expr-coach-txt">'+esc(a)+(wc?'<span class="expr-coach-wc">'+wc+' 字</span>':'')+'</div></div>'
+    +'<div class="expr-coach-date">'+esc(date)+(rec.mode==='coach'?' · 对话式训练':' · 打卡训练')+'</div>'
+    +(rec.q?'<div class="expr-coach-row q"><span class="expr-coach-tag">问题</span><div class="expr-coach-txt">'+esc(rec.q)+'</div></div>':'')
+    +'<div class="expr-coach-row a"><span class="expr-coach-tag">'+(rec.mode==='coach'?'我的回答':'表达内容')+'</span><div class="expr-coach-txt">'+esc(a)+(wc?'<span class="expr-coach-wc">'+wc+' 字</span>':'')+'</div></div>'
     +(rec.fb?'<div class="expr-coach-row fb"><span class="expr-coach-tag">果果反馈</span><div class="expr-coach-txt">'+esc(rec.fb)+'</div></div>':'')
     +(rec.opt?'<div class="expr-coach-row opt"><span class="expr-coach-tag">优化版</span><div class="expr-coach-txt">'+esc(rec.opt)+'</div></div>':'')
     +(rec.take?'<div class="expr-coach-row tk"><span class="expr-coach-tag">优化要点</span><div class="expr-coach-txt">'+esc(rec.take)+'</div></div>':'')
@@ -4053,9 +4053,10 @@ function renderExprCoachToday(){
     +'<div class="expr-btns"><button class="expr-cancel" onclick="exprShowView(\'history\')">📜 查看全部训练记录</button></div>';
 }
 // 训练记录历史 + 优化点聚合
+// 全部有效表达记录的日期（手动打卡 text + 对话训练 a 双字段兼容），倒序
 function exprCoachKeys(){
   const ec=lg(K.exprCk,{});
-  return Object.keys(ec).filter(k=>ec[k]&&ec[k].mode==='coach').sort().reverse();
+  return Object.keys(ec).filter(k=>ec[k]&&(ec[k].a||ec[k].text)).sort().reverse();
 }
 function exprTakeAgg(){
   const ec=lg(K.exprCk,{});
@@ -4072,10 +4073,10 @@ function renderExprHistory(){
   html+=agg.length
     ?agg.map((x,i)=>'<div class="expr-agg-row"><span class="expr-agg-n">'+(i+1)+'</span><span class="expr-agg-t">'+esc(x[0])+'</span><span class="expr-agg-c">×'+x[1]+'</span></div>').join('')
     :'<div class="expr-coach-empty">对话训练攒起来后，这里会聚合出你最常被点到的表达问题 —— 练哪儿，一目了然。</div>';
-  html+='<div class="expr-agg-title" style="margin-top:14px">📜 对话训练记录 · 最近 10 次</div>';
+  html+='<div class="expr-agg-title" style="margin-top:14px">📜 训练记录 · 全部（最近 10 次）</div>';
   html+=keys.length
     ?keys.slice(0,10).map(k=>exprCoachCardHtml(ec[k],k)).join('')
-    :'<div class="expr-coach-empty">还没有对话式训练记录 —— 去对话里对果果说「开始表达训练」。</div>';
+    :'<div class="expr-coach-empty">还没有任何训练记录 —— 在打卡训练里写下表达，或去对话里对果果说「开始表达训练」。</div>';
   el.innerHTML=html;
 }
 // 技能档案页 · 表达训练专属区（高频要点 + 最近训练）
@@ -4093,7 +4094,7 @@ function exprSkillSection(){
     h+='<div class="expr-agg-title" style="margin-top:12px">最近 3 次训练</div>';
     h+=keys.slice(0,3).map(k=>exprCoachCardHtml(ec[k],k)).join('');
   }else{
-    h+='<div class="expr-coach-empty">还没有对话式训练记录。</div>';
+    h+='<div class="expr-coach-empty">还没有训练记录 —— 打卡训练和对话训练的记录都会沉淀在这里。</div>';
   }
   h+='<div class="skill-p-btns" style="margin-top:10px"><button class="skill-p-fogg" onclick="exprOpenHistory()">📜 查看全部训练记录</button></div>';
   h+='</div>';
