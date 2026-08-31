@@ -748,6 +748,43 @@ body{
 }
 .expr-cancel:hover{background:var(--nav-active);}
 
+/* ===== 表达面板 · 视图切换与对话式训练记录 ===== */
+.expr-tabs{display:flex;gap:6px;margin:2px 0 12px;}
+.expr-tab{
+  flex:1;padding:7px 0;border-radius:9px;border:0.5px solid var(--input-border);background:var(--input-bg);
+  color:var(--text-2);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s;
+}
+.expr-tab:hover{border-color:var(--primary);}
+.expr-tab.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+.expr-coach-card{
+  border:0.5px solid var(--input-border);border-radius:12px;padding:11px 13px 9px;margin-bottom:9px;
+  background:var(--input-bg);
+}
+.expr-coach-date{font-size:11px;color:var(--text-3);margin-bottom:6px;font-variant-numeric:tabular-nums;font-weight:600;}
+.expr-coach-row{display:flex;gap:9px;padding:5px 0;align-items:flex-start;}
+.expr-coach-tag{
+  flex:0 0 62px;text-align:center;font-size:11px;font-weight:800;border-radius:7px;padding:3px 0;margin-top:2px;
+}
+.expr-coach-txt{flex:1;min-width:0;font-size:13px;line-height:1.65;color:var(--text);white-space:pre-wrap;word-break:break-word;}
+.expr-coach-row.q .expr-coach-tag{background:rgba(10,132,255,.12);color:#0A84FF;}
+.expr-coach-row.a .expr-coach-tag{background:rgba(48,209,88,.14);color:#30D158;}
+.expr-coach-row.fb .expr-coach-tag{background:rgba(255,149,0,.14);color:#FF9500;}
+.expr-coach-row.opt .expr-coach-tag{background:rgba(175,82,222,.14);color:#AF52DE;}
+.expr-coach-row.tk .expr-coach-tag{background:rgba(255,45,85,.12);color:#FF2D55;}
+.expr-coach-wc{font-size:11px;color:var(--text-3);font-variant-numeric:tabular-nums;margin-left:6px;white-space:nowrap;}
+.expr-coach-empty{
+  font-size:12.5px;color:var(--text-3);line-height:1.7;padding:14px 10px;text-align:center;
+}
+.expr-agg-title{font-size:12.5px;font-weight:700;margin:4px 0 7px;}
+.expr-agg-row{
+  display:flex;align-items:center;gap:8px;padding:6px 10px;border:0.5px solid var(--input-border);
+  border-radius:9px;margin-bottom:5px;background:var(--input-bg);
+}
+.expr-agg-n{flex:0 0 18px;font-size:12px;font-weight:800;color:#FF2D55;text-align:center;font-variant-numeric:tabular-nums;}
+.expr-agg-t{flex:1;min-width:0;font-size:12.5px;color:var(--text);}
+.expr-agg-c{flex:0 0 auto;font-size:11.5px;color:var(--text-3);font-variant-numeric:tabular-nums;}
+.expr-skill-tip{font-size:11.5px;line-height:1.65;color:var(--text-3);margin-bottom:9px;}
+
 /* 计划任务标题可点击（表达任务点击回顾） */
 .plan-task-title.clickable{cursor:pointer;}
 .plan-task-title.clickable:hover{color:var(--primary-dark);text-decoration:underline;}
@@ -1710,13 +1747,19 @@ body{
   </div>
 </div>
 
-<!-- Expression Training Panel（今日表达训练） -->
+<!-- Expression Training Panel（今日表达训练：打卡 / 对话式训练 / 记录） -->
 <div class="expr-overlay" id="exprOverlay" onclick="if(event.target===this)exprClose()" data-page-node-id="HPS4yvLsS7znV0Uq8mSnIs">
   <div class="expr-panel" data-page-node-id="1jCJVs8K3le1TzQ2wJAu3P">
     <div class="expr-head" data-page-node-id="3CzoboyJqsXisTIia98n1G">
       <div class="expr-title" data-page-node-id="yJFA18CjDsNXWXYpqRrjaC">🗣️ 今日表达训练</div>
       <button class="expr-close" onclick="exprClose()" title="关闭" data-page-node-id="m4IH3MMRYp1sn0DGDYcDtf">×</button>
     </div>
+    <div class="expr-tabs">
+      <button class="expr-tab active" id="exprTabInput" onclick="exprShowView('input')">✍️ 打卡训练</button>
+      <button class="expr-tab" id="exprTabCoach" onclick="exprShowView('coach')">🎙️ 对话训练</button>
+      <button class="expr-tab" id="exprTabHistory" onclick="exprShowView('history')">📜 训练记录</button>
+    </div>
+    <div id="exprInputView">
     <div class="expr-rule" data-page-node-id="OOTMvsH7vvPZ8ozv3hmL4S">用 <b data-page-node-id="DZvoensGD77hregXhXkDMH">30–60 秒</b>，把今天学到<b data-page-node-id="sE82eFhgYEUe62H3RobpEJ">最有价值的一点</b>讲清楚 —— 费曼输出：讲得明白，才算真的学会。写完照着念一遍，就是今天的表达训练。</div>
     <div class="expr-frames" id="exprFrames">
       <span class="expr-frame-label">表达框架</span>
@@ -1735,6 +1778,9 @@ body{
       <button class="expr-save" onclick="exprSave()" data-page-node-id="h0RC09UrgNiVw2QzP1TweQ">保存并打卡 ✓</button>
       <button class="expr-cancel" onclick="exprClose()" data-page-node-id="SZrvwtuJW9QtMhIXmepKEH">取消</button>
     </div>
+    </div>
+    <div id="exprCoachView" style="display:none"></div>
+    <div id="exprHistoryView" style="display:none"></div>
   </div>
 </div>
 
@@ -3932,7 +3978,7 @@ function selectExprFrame(f){
   const textEl=document.getElementById('exprText');
   if(textEl&&!textEl.value.trim())textEl.placeholder=EXPR_FRAMES[exprFrame].placeholder;
 }
-let exprDate='',exprTaskId='';
+let exprDate='',exprTaskId='',exprView='input';
 function openExprPanel(date,id){
   exprDate=date;exprTaskId=id||'';
   const ec=lg(K.exprCk,{});
@@ -3960,7 +4006,102 @@ function openExprPanel(date,id){
   selectExprFrame(rec&&rec.frame?rec.frame:'prep');
   const ov=document.getElementById('exprOverlay');
   if(ov)ov.classList.add('show');
-  if(textEl)setTimeout(()=>textEl.focus(),60);
+  // 视图路由：当天已有对话式训练 → 直接展示训练记录；否则进入打卡输入
+  exprShowView(rec&&rec.mode==='coach'?'coach':'input');
+  if(exprView==='input'&&textEl)setTimeout(()=>textEl.focus(),60);
+}
+// ==================== 表达面板 · 三视图切换（打卡 / 对话训练 / 记录） ====================
+function exprShowView(view){
+  exprView=view;
+  const input=document.getElementById('exprInputView');
+  const coach=document.getElementById('exprCoachView');
+  const hist=document.getElementById('exprHistoryView');
+  if(!input||!coach||!hist)return;
+  input.style.display=view==='input'?'':'none';
+  coach.style.display=view==='coach'?'':'none';
+  hist.style.display=view==='history'?'':'none';
+  const tabs=['exprTabInput','exprTabCoach','exprTabHistory'];
+  const map={input:'exprTabInput',coach:'exprTabCoach',history:'exprTabHistory'};
+  tabs.forEach(t=>{const el=document.getElementById(t);if(el)el.classList.remove('active');});
+  const act=document.getElementById(map[view]);if(act)act.classList.add('active');
+  if(view==='coach')renderExprCoachToday();
+  if(view==='history')renderExprHistory();
+}
+// 五段式训练记录卡：问题 / 我的回答 / 果果反馈 / 优化版 / 优化要点
+function exprCoachCardHtml(rec,date){
+  const a=rec.a||rec.text||'';
+  const wc=a.length;
+  return '<div class="expr-coach-card">'
+    +'<div class="expr-coach-date">'+esc(date)+(rec.mode==='coach'?' · 对话式训练':'')+'</div>'
+    +'<div class="expr-coach-row q"><span class="expr-coach-tag">问题</span><div class="expr-coach-txt">'+esc(rec.q||'')+'</div></div>'
+    +'<div class="expr-coach-row a"><span class="expr-coach-tag">我的回答</span><div class="expr-coach-txt">'+esc(a)+(wc?'<span class="expr-coach-wc">'+wc+' 字</span>':'')+'</div></div>'
+    +(rec.fb?'<div class="expr-coach-row fb"><span class="expr-coach-tag">果果反馈</span><div class="expr-coach-txt">'+esc(rec.fb)+'</div></div>':'')
+    +(rec.opt?'<div class="expr-coach-row opt"><span class="expr-coach-tag">优化版</span><div class="expr-coach-txt">'+esc(rec.opt)+'</div></div>':'')
+    +(rec.take?'<div class="expr-coach-row tk"><span class="expr-coach-tag">优化要点</span><div class="expr-coach-txt">'+esc(rec.take)+'</div></div>':'')
+    +'</div>';
+}
+// 当天的对话式训练视图
+function renderExprCoachToday(){
+  const el=document.getElementById('exprCoachView');if(!el)return;
+  const date=exprDate||ts();
+  const rec=(lg(K.exprCk,{})[date])||null;
+  if(!rec||rec.mode!=='coach'){
+    el.innerHTML='<div class="expr-coach-empty">今天还没有对话式训练。<br><br>打开 WorkBuddy 对话，对果果说「<b>开始表达训练</b>」：<br>果果出题（真实场景 / 当天所学）→ 你语音回答 → 获得诊断反馈、优化版和优化要点。<br>训练结束后，记录会自动同步到这里。</div>';
+    return;
+  }
+  el.innerHTML=exprCoachCardHtml(rec,date)
+    +'<div class="expr-btns"><button class="expr-cancel" onclick="exprShowView(\'history\')">📜 查看全部训练记录</button></div>';
+}
+// 训练记录历史 + 优化点聚合
+function exprCoachKeys(){
+  const ec=lg(K.exprCk,{});
+  return Object.keys(ec).filter(k=>ec[k]&&ec[k].mode==='coach').sort().reverse();
+}
+function exprTakeAgg(){
+  const ec=lg(K.exprCk,{});
+  const m={};
+  Object.keys(ec).forEach(k=>{const t=ec[k]&&ec[k].take;if(t)m[t]=(m[t]||0)+1;});
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,5);
+}
+function renderExprHistory(){
+  const el=document.getElementById('exprHistoryView');if(!el)return;
+  const ec=lg(K.exprCk,{});
+  const keys=exprCoachKeys();
+  const agg=exprTakeAgg();
+  let html='<div class="expr-agg-title">🎯 优化点聚合 · 你的高频表达问题</div>';
+  html+=agg.length
+    ?agg.map((x,i)=>'<div class="expr-agg-row"><span class="expr-agg-n">'+(i+1)+'</span><span class="expr-agg-t">'+esc(x[0])+'</span><span class="expr-agg-c">×'+x[1]+'</span></div>').join('')
+    :'<div class="expr-coach-empty">对话训练攒起来后，这里会聚合出你最常被点到的表达问题 —— 练哪儿，一目了然。</div>';
+  html+='<div class="expr-agg-title" style="margin-top:14px">📜 对话训练记录 · 最近 10 次</div>';
+  html+=keys.length
+    ?keys.slice(0,10).map(k=>exprCoachCardHtml(ec[k],k)).join('')
+    :'<div class="expr-coach-empty">还没有对话式训练记录 —— 去对话里对果果说「开始表达训练」。</div>';
+  el.innerHTML=html;
+}
+// 技能档案页 · 表达训练专属区（高频要点 + 最近训练）
+function exprSkillSection(){
+  const ec=lg(K.exprCk,{});
+  const keys=exprCoachKeys();
+  const agg=exprTakeAgg();
+  let h='<div class="skill-p-section"><div class="skill-p-sec-title">🎙️ 对话式训练<span class="skill-p-sec-sub">语音训练 · 果果教练 · 自动沉淀</span></div>';
+  h+='<div class="expr-skill-tip">在 WorkBuddy 对话里说「开始表达训练」：果果出题（真实场景 / 当天所学）→ 你语音回答 → 获得诊断、优化版、优化要点，记录自动同步到这里。</div>';
+  if(agg.length){
+    h+='<div class="expr-agg-title">🎯 高频优化要点</div>';
+    h+=agg.map((x,i)=>'<div class="expr-agg-row"><span class="expr-agg-n">'+(i+1)+'</span><span class="expr-agg-t">'+esc(x[0])+'</span><span class="expr-agg-c">×'+x[1]+'</span></div>').join('');
+  }
+  if(keys.length){
+    h+='<div class="expr-agg-title" style="margin-top:12px">最近 3 次训练</div>';
+    h+=keys.slice(0,3).map(k=>exprCoachCardHtml(ec[k],k)).join('');
+  }else{
+    h+='<div class="expr-coach-empty">还没有对话式训练记录。</div>';
+  }
+  h+='<div class="skill-p-btns" style="margin-top:10px"><button class="skill-p-fogg" onclick="exprOpenHistory()">📜 查看全部训练记录</button></div>';
+  h+='</div>';
+  return h;
+}
+function exprOpenHistory(){
+  openExprPanel(ts(),getExprTaskId());
+  setTimeout(function(){exprShowView('history');},60);
 }
 function exprCountUpdate(){
   const el=document.getElementById('exprText');if(!el)return;
@@ -3981,7 +4122,9 @@ function exprSave(){
   if(!text){toast('先写两句，才算完成表达训练');return;}
   if(text.length<20){toast('再写几句（20 字以上），把观点讲完整');return;}
   const ec=lg(K.exprCk,{});
-  ec[date]={text,wc:text.length,ts:Date.now(),frame:exprFrame};
+  const old=ec[date]||{};
+  // 保留已有对话式训练字段（q/fb/opt/take/mode），手动打卡只更新文本与框架
+  ec[date]=Object.assign({},old,{text,wc:text.length,ts:Date.now(),frame:exprFrame});
   sg(K.exprCk,ec);
   // 同步标记计划任务为完成
   const daily=planGetDaily();const day=daily[date];
@@ -4003,14 +4146,14 @@ function exprTaskDetail(date,base){
 function getExprTaskId(){
   try{const dt=getTodayDailyTasks();return dt.express?dt.express.id:null;}catch(e){return null;}
 }
-// 表达连续打卡天数（从今天或昨天往前数）
+// 表达连续打卡天数（从今天或昨天往前数；对话式训练记录 a 视同完成）
 function exprStreakCount(){
   const ec=lg(K.exprCk,{});
   let n=0,d=new Date();
   while(true){
     const k=dstr(d);
     const rec=ec[k];
-    if(rec&&rec.text){n++;}
+    if(rec&&(rec.text||rec.a)){n++;}
     else if(n>0||k!==ts()){break;}
     d.setDate(d.getDate()-1);
   }
@@ -4033,9 +4176,10 @@ function renderHomeExprCard(){
   card.style.display='flex';
   card.onclick=()=>openExprPanel(today,task);
   check.onclick=(ev)=>{ev.stopPropagation();openExprPanel(today,task);};
-  if(rec&&rec.text){
+  if(rec&&(rec.text||rec.a)){
+    const wc=rec.wc||((rec.a||rec.text)||'').length;
     label.textContent='今日表达 · 连续 '+streak+' 天';
-    title.textContent='已完成 ✓ · 表达 '+(rec.wc||0)+' 字';
+    title.textContent='已完成 ✓ · 表达 '+(rec.mode==='coach'?'对话式训练 ':rec.mode==='free'?'自由 ': '')+wc+' 字';
     sub.textContent='点击回顾今天的表达，或继续打磨观点';
     check.classList.add('checked');
   }else{
@@ -4081,7 +4225,7 @@ function exTpMatch(s,tp){if(!s||!s.exTps||!s.exTps.length)return true;return s.e
 function skillDoneToday(id){
   const s=skillGet(id);if(!s||!s.bind)return false;
   const src=skillSrc(id),t=ts();
-  if(s.bind==='expr'){const r=src[t];return !!(r&&r.text);}
+  if(s.bind==='expr'){const r=src[t];return !!(r&&(r.text||r.a));}
   if(s.bind==='exercise')return src.some(e=>e&&e.d===t&&exTpMatch(s,e.tp));
   if(s.bind==='contact')return false;
   return !!src[t];
@@ -4090,7 +4234,7 @@ function skillTotalDays(id){
   const s=skillGet(id);if(!s||!s.bind)return 0;
   const src=skillSrc(id);
   let n=0;
-  if(s.bind==='expr')n=Object.keys(src).filter(k=>src[k]&&src[k].text).length;
+  if(s.bind==='expr')n=Object.keys(src).filter(k=>src[k]&&(src[k].text||src[k].a)).length;
   else if(s.bind==='exercise')n=new Set(src.filter(e=>exTpMatch(s,e&&e.tp)).map(e=>e&&e.d).filter(Boolean)).size;
   else if(s.bind==='contact')n=0;
   else n=Object.keys(src).filter(k=>src[k]).length;
@@ -4102,7 +4246,7 @@ function skillStreak(id){
   let n=0,d=new Date();
   while(true){
     const k=dstr(d);let ok=false;
-    if(s.bind==='expr'){const r=src[k];ok=!!(r&&r.text);}
+    if(s.bind==='expr'){const r=src[k];ok=!!(r&&(r.text||r.a));}
     else if(s.bind==='exercise')ok=src.some(e=>e&&e.d===k&&exTpMatch(s,e.tp));
     else if(s.bind==='contact')ok=false;
     else ok=!!src[k];
@@ -4227,6 +4371,7 @@ function renderSkillProfile(id){
       <div class="skill-p-sec-title">📅 练习记录<span class="skill-p-sec-sub">最近反馈</span></div>
       <div>${recent.length?recent.map(r=>`<div class="skill-p-log"><span class="skill-p-log-date">${r.date.slice(5)}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.focus||'—')}</span><span class="skill-p-log-fix">→ ${esc(r.fix||'')}</span></div>`).join(''):'<div class="skill-p-empty">还没有反馈记录 —— 练完一次，回来写一句 Focus / Fix，积累就从今天开始。</div>'}</div>
     </div>
+    ${id==='expr'?exprSkillSection():''}
     ${s.jump?`<div class="skill-p-actions"><button class="skill-p-btn" style="background:${s.color};width:100%;padding:11px 0;font-size:14.5px" onclick="skillJump('${id}')">去练习 → ${s.action}</button></div>`:''}`;
 }
 function skillSaveGoal(id){
