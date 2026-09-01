@@ -869,6 +869,17 @@ body{
 .skill-fogg-opt input{flex:0 0 auto;}
 .skill-fogg-adv{font-size:13px;line-height:1.6;color:var(--text-2);background:var(--input-bg);border-left:3px solid var(--primary);border-radius:6px;padding:7px 10px;margin:5px 0;text-align:left;}
 
+/* ===== SKILL 五阶段训练 ===== */
+.skill-stage{margin:10px 18px 4px;background:var(--card-bg);border:0.5px solid var(--input-border);border-radius:12px;padding:13px 14px;border-left:3px solid var(--primary);}
+.skill-stage-head{display:flex;align-items:center;gap:7px;margin-bottom:8px;}
+.skill-stage-icon{font-size:16px;line-height:1;}
+.skill-stage-name{font-size:14px;font-weight:700;}
+.skill-stage-tag{font-size:10.5px;font-weight:700;color:var(--text-3);background:var(--input-bg);border-radius:6px;padding:2px 7px;margin-left:2px;letter-spacing:.3px;}
+.skill-stage-list{display:flex;flex-direction:column;gap:6px;}
+.skill-stage-item{display:flex;gap:8px;font-size:13px;line-height:1.62;color:var(--text-2);}
+.skill-stage-dot{flex:0 0 5px;width:5px;height:5px;border-radius:50%;margin-top:8px;background:var(--primary);}
+.skill-stage-extra{margin-top:10px;padding-top:10px;border-top:0.5px dashed var(--input-border);}
+
 /* ===== DIALOG ===== */
 .dialog-overlay{
   position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.35);
@@ -4198,18 +4209,67 @@ var SKILL_ZONES=[
   {id:'P3',label:'人际与领导',desc:'广度 · 杠杆的来源',color:'#5AC8FA'}
 ];
 var SKILLS=[
-  {id:'expr',name:'表达训练',icon:'🎙️',zone:'P0',color:'#FF2D55',bind:'expr',desc:'30-60s 讲清今天学到的一点',action:'打开表达面板',jump:function(){openExprPanel(ts(),getExprTaskId());}},
+  {id:'expr',name:'表达训练',icon:'🎙️',zone:'P0',color:'#FF2D55',bind:'expr',desc:'30-60s 讲清今天学到的一点',action:'打开表达面板',jump:function(){openExprPanel(ts(),getExprTaskId());},
+    stages:{
+      intro:['表达的内核：结论先行、观点明确 —— 第一句就给答案','三大框架：PREP（观点→理由→例子→重申）/ 金字塔（结论→分论点→论据）/ SCQA（情境→冲突→疑问→回答）','练的不是"会说"，是"想清楚"—— 讲不明白 = 没想明白'],
+      practice:['每日 30-60 秒：用 PREP 把今天学到的一点讲清楚','对话式训练：对果果说「开始表达训练」，语音回答 30-60 秒','优先练真实难题：当天遇到的汇报 / 沟通 / 拒绝场景'],
+      feedback:['果果诊断：结论是否先行、逻辑是否金字塔、有无口头禅','录音回听：自己听一遍，揪出口头禅和绕圈','每次产出：诊断 + 优化版 + 一条可复用要点'],
+      record:['五段式记录卡：问题 / 回答 / 反馈 / 优化版 / 要点','优化点聚合：高频问题 Top5 自动统计，练哪儿一目了然'],
+      advance:['从"说清"到"说动人"：加数据、讲故事、带情绪','按高频问题针对性刻意练习','目标：30 秒讲清一个观点，3 分钟讲透一个概念']
+    }},
   {id:'think',name:'结构化思维',icon:'🧩',zone:'P0',color:'#FF9500',bind:null,desc:'结论先行 · 金字塔 · SCQA（规划中）'},
-  {id:'strength',name:'力量训练',icon:'💪',zone:'P1',color:'#30D158',bind:'exercise',base:45,exTps:['推','拉','腿','核心','力量'],desc:'推拉腿 · 力量与体能',action:'去运动页',jump:function(){switchTab('exercise');}},
-  {id:'cardio',name:'有氧训练',icon:'🏃',zone:'P1',color:'#64D2FF',bind:'exercise',base:25,exTps:['有氧','跑步','骑行','搏击'],desc:'跑步 · 骑行 · 搏击操',action:'去运动页',jump:function(){switchTab('exercise');}},
-  {id:'climb',name:'攀岩训练',icon:'🧗',zone:'P1',color:'#FF9500',bind:'exercise',base:12,exTps:['攀岩','吊杠'],desc:'攀爬 · 指力 · 悬挂',action:'去运动页',jump:function(){switchTab('exercise');}},
+  {id:'strength',name:'力量训练',icon:'💪',zone:'P1',color:'#30D158',bind:'exercise',base:45,exTps:['推','拉','腿','核心','力量'],desc:'推拉腿 · 力量与体能',action:'去运动页',jump:function(){switchTab('exercise');},
+    stages:{
+      intro:['力量 = 推 / 拉 / 腿三分化，复合动作为主（卧推 / 引体 / 深蹲）','唯一铁律：渐进超负荷 —— 每次比上次多一点点','先动作标准，再上重量，避免受伤'],
+      practice:['推日：胸 / 肩 / 三头（卧推、肩推、臂屈伸）','拉日：背 / 二头（引体、划船、弯举）','腿日：腿 / 臀（深蹲、硬拉、箭步蹲）','每个动作 3-5 组，8-12 次接近力竭'],
+      feedback:['记录重量 × 组数 × 次数，看是否破 PR','动作标准度：录视频回看，找代偿','力竭感：最后一组是否接近力竭'],
+      record:['打卡类型（推 / 拉 / 腿 / 核心 / 力量）+ 时长 + 备注','重量和次数写进备注，方便下次对比'],
+      advance:['线性加重 → 周期化（增肌期 / 力量期交替）','补弱项：核心、握力','目标：深蹲 / 硬拉 / 卧推三大项持续突破']
+    }},
+  {id:'cardio',name:'有氧训练',icon:'🏃',zone:'P1',color:'#64D2FF',bind:'exercise',base:25,exTps:['有氧','跑步','骑行','搏击'],desc:'跑步 · 骑行 · 搏击操',action:'去运动页',jump:function(){switchTab('exercise');},
+    stages:{
+      intro:['有氧 = 心率区间训练，心肺是精力的地基','Zone2 有氧（能边跑边说话）打底，高强度间歇提速','形式：跑步 / 骑行 / 搏击操'],
+      practice:['慢跑 / 骑行 Zone2：30-45 分钟，保持能说话','搏击操：30 分钟中高强度','每周 2-4 次，循序渐进'],
+      feedback:['看趋势：配速、心率、时长是否进步','体感：是否轻松完成、次日是否疲劳','有设备可看平均心率是否落在目标区间'],
+      record:['打卡类型（有氧 / 跑步 / 骑行 / 搏击）+ 时长','距离、平均心率写进备注'],
+      advance:['先堆时长（LSD 长距离慢跑）→ 再加间歇（HIIT）','目标：静息心率下降、恢复更快']
+    }},
+  {id:'climb',name:'攀岩训练',icon:'🧗',zone:'P1',color:'#FF9500',bind:'exercise',base:12,exTps:['攀岩','吊杠'],desc:'攀爬 · 指力 · 悬挂',action:'去运动页',jump:function(){switchTab('exercise');},
+    stages:{
+      intro:['攀岩 = 技术 + 指力 + 核心 + 心理','从 V0-V1 起步，先磨动作流畅度再冲难度','关键：抓点要放松，多用腿少用手'],
+      practice:['攀爬线路：每次 1-2 小时，多爬 V0-V1 磨动作','吊杠悬挂：练指力，累计悬垂时长','核心：平板支撑 / 悬垂举腿'],
+      feedback:['线路完成难度等级，是否掉点','动作流畅度：静态省力还是蛮力硬拉','手指 / 前臂疲劳感（判断是否过度）'],
+      record:['打卡类型（攀岩 / 吊杠）+ 时长 + 备注','线路难度、完成情况写进备注'],
+      advance:['难度递进 V1 → V2 → V3','专项指力板、引体锁定','目标：攻克一条 V3 / V4 线']
+    }},
   {id:'energy',name:'精力管理',icon:'🔋',zone:'P1',color:'#32ADE6',bind:null,desc:'睡眠 · 恢复 · 节奏（规划中）'},
-  {id:'agent',name:'AI Agent 工程',icon:'🤖',zone:'P2',color:'#AF52DE',bind:'agent',desc:'16 周冲刺 · Agent 技术栈',action:'去看学习计划',jump:function(){switchTab('reading');}},
-  {id:'reading',name:'深度阅读',icon:'📖',zone:'P2',color:'#0A84FF',bind:'reading',desc:'每天一章 · 内化输入',action:'去读书页',jump:function(){switchTab('reading');}},
+  {id:'agent',name:'AI Agent 工程',icon:'🤖',zone:'P2',color:'#AF52DE',bind:'agent',desc:'16 周冲刺 · Agent 技术栈',action:'去看学习计划',jump:function(){switchTab('reading');},
+    stages:{
+      intro:['Agent = 编码 / 规划 / 工具调用 / 记忆 / 多 Agent','你的 L3 四层架构：应用层 / 平台层 / 资产层 / 数据层','16 周冲刺计划已就位（agent-interview-hub）'],
+      practice:['每天按 16 周计划推进：读论文 / 做实验 / 写代码','拆解一个开源 Agent 项目源码','输出知识卡片 + 实验记录'],
+      feedback:['面试题自测：能否 30 秒讲清一个概念','项目 review：自己做的 Agent 哪里卡、哪里顺','错题本：面试 / 实操中答错的点'],
+      record:['学习打卡（每天进度）','知识点卡片（Obsidian 双链）'],
+      advance:['从"会用" → "会设计" → "会落地"','输出一个完整 Agent 项目作为作品','目标：面试冲刺上岸']
+    }},
+  {id:'reading',name:'深度阅读',icon:'📖',zone:'P2',color:'#0A84FF',bind:'reading',desc:'每天一章 · 内化输入',action:'去读书页',jump:function(){switchTab('reading');},
+    stages:{
+      intro:['阅读 = 输入 + 内化 + 输出（费曼：讲得明白才算懂）','固定流程：读 → 写导读 → 更新索引 → 双链 → 回填四问','每天一章，积小胜'],
+      practice:['每天读一章，微信读书打卡','写导读笔记 + 四问回填','用一句话复述今天读的内容（可口头）'],
+      feedback:['能否不看笔记复述核心观点','导读笔记质量：是否提炼出可复用框架','工作台 AI 复盘分析'],
+      record:['读书打卡（每天进度）','笔记 + 四问框架（Obsidian）'],
+      advance:['从单本到主题阅读（跨书连接）','输出成体系：知识卡片 → 长文 → 课程','目标：把读的变成讲的（连接表达训练）']
+    }},
   {id:'finance',name:'金融投资分析',icon:'📈',zone:'P2',color:'#FFD60A',bind:null,desc:'市场跟踪 · 机构观点（规划中）'},
   {id:'writing',name:'写作输出',icon:'✍️',zone:'P2',color:'#FF9F0A',bind:null,desc:'结构化写作 · 知识卡片（规划中）'},
   {id:'comm',name:'沟通协作',icon:'💬',zone:'P3',color:'#5AC8FA',bind:null,desc:'向上沟通 · 跨团队协作（规划中）'},
-  {id:'network',name:'人脉经营',icon:'🤝',zone:'P3',color:'#32ADE6',bind:'contact',desc:'定期联系 · 价值交换',action:'去人脉页',jump:function(){switchTab('contact');}}
+  {id:'network',name:'人脉经营',icon:'🤝',zone:'P3',color:'#32ADE6',bind:'contact',desc:'定期联系 · 价值交换',action:'去人脉页',jump:function(){switchTab('contact');},
+    stages:{
+      intro:['人脉 = 价值交换 + 长期经营，不是加微信','节奏：低频高质的定期联系，胜过突击','分类维护：重要人脉 / 普通联系人'],
+      practice:['每周联系 / 拜访 1-2 位重要人脉','联系前准备：这次能提供什么价值','联系后记录：对方近况 / 需求 / 下次节点'],
+      feedback:['联系质量：双向价值，还是单向索取','对方反应：是否愿意继续深入','自我复盘：这次哪里可以更好'],
+      record:['联系记录 / 拜访记录','对方生日 / 近况 / 需求备忘'],
+      advance:['从"维护"到"经营"：建立长期价值网络','主动牵线搭桥，做连接者','目标：关键人脉 3 个月内深度连接']
+    }}
 ];
 function skillGet(id){return SKILLS.find(x=>x.id===id)||null;}
 function skillSrc(id){
@@ -4261,6 +4321,24 @@ function skillLevel(days){
   if(days>=30)return{lv:2,name:'精通',pct:Math.min(100,68+Math.round((days-30)/60*30))};
   if(days>=7)return{lv:1,name:'熟练',pct:Math.min(68,36+Math.round((days-7)/23*30))};
   return{lv:0,name:'新手',pct:Math.max(4,Math.round(days/7*34))};
+}
+// 五阶段训练框架：入门 → 练习 → 反馈 → 记录 → 精进（每个技能一套专属内容）
+var SKILL_STAGES={
+  intro:{icon:'📘',label:'入门',tag:'理解它'},
+  practice:{icon:'🎯',label:'练习',tag:'每天做'},
+  feedback:{icon:'🔍',label:'反馈',tag:'怎么改'},
+  record:{icon:'📅',label:'记录',tag:'沉淀数据'},
+  advance:{icon:'🚀',label:'精进',tag:'变厉害'}
+};
+function skillStageHtml(s,key,extra){
+  const cfg=SKILL_STAGES[key];
+  const items=s.stages&&s.stages[key];
+  if(!items||!items.length)return '';
+  return '<div class="skill-stage" style="border-left-color:'+s.color+'">'
+    +'<div class="skill-stage-head"><span class="skill-stage-icon">'+cfg.icon+'</span><span class="skill-stage-name">'+cfg.label+'</span><span class="skill-stage-tag" style="color:'+s.color+'">'+cfg.tag+'</span></div>'
+    +'<div class="skill-stage-list">'+items.map(x=>'<div class="skill-stage-item"><span class="skill-stage-dot" style="background:'+s.color+'"></span><span>'+esc(x)+'</span></div>').join('')+'</div>'
+    +(extra?'<div class="skill-stage-extra">'+extra+'</div>':'')
+    +'</div>';
 }
 var skillProfileOpen='';
 function renderSkill(){
@@ -4326,54 +4404,44 @@ function renderSkillProfile(id){
   const recent=(log[id]||[]).filter(x=>x.type!=='fogg').slice(-7).reverse();
   const nextDays=lv.lv===0?7:lv.lv===1?30:lv.lv===2?90:999;
   const nextTxt=lv.lv<3?('距 '+['熟练','精通','大师'][lv.lv]+' 还需 '+(nextDays-days)+' 天'):'已达最高等级 🏆';
-  prof.innerHTML=`
-    <div class="skill-p-head">
-      <button class="skill-p-back" onclick="skillBackToGrid()">← 返回</button>
-      <div class="skill-p-icon" style="background:${s.color}1a">${s.icon}</div>
-      <div class="skill-p-title">
-        <div class="skill-p-name">${s.name}</div>
-        <div class="skill-p-meta">${s.desc}</div>
-      </div>
-      <div class="skill-p-level" style="border-color:${s.color};color:${s.color}">L${lv.lv} ${lv.name}</div>
-    </div>
-    <div class="skill-p-stats">
-      <div class="skill-p-stat"><b>${days}</b><span>累计天数</span></div>
-      <div class="skill-p-stat"><b>${streak}</b><span>连续天数</span></div>
-      <div class="skill-p-stat"><b>${done?'✓':'—'}</b><span>今日状态</span></div>
-      <div class="skill-p-stat"><b style="font-size:14px">${nextTxt}</b><span>升级路径</span></div>
-    </div>
-    <div class="skill-p-section">
-      <div class="skill-p-sec-title">🎯 当前目标</div>
-      <input class="skill-p-goal" id="skillGoalInput" value="${esc(goal)}" placeholder="例：30 秒内把结论讲清楚" onchange="skillSaveGoal('${id}')">
-      <div style="font-size:10.5px;color:var(--text-3);margin-top:4px">目标要具体、可检验（原子习惯：明确的开始信号 + 明确的完成状态）</div>
-    </div>
-    <div class="skill-p-section">
-      <div class="skill-p-sec-title">🔁 3F 反馈本<span class="skill-p-sec-sub">刻意练习三要素：专注 Focus → 反馈 Feedback → 修正 Fix</span></div>
-      <div class="skill-p-3f">
-        <div class="skill-p-3f-row">
-          <span class="skill-p-3f-key" style="background:${s.color}1a;color:${s.color}">Focus</span>
-          <input id="skFocus" class="skill-p-3f-in" placeholder="今天练什么？（如：用 PREP 框架讲今日所学）" value="${esc(todayRec.focus||'')}">
-        </div>
-        <div class="skill-p-3f-row">
-          <span class="skill-p-3f-key" style="background:${s.color}1a;color:${s.color}">Feedback</span>
-          <input id="skFeedback" class="skill-p-3f-in" placeholder="反馈来源？（录音回听 / 自评 / AI 点评）" value="${esc(todayRec.feedback||'')}">
-        </div>
-        <div class="skill-p-3f-row">
-          <span class="skill-p-3f-key" style="background:${s.color}1a;color:${s.color}">Fix</span>
-          <input id="skFix" class="skill-p-3f-in" placeholder="下次改进？（减少口头禅 / 结论再短一点）" value="${esc(todayRec.fix||'')}">
-        </div>
-      </div>
-      <div class="skill-p-btns">
-        <button class="skill-p-btn" style="background:${s.color}" onclick="skillSave3F('${id}')">保存今日反馈</button>
-        <button class="skill-p-fogg" onclick="skillFoggOpen('${id}')">🤔 断卡诊断（福格 B=MAP）</button>
-      </div>
-    </div>
-    <div class="skill-p-section">
-      <div class="skill-p-sec-title">📅 练习记录<span class="skill-p-sec-sub">最近反馈</span></div>
-      <div>${recent.length?recent.map(r=>`<div class="skill-p-log"><span class="skill-p-log-date">${r.date.slice(5)}</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(r.focus||'—')}</span><span class="skill-p-log-fix">→ ${esc(r.fix||'')}</span></div>`).join(''):'<div class="skill-p-empty">还没有反馈记录 —— 练完一次，回来写一句 Focus / Fix，积累就从今天开始。</div>'}</div>
-    </div>
-    ${id==='expr'?exprSkillSection():''}
-    ${s.jump?`<div class="skill-p-actions"><button class="skill-p-btn" style="background:${s.color};width:100%;padding:11px 0;font-size:14.5px" onclick="skillJump('${id}')">去练习 → ${s.action}</button></div>`:''}`;
+
+  // 练习板块落地：当前目标（明确、可检验 = 刻意练习第一步）
+  const goalExtra='<div style="font-size:11px;color:var(--text-3);margin-bottom:5px">🎯 当前目标（明确、可检验）</div>'
+    +'<input class="skill-p-goal" id="skillGoalInput" value="'+esc(goal)+'" placeholder="例：30 秒内把结论讲清楚" onchange="skillSaveGoal(\''+id+'\')">';
+
+  // 反馈板块落地：3F 反馈本 + 断卡诊断
+  const feedbackExtra='<div style="font-size:11px;color:var(--text-3);margin-bottom:6px">🔁 3F 反馈本 · 专注 Focus → 反馈 Feedback → 修正 Fix</div>'
+    +'<div class="skill-p-3f">'
+    +'<div class="skill-p-3f-row"><span class="skill-p-3f-key" style="background:'+s.color+'1a;color:'+s.color+'">Focus</span><input id="skFocus" class="skill-p-3f-in" placeholder="今天练什么？" value="'+esc(todayRec.focus||'')+'"></div>'
+    +'<div class="skill-p-3f-row"><span class="skill-p-3f-key" style="background:'+s.color+'1a;color:'+s.color+'">Feedback</span><input id="skFeedback" class="skill-p-3f-in" placeholder="反馈来源？（录音回听 / 自评 / AI 点评）" value="'+esc(todayRec.feedback||'')+'"></div>'
+    +'<div class="skill-p-3f-row"><span class="skill-p-3f-key" style="background:'+s.color+'1a;color:'+s.color+'">Fix</span><input id="skFix" class="skill-p-3f-in" placeholder="下次改进？" value="'+esc(todayRec.fix||'')+'"></div>'
+    +'</div>'
+    +'<div class="skill-p-btns"><button class="skill-p-btn" style="background:'+s.color+'" onclick="skillSave3F(\''+id+'\')">保存今日反馈</button><button class="skill-p-fogg" onclick="skillFoggOpen(\''+id+'\')">🤔 断卡诊断（福格 B=MAP）</button></div>';
+
+  // 记录板块落地：练习记录历史
+  const recordExtra='<div style="font-size:11px;color:var(--text-3);margin-bottom:6px">最近反馈记录</div>'
+    +(recent.length?recent.map(r=>'<div class="skill-p-log"><span class="skill-p-log-date">'+r.date.slice(5)+'</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(r.focus||'—')+'</span><span class="skill-p-log-fix">→ '+esc(r.fix||'')+'</span></div>').join(''):'<div class="skill-p-empty">还没有反馈记录 —— 练完一次，回来写一句 Focus / Fix。</div>');
+
+  prof.innerHTML=
+    '<div class="skill-p-head">'
+    +'<button class="skill-p-back" onclick="skillBackToGrid()">← 返回</button>'
+    +'<div class="skill-p-icon" style="background:'+s.color+'1a">'+s.icon+'</div>'
+    +'<div class="skill-p-title"><div class="skill-p-name">'+s.name+'</div><div class="skill-p-meta">'+s.desc+'</div></div>'
+    +'<div class="skill-p-level" style="border-color:'+s.color+';color:'+s.color+'">L'+lv.lv+' '+lv.name+'</div>'
+    +'</div>'
+    +'<div class="skill-p-stats">'
+    +'<div class="skill-p-stat"><b>'+days+'</b><span>累计天数</span></div>'
+    +'<div class="skill-p-stat"><b>'+streak+'</b><span>连续天数</span></div>'
+    +'<div class="skill-p-stat"><b>'+(done?'✓':'—')+'</b><span>今日状态</span></div>'
+    +'<div class="skill-p-stat"><b style="font-size:14px">'+nextTxt+'</b><span>升级路径</span></div>'
+    +'</div>'
+    +skillStageHtml(s,'intro')
+    +skillStageHtml(s,'practice',goalExtra)
+    +skillStageHtml(s,'feedback',feedbackExtra)
+    +skillStageHtml(s,'record',recordExtra)
+    +(id==='expr'?exprSkillSection():'')
+    +skillStageHtml(s,'advance')
+    +(s.jump?'<div class="skill-p-actions"><button class="skill-p-btn" style="background:'+s.color+';width:100%;padding:11px 0;font-size:14.5px" onclick="skillJump(\''+id+'\')">去练习 → '+s.action+'</button></div>':'');
 }
 function skillSaveGoal(id){
   const el=document.getElementById('skillGoalInput');if(!el)return;
