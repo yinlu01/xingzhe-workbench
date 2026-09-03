@@ -969,6 +969,7 @@ body{
 .plan-today-btn{height:36px;min-width:74px;border-radius:11px;border:1px solid rgba(255,149,0,.4);background:rgba(255,149,0,.13);color:var(--primary-dark);cursor:pointer;font-size:13px;font-weight:700;padding:0 16px;transition:all .15s;}
 .plan-today-btn:hover{background:rgba(255,149,0,.22);}
 .plan-today-btn:active{transform:scale(.94);}
+.plan-today-btn.on{background:var(--primary);border-color:var(--primary);color:#fff;}
 .plan-week-strip{display:flex;gap:8px;position:relative;z-index:1;margin-bottom:14px;}
 .pw-day{flex:1;height:64px;border:1px solid var(--card-border);background:var(--card-bg);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:all .15s;font-family:inherit;padding:0;}
 .pw-day:hover{border-color:rgba(255,149,0,.5);transform:translateY(-1px);box-shadow:var(--shadow);}
@@ -3668,6 +3669,17 @@ var planView='day';
 var planCursor=ts();
 var planMonthCursor=null;
 var planAddOpen=null;
+// 用户是否主动翻过日期（翻过则跨天不自动回今天，尊重用户选择；点「今天」重置）
+var planCursorTouched=false;
+// 上一次检测到的「今天」日期，用于跨天自动回今天
+var planLastToday=ts();
+function planSyncToday(){
+  // 跨天自动跟进：只有用户未主动翻日期时，才把停留日期切回今天
+  const t=ts();
+  if(t!==planLastToday){planLastToday=t;}
+  if(!planCursorTouched&&planCursor!==t){planCursor=t;return true;}
+  return false;
+}
 
 // 默认时间段表（数据源无时间字段时按此赋默认值）
 var PLAN_TIME_DEF={exercise:'20:00-20:30',reading:'20:30-21:30',study:'21:30-22:00',express:'22:00-22:20',review:'22:30-23:00',ai:'21:00-21:30',contact:'21:00-21:30',work:'09:30-10:00',custom:'09:30-10:00'};
@@ -3826,6 +3838,7 @@ function getTodayDailyTasks(){
 
 // ---------- 渲染 ----------
 function renderPlan(){
+  planSyncToday();
   ensurePlanForDate(ts());
   if(planView==='day'){renderPlanDay();renderPlanAiCard();}
   else if(planView==='month'){renderPlanMonth();}
@@ -3841,7 +3854,7 @@ function renderPlanDay(){
   const subTxt=(dow===0||dow===6)?'周末 · 灵活安排':'工作日 · 白天工作，晚上提升';
   document.getElementById('planDayLabel').innerHTML='<div class="plan-day-main">'+(dt.getMonth()+1)+'月'+dt.getDate()+'日 · 周'+days[dow]+'</div><div class="plan-day-sub">'+subTxt+'</div>';
   const tbtn=document.getElementById('planTodayBtn');
-  if(tbtn)tbtn.style.visibility=isToday?'hidden':'';
+  if(tbtn){tbtn.style.visibility='';tbtn.classList.toggle('on',isToday);tbtn.textContent=isToday?'今天 ✓':'今天';}
   const all=planAllTasks(day);
   const done=all.filter(t=>t.done).length;
   const pct=all.length?Math.round(done/all.length*100):0;
@@ -4554,10 +4567,10 @@ function planApplySuggestion(){
 // ---------- 日度导航 ----------
 function planShiftDay(n){
   const d=new Date(planCursor+'T00:00:00');d.setDate(d.getDate()+n);
-  planCursor=dstr(d);
+  planCursor=dstr(d);planCursorTouched=true;
   renderPlanDay();renderPlanAiCard();
 }
-function planJumpToday(){planCursor=ts();renderPlanDay();renderPlanAiCard();}
+function planJumpToday(){planCursor=ts();planCursorTouched=false;renderPlanDay();renderPlanAiCard();}
 function planPickDate(){
   const el=document.getElementById('planDatePicker');if(!el)return;
   el.value=planCursor;el.focus();
@@ -4565,7 +4578,7 @@ function planPickDate(){
 }
 function planJumpDate(v){
   if(!v)return;
-  planCursor=v;
+  planCursor=v;planCursorTouched=true;
   const pk=document.getElementById('planDatePicker');if(pk)pk.blur();
   renderPlanDay();renderPlanAiCard();
 }
@@ -4665,7 +4678,7 @@ function renderPlanMonth(){
   renderPlanMonthProgress(y,m);
 }
 function planDayFromCal(dateStr){
-  planCursor=dateStr;
+  planCursor=dateStr;planCursorTouched=true;
   planSwitchView('day');
   if(dateStr===ts())toast('今天 · 勾选即打卡，自动进入复盘');
   else if(dateStr<ts())toast('回看 '+dateStr+' · 历史只读');
@@ -4929,6 +4942,8 @@ async function autoRefreshData(){
       }
     }
   }catch(e){}
+  // 4) 跨天自动回今天：若用户未主动翻日期、停留日期已过期，且当前在规划页，则切回今天重新渲染
+  if(planSyncToday()&&currentTab==='plan'){renderPlan();}
 }
 
 // ==================== TAB QUERY PARAM ====================
