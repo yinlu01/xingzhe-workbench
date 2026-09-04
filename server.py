@@ -51,6 +51,14 @@ VAPID_PUBLIC_KEY = 'BEl62i2Y7jFjDgTqBGPmNvE3uPPYm3hR5SQkLGcPTXdRhVgCobGkTyvMLHnx
 
 push_subscriptions = []
 
+# ---- 进化存储层（可选依赖）----
+# 缺失时 server 照常提供服务，/api/event 直接返回 ok:false，不影响任何主流程。
+try:
+    import evolution_store
+except ImportError:
+    evolution_store = None
+    print('  [EVOLVE] evolution_store 不可用，事件上报降级为忽略')
+
 MIME = {
     '.html': 'text/html; charset=utf-8',
     '.css': 'text/css; charset=utf-8',
@@ -190,6 +198,34 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self._json_resp({'publicKey': VAPID_PUBLIC_KEY})
             return
         
+        if parsed.path == '/api/event':
+            # 前端双写通道：行为事件落 SQLite。全程失败静默，绝不阻塞打卡。
+            if evolution_store is None:
+                self._json_resp({'ok': False, 'error': 'store unavailable'})
+                return
+            length = int(self.headers.get('Content-Length', 0))
+            try:
+                data = json.loads(self.rfile.read(length).decode())
+            except (ValueError, UnicodeDecodeError):
+                self._json_resp({'ok': False, 'error': 'bad json'})
+                return
+            date, etype = data.get('date'), data.get('type')
+            if not date or not etype:
+                self._json_resp({'ok': False, 'error': 'missing date or type'})
+                return
+            ok = False
+            try:
+                ok = evolution_store.apply_event(
+                    date=date, type_=etype,
+                    payload=data.get('payload'),
+                    source=data.get('source', 'pwa'),
+                    ts=data.get('ts'))
+            except Exception as e:
+                print(f'  [EVENT] 异常（已忽略）: {e}')
+            print(f'  [EVENT] {date} {etype} source={data.get("source", "pwa")} ok={ok}')
+            self._json_resp({'ok': ok})
+            return
+
         if parsed.path == '/api/review':
             length = int(self.headers.get('Content-Length', 0))
             data = json.loads(self.rfile.read(length).decode())

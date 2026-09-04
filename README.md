@@ -63,7 +63,11 @@
 - **前端**：单文件 `mac-dashboard.html`（约 5000 行，HTML + CSS + JS 内联），无任何前端框架、无构建步骤、无外部 CDN 依赖，离线可用。
 - **服务端**：Python 标准库 `http.server`，端口 `8765`，同一端口提供静态文件与 JSON API。
 - **桌面壳**：Swift `main.swift` 创建 `1280x840` 窗口，内嵌 WKWebView；App 启动时自动检测并拉起服务端，退出时关闭自己拉起的服务端进程。
-- **存储**：浏览器端数据存 `localStorage`（`wb_life_*` 前缀）；复盘等跨端数据存服务端 JSON 文件，两者通过页面逻辑保持同步。
+- **存储**：浏览器端数据存 `localStorage`（`wb_life_*` 前缀，主存储）；复盘等跨端数据存服务端 JSON 文件。两者通过页面逻辑保持同步。
+- **进化存储层（2026-09-04 新增）**：`evolution_store.py` + `workbench.db`（SQLite，Python 内置零依赖）。**双写共存**——打卡时除写 localStorage 外，异步上报一份事件到服务端落库，专供分析与 AI 建议生成。**localStorage 仍是主存储与唯一读取源**，分析库故障不影响任何打卡动作。
+  - 事件溯源：`events` 事实表（只追加）+ `daily_metrics` 按天聚合视图，任何新指标都可重算。
+  - 查询：`python3 evolution_store.py stats` 看概况，`query "<SQL>"` 跑自定义分析，`backfill` 从 `review.json` 回填历史（幂等）。
+  - ⚠️ 已知：桌面 App（`127.0.0.1:8765`）与手机 PWA（`192.168.x.x:8765`）的 localStorage 物理隔离，**目前只有走服务端的数据才真正跨设备共享**。
 - **通知**：桌面 App 走 macOS 原生通知（WKScriptMessageHandler 桥接）；浏览器/PWA 走 Web Push（RFC 8291 aes128gcm 标准协议，VAPID 密钥在 `server.py`）。
 
 ---
@@ -129,15 +133,19 @@
 ├── selfcheck.py                # 服务端健康自检（数据文件/接口/同步链路）
 ├── review.json                 # 复盘数据（个人，不入库）
 │
+├── evolution_store.py          # 进化存储层：SQLite 行为事件库（分析用，零依赖）
+├── workbench.db                # SQLite 数据库（个人，不入库）
+│
 ├── 产品需求文档.md              # 产品 PRD
 ├── 设计文档-时间规划模块.md      # 时间规划模块设计
+├── 设计文档-系统进化模块.md      # 系统进化模块设计（AI 建议 → 用户决策 → 后台执行）
 ├── 项目交接文档.md              # 项目交接说明
 ├── CHANGELOG.md                # 更新日志（按时间倒序）
 │
 └── start.sh                    # 一键启动脚本（含手机安装指引）
 ```
 
-> 个人数据文件（`review.json`、`reading_plan.json`、`weread_data.json`、`obsidian_report.json`、`life-dashboard.html` 旧版页面）已在 `.gitignore` 中排除，不会提交到仓库。
+> 个人数据文件（`review.json`、`reading_plan.json`、`weread_data.json`、`obsidian_report.json`、`workbench.db`、`life-dashboard.html` 旧版页面）已在 `.gitignore` 中排除，不会提交到仓库。
 
 ---
 

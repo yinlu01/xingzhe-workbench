@@ -1828,6 +1828,20 @@ function lg(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}ca
 function sg(k,v){localStorage.setItem(k,JSON.stringify(v))}
 function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function ts(){return dstr(new Date())}
+
+// ==================== EVOLVE · 双写上报 ====================
+// 打卡时把行为事件同步到服务端 SQLite（进化分析用）。
+// 硬约束：全程失败静默——服务端不可达、接口报错都不影响任何打卡动作。
+var EVOLVE_SRC=(location.hostname==='127.0.0.1'||location.hostname==='localhost')?'mac-app':'pwa';
+function trackEvent(type,payload){
+  try{
+    fetch('/api/event',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({date:ts(),type:type,payload:payload||{},source:EVOLVE_SRC})})
+      .then(function(r){return r.json();})
+      .then(function(j){if(!j||!j.ok)console.warn('[evolve] event dropped:',type);})
+      .catch(function(){});
+  }catch(e){}
+}
 function fmt(d){const dt=new Date(d);return dt.getMonth()+1+'/'+dt.getDate();}
 function ds(d){return Math.floor((new Date()-new Date(d))/86400000)}
 function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
@@ -2017,6 +2031,7 @@ function addExerciseSheet(){
     if(h&&h>0)rec.hang=h;
   }
   const exs=ld(K.exercises);exs.push(rec);sv(K.exercises,exs);
+  trackEvent('exercise',{types:[tp],minutes:dr});
   closeSheet();renderAll();toast('运动打卡成功');
 }
 function addCommSheet(){
@@ -2847,6 +2862,7 @@ function togglePlanCheckIn(){
     checkins[todayKey]=true;
     sg(K.planCheckins,checkins);
     advanceReadingCursor();
+    trackEvent('checkin.reading',{});
     planSyncTodayFromCheckins();
     renderReadingTaskCards();
     renderReadingPlan();
@@ -2868,6 +2884,7 @@ function checkPlanToday(){
   checkins[todayKey]=true;
   sg(K.planCheckins,checkins);
   advanceReadingCursor();
+  trackEvent('checkin.reading',{});
   planSyncTodayFromCheckins();
   renderReadingPlan();
   renderHomePlan();
@@ -2980,6 +2997,7 @@ function toggleAgentCheckIn(){
   }else{
     checkins[t]=true;sg(K.agentCk,checkins);
     advanceAgentCursor();
+    trackEvent('checkin.agent',{});
     renderAgentCards();renderTasks();renderHome();
     toast('🎉 今日学习任务完成！');
   }
@@ -3461,6 +3479,8 @@ async function submitReview(opts){
       body:JSON.stringify(body)
     });
     if(!resp.ok)throw new Error('HTTP '+resp.status);
+    trackEvent('review.saved',{energy:energy,chars:text.length,
+      prevSuggestionDone:(opts.done===undefined?null:opts.done)});
     if(opts.toast)toast('今日复盘已保存，23 点自动分析');
     await loadReview(true);
   }catch(e){
